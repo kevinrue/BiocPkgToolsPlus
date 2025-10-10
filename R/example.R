@@ -29,7 +29,6 @@ my_bioc_function <- function(x, y) {
 #' @examples
 #' get_packages_by_view("Spatial")
 get_packages_by_view <- function(view) {
-  stopifnot(require("biocViews"))
   data(biocViewsVocab)
   pkg_info <- biocPkgList()
   stopifnot(view %in% nodes(biocViewsVocab))
