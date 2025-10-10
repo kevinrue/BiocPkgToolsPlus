@@ -11,8 +11,8 @@ Description: This package demonstrates the set up of a Bioconductor-friendly
     initialisation of a git repository as well as the connection of the local
     repository to the GitHub website.
 License: Artistic-2.0
-URL: https://github.com/kevinrue/MyBioconductorPackage
-BugReports: https://support.bioconductor.org/t/MyBioconductorPackage
+URL: https://github.com/kevinrue/BiocPkgToolsPlus
+BugReports: https://support.bioconductor.org/t/BiocPkgToolsPlus
 biocViews: Software,
     Infrastructure
 Encoding: UTF-8

@@ -4,10 +4,13 @@
 \alias{get_packages_by_view}
 \title{Get Packages by biocViews}
 \usage{
-get_packages_by_view(view)
+get_packages_by_view(view, pkg_list = NULL)
 }
 \arguments{
 \item{view}{One biocView term.}
+
+\item{pkg_list}{Value of a call to \code{biocPkgList()}.
+If \code{NULL} (default), will call \code{biocPkgList()} internally.}
 }
 \value{
 Character vector of package names.
@@ -16,5 +19,5 @@ Character vector of package names.
 Get Packages by biocViews
 }
 \examples{
-get_packages_by_view("Sequencing")
+get_packages_by_view("Spatial")
 }
