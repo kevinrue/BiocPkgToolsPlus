@@ -24,10 +24,12 @@ my_bioc_function <- function(x, y) {
 #' @importFrom BiocPkgTools biocPkgList
 #' @importFrom biocViews getSubTerms
 #' @importFrom graph nodes
+#' @importFrom utils data
 #'
 #' @examples
 #' get_packages_by_view("Sequencing")
 get_packages_by_view <- function(view) {
+  stopifnot(require("biocViews"))
   data("biocViewsVocab")
   pkg_info <- biocPkgList()
   stopifnot(view %in% nodes(biocViewsVocab))

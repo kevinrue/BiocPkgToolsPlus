@@ -21,7 +21,8 @@ RoxygenNote: 7.3.3
 Imports:
     BiocPkgTools,
     biocViews,
-    graph
+    graph,
+    utils
 Suggests: 
     BiocStyle,
     covr,
