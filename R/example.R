@@ -18,6 +18,8 @@ my_bioc_function <- function(x, y) {
 #' Get Packages by biocViews
 #'
 #' @param view One biocView term.
+#' @param pkg_list Value of a call to `biocPkgList()`.
+#' If `NULL` (default), will call `biocPkgList()` internally.
 #'
 #' @returns Character vector of package names.
 #' @export
@@ -28,18 +30,29 @@ my_bioc_function <- function(x, y) {
 #'
 #' @examples
 #' get_packages_by_view("Spatial")
-get_packages_by_view <- function(view) {
+get_packages_by_view <- function(view, pkg_list = NULL) {
+  if (is.null(pkg_list)) {
+    pkg_list <- biocPkgList()
+  } else {
+    stopifnot(.check_valid_pkg_list(pkg_list))
+  }
   data(biocViewsVocab)
-  pkg_info <- biocPkgList()
   stopifnot(view %in% nodes(biocViewsVocab))
   query_terms <- getSubTerms(dag = biocViewsVocab, term = view)
   which_pkgs <- vapply(
-    X = pkg_info$biocViews,
+    X = pkg_list$biocViews,
     FUN = function(pkg_terms, query_terms) {
       any(pkg_terms %in% query_terms)
     },
     FUN.VALUE = logical(1),
     query_terms = query_terms
   )
-  pkg_info$Package[which_pkgs]
+  pkg_list$Package[which_pkgs]
+}
+
+.check_valid_pkg_list <- function(pkg_list) {
+  if (!"Package" %in% colnames(pkg_list)) {
+    stop("Invalid pkg_list: no 'Package' column")
+  }
+  return(TRUE)
 }
