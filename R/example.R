@@ -14,3 +14,31 @@ my_bioc_function <- function(x, y) {
   message("This is an example function")
   return(x + y)
 }
+
+#' Get Packages by biocViews
+#'
+#' @param view One biocView term.
+#'
+#' @returns Character vector of package names.
+#' @export
+#' @importFrom BiocPkgTools biocPkgList
+#' @importFrom biocViews getSubTerms
+#' @importFrom graph nodes
+#'
+#' @examples
+#' get_packages_by_view("Sequencing")
+get_packages_by_view <- function(view) {
+  data("biocViewsVocab")
+  pkg_info <- biocPkgList()
+  stopifnot(view %in% nodes(biocViewsVocab))
+  query_terms <- getSubTerms(dag = biocViewsVocab, term = view)
+  which_pkgs <- vapply(
+    X = pkg_info$biocViews,
+    FUN = function(pkg_terms, query_terms) {
+      any(pkg_terms %in% query_terms)
+    },
+    FUN.VALUE = logical(1),
+    query_terms = query_terms
+  )
+  pkg_info$Package[which_pkgs]
+}
