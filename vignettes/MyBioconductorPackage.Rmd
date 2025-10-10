@@ -66,6 +66,14 @@ BiocManager::install("MyBioconductorPackage")
 BiocManager::valid()
 ```
 
+## Use cases
+
+### Getting packages under a biocViews term
+
+```{r}
+get_packages_by_view("Spatial")
+```
+
 ## Required knowledge
 
 `r Biocpkg("MyBioconductorPackage")` is based on many other packages and in particular in those that have implemented the infrastructure needed for dealing with RNA-seq data (EDIT!). That is, packages like `r Biocpkg("SummarizedExperiment")` (EDIT!).

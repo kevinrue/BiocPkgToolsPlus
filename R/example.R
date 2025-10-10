@@ -27,10 +27,10 @@ my_bioc_function <- function(x, y) {
 #' @importFrom utils data
 #'
 #' @examples
-#' get_packages_by_view("Sequencing")
+#' get_packages_by_view("Spatial")
 get_packages_by_view <- function(view) {
   stopifnot(require("biocViews"))
-  data("biocViewsVocab")
+  data(biocViewsVocab)
   pkg_info <- biocPkgList()
   stopifnot(view %in% nodes(biocViewsVocab))
   query_terms <- getSubTerms(dag = biocViewsVocab, term = view)
