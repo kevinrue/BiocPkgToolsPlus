@@ -91,13 +91,17 @@ citation("MyBioconductorPackage")
 library("MyBioconductorPackage")
 ```
 
-Edit this as you see fit =)
+## Use cases
+
+### Getting packages under a biocViews term
+
+```{r}
+get_packages_by_view("Spatial")
+```
 
 Here is an example of you can cite your package inside the vignette:
 
 * `r Biocpkg("MyBioconductorPackage")` `r Citep(bib[["MyBioconductorPackage"]])`
-
-
 
 # Reproducibility
 
