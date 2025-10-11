@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' out <- biocview_by_package_matrix()
+#' out <- get_view_membership_matrix()
 #' out[1:5, 1:5]
 get_view_membership_matrix <- function(pkg_list = NULL) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)

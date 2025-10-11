@@ -24,6 +24,6 @@ if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
-out <- biocview_by_package_matrix()
+out <- get_view_membership_matrix()
 out[1:5, 1:5]
 }
