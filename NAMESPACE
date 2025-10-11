@@ -2,6 +2,7 @@
 
 export(get_packages_by_view)
 export(get_packages_by_views)
+export(get_view_membership_matrix)
 export(my_bioc_function)
 importFrom(BiocPkgTools,biocPkgList)
 importFrom(biocViews,getSubTerms)

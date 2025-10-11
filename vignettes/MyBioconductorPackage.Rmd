@@ -107,6 +107,14 @@ out <- get_packages_by_views(c("Spatial", "SingleCell", "Sequencing"))
 str(out)
 ```
 
+### Getting a package-by-biocView membership matrix
+
+```{r}
+out <- get_view_membership_matrix()
+out[1:5, 1:5]
+```
+
+
 Here is an example of you can cite your package inside the vignette:
 
 * `r Biocpkg("MyBioconductorPackage")` `r Citep(bib[["MyBioconductorPackage"]])`
