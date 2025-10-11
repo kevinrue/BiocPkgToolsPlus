@@ -2,22 +2,37 @@
 % Please edit documentation in R/example.R
 \name{get_packages_by_view}
 \alias{get_packages_by_view}
+\alias{get_packages_by_views}
 \title{Get Packages by biocViews}
 \usage{
 get_packages_by_view(view, pkg_list = NULL)
+
+get_packages_by_views(views, pkg_list = NULL)
 }
 \arguments{
-\item{view}{One biocView term.}
+\item{view}{A single biocView term.}
 
 \item{pkg_list}{Value of a call to \code{biocPkgList()}.
-If \code{NULL} (default), will call \code{biocPkgList()} internally.}
+If \code{NULL} (default), will call \code{biocPkgList()} internally.
+See Details.}
+
+\item{views}{A character vector of biocView term.}
 }
 \value{
 Character vector of package names.
 }
 \description{
-Get Packages by biocViews
+\code{get_packages_by_view()} returns package names associated with a single biocViews term.
+
+\code{get_packages_by_views()} returns packages names at the intersection of multiple biocViews terms.
+}
+\details{
+Calling \code{BiocPkgTools::biocPkgList()} and passing the result to
+\code{get_packages_by_view()} or \code{get_packages_by_views()} is more efficient
+if you are making multiple calls.
+See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
 get_packages_by_view("Spatial")
+get_packages_by_views(c("Spatial", "SingleCell"))
 }

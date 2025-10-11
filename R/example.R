@@ -16,10 +16,23 @@ my_bioc_function <- function(x, y) {
 }
 
 #' Get Packages by biocViews
+#' 
+#' @description
+#' 
+#' `get_packages_by_view()` returns package names associated with a single biocViews term.
+#' 
+#' `get_packages_by_views()` returns packages names at the intersection of multiple biocViews terms.
+#' 
+#' @details
+#' Calling `BiocPkgTools::biocPkgList()` and passing the result to
+#' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
+#' if you are making multiple calls.
+#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
 #'
-#' @param view One biocView term.
+#' @param view A single biocView term.
 #' @param pkg_list Value of a call to `biocPkgList()`.
 #' If `NULL` (default), will call `biocPkgList()` internally.
+#' See Details.
 #'
 #' @returns Character vector of package names.
 #' @export
@@ -31,11 +44,7 @@ my_bioc_function <- function(x, y) {
 #' @examples
 #' get_packages_by_view("Spatial")
 get_packages_by_view <- function(view, pkg_list = NULL) {
-  if (is.null(pkg_list)) {
-    pkg_list <- biocPkgList()
-  } else {
-    stopifnot(.check_valid_pkg_list(pkg_list))
-  }
+  pkg_list <- .check_or_get_pkg_list(pkg_list)
   data(biocViewsVocab)
   stopifnot(view %in% nodes(biocViewsVocab))
   query_terms <- getSubTerms(dag = biocViewsVocab, term = view)
@@ -47,7 +56,17 @@ get_packages_by_view <- function(view, pkg_list = NULL) {
     FUN.VALUE = logical(1),
     query_terms = query_terms
   )
-  pkg_list$Package[which_pkgs]
+  res_pkgs <- pkg_list$Package[which_pkgs]
+  return(res_pkgs)
+}
+
+.check_or_get_pkg_list <- function(pkg_list) {
+  if (is.null(pkg_list)) {
+    pkg_list <- biocPkgList()
+  } else {
+    stopifnot(.check_valid_pkg_list(pkg_list))
+  }
+  return(pkg_list)
 }
 
 .check_valid_pkg_list <- function(pkg_list) {
@@ -55,4 +74,21 @@ get_packages_by_view <- function(view, pkg_list = NULL) {
     stop("Invalid pkg_list: no 'Package' column")
   }
   return(TRUE)
+}
+
+#' @param views A character vector of biocView term.
+#' @export
+#' @rdname get_packages_by_view
+#'
+#' @examples
+#' get_packages_by_views(c("Spatial", "SingleCell"))
+get_packages_by_views <- function(views, pkg_list = NULL) {
+  pkg_list <- .check_or_get_pkg_list(pkg_list)
+  res_pkgs <- lapply(
+    X = views,
+    FUN = get_packages_by_view,
+    pkg_list = pkg_list
+  )
+  res_pkgs <- Reduce(f = `intersect`, x = res_pkgs)
+  return(res_pkgs)
 }
