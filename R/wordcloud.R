@@ -4,7 +4,9 @@
 #' @param pkg_list Value of a call to `biocPkgList()`.
 #' If `NULL` (default), will call `biocPkgList()` internally.
 #' See Details.
-#' @param keep_self Include `view` itself in the output.
+#' @param keep_self Logical. Include `view` itself in the output.
+#' @param ratio Logical. Return fraction of packages annotated with `view` also
+#' annotated with each other term, rather than raw counts.
 #' 
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
@@ -18,7 +20,7 @@
 #' @examples
 #' out <- get_view_cooccurrence_counts("Spatial")
 #' head(sort(out, decreasing = TRUE))
-get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALSE) {
+get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)
   # find packages that contain the query view
   which_pkgs <- vapply(
@@ -31,6 +33,10 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   pkg_list <- pkg_list[which_pkgs, ]
   # count occurrences of other terms in those packages
   cooccurences <- table(unlist(pkg_list$biocViews))
+  # optionally convert to ratio
+  if (ratio) {
+    cooccurences <- cooccurences / nrow(pkg_list)
+  }
   # optionally remove query view itself 
   if (!keep_self) {
     cooccurences <- cooccurences[names(cooccurences) != view]

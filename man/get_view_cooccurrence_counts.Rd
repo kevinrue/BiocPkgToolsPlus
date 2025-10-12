@@ -4,7 +4,12 @@
 \alias{get_view_cooccurrence_counts}
 \title{Get biocViews Co-Occurrence Counts}
 \usage{
-get_view_cooccurrence_counts(view, pkg_list = NULL, keep_self = FALSE)
+get_view_cooccurrence_counts(
+  view,
+  pkg_list = NULL,
+  keep_self = FALSE,
+  ratio = FALSE
+)
 }
 \arguments{
 \item{view}{A biocViews term.}
@@ -13,7 +18,10 @@ get_view_cooccurrence_counts(view, pkg_list = NULL, keep_self = FALSE)
 If \code{NULL} (default), will call \code{biocPkgList()} internally.
 See Details.}
 
-\item{keep_self}{Include \code{view} itself in the output.}
+\item{keep_self}{Logical. Include \code{view} itself in the output.}
+
+\item{ratio}{Logical. Return fraction of packages annotated with \code{view} also
+annotated with each other term, rather than raw counts.}
 }
 \value{
 Named integer vector of co-occurrence counts for each biocViews term.
