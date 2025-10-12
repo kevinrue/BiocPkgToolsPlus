@@ -41,19 +41,16 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   if (!keep_self) {
     cooccurences <- cooccurences[names(cooccurences) != view]
   }
-  # 3) remove zeroes (make optional)
+  ## remove zeroes (make optional in case someone cares about seeing them)
   # cooccurences <- cooccurences[cooccurences > 0]
-  # 4) remove parent terms (see below)
-  # super_terms <- get_parent_nodes(view, biocViewsVocab)
-  # cooccurences <- cooccurences[!names(cooccurences) %in% super_terms]
-  # 5) keep only leaf nodes (makes 4 moot)
-  # this is because biocPkgList() returns all parent terms,
-  # not only those explicitly in the DESCRIPTION file
-  # that means we need to remove parent terms from the co-occurrence counts
-  # to avoid inflating terms that are inferred from many child terms
+  # Keep only leaf nodes
+  # This is because biocPkgList() seems to return all parent terms,
+  # not only those explicitly in the DESCRIPTION file.
+  # That means we need to remove parent terms from the co-occurrence counts
+  # to avoid inflating terms that are inferred from many child terms.
   data(biocViewsVocab)
-  cooccurences <- cooccurences[names(cooccurences) %in% get_leaf_nodes(biocViewsVocab)]
-  # convert to named vector
+  cooccurences <- cooccurences[names(cooccurences) %in% get_biocviews_leaf_nodes(biocViewsVocab)]
+  # convert to named vector for less surprising return type
   cooccurences <- c(cooccurences)
   return(cooccurences)
 }
@@ -69,7 +66,7 @@ get_parent_nodes <- function(node, g) {
 }
 
 #' @importFrom graph edges
-get_leaf_nodes <- function(g) {
+get_biocviews_leaf_nodes <- function(g) {
   e <- edges(g)
   names(which(lengths(e) == 0))
 }
