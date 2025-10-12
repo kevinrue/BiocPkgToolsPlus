@@ -22,17 +22,17 @@ my_bioc_function <- function(x, y) {
 #' `get_packages_by_view()` returns package names associated with a single biocViews term.
 #' 
 #' `get_packages_by_views()` returns packages names at the intersection of multiple biocViews terms.
+#'
+#' @param view A single biocView term.
+#' @param pkg_list Value of a call to `biocPkgList()`.
+#' If `NULL` (default), will call `biocPkgList()` internally.
+#' See Details.
 #' 
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
 #' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
 #' if you are making multiple calls.
 #' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
-#'
-#' @param view A single biocView term.
-#' @param pkg_list Value of a call to `biocPkgList()`.
-#' If `NULL` (default), will call `biocPkgList()` internally.
-#' See Details.
 #'
 #' @returns Character vector of package names.
 #' @export

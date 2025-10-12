@@ -107,6 +107,27 @@ out <- get_packages_by_views(c("Spatial", "SingleCell", "Sequencing"))
 str(out)
 ```
 
+### Getting biocViews co-occurrence counts
+
+```{r}
+out <- get_view_cooccurrence_counts("Spatial")
+head(sort(out, decreasing = TRUE))
+```
+
+The output can be used to rapidly produce a wordcloud with a choice of packages,
+for instance:
+
+```{r}
+library(wordcloud2)
+df <- data.frame(
+  word = names(out),
+  freq = as.integer(out)
+)
+wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
+```
+
+Note that setting size to a value lower than 1 is a workaround sometimes needed to display the most frequent words, as per [this thread](https://stackoverflow.com/a/41654245/2378122).
+
 ### Getting a package-by-biocView membership matrix
 
 ```{r}
@@ -169,8 +190,6 @@ library("sessioninfo")
 options(width = 120)
 session_info()
 ```
-
-
 
 # Bibliography
 
