@@ -87,7 +87,7 @@ In contrast to the interactive workclouds produced by `BiocStyle::CRANpkg("wordc
 the `BiocStyle::CRANpkg("wordcloud")` package can be used to produce static wordclouds,
 with a little bit more work:
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, fig.cap="Wordcloud."}
 library(wordcloud)
 library(RColorBrewer)
 wordcloud(words = names(out), freq = out, colors = brewer.pal(n = 8, name = "Dark2"), random.color = TRUE, rot.per=.3)
