@@ -107,6 +107,13 @@ out <- get_packages_by_views(c("Spatial", "SingleCell", "Sequencing"))
 str(out)
 ```
 
+### Getting biocViews co-occurrence counts
+
+```{r}
+out <- get_view_cooccurrence_counts("Spatial")
+head(sort(out, decreasing = TRUE))
+```
+
 ### Getting a package-by-biocView membership matrix
 
 ```{r}

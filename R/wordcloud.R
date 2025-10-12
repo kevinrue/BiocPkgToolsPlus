@@ -1,6 +1,26 @@
-get_view_cooccurrence_counts <- function(view, pkg_list = NULL) {
+#' Get biocViews Co-Occurrence Counts
+#'
+#' @param view A biocViews term.
+#' @param pkg_list Value of a call to `biocPkgList()`.
+#' If `NULL` (default), will call `biocPkgList()` internally.
+#' See Details.
+#' @param keep_self Include `view` itself in the output.
+#' 
+#' @details
+#' Calling `BiocPkgTools::biocPkgList()` and passing the result to
+#' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
+#' if you are making multiple calls.
+#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
+#'
+#' @returns Named integer vector of co-occurrence counts for each biocViews term.
+#' @export
+#'
+#' @examples
+#' out <- get_view_cooccurrence_counts("Spatial")
+#' head(sort(out, decreasing = TRUE))
+get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALSE) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)
-  # 1) find packages that contain the query
+  # find packages that contain the query view
   which_pkgs <- vapply(
     X = pkg_list$biocViews,
     FUN = function(views) {
@@ -8,23 +28,29 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL) {
     },
     FUN.VALUE = logical(1)
   )
-  pkg_list <- pkg_list[which_pkgs,]
-  # 2) count occurrences of other terms in those packages
+  pkg_list <- pkg_list[which_pkgs, ]
+  # count occurrences of other terms in those packages
   cooccurences <- table(unlist(pkg_list$biocViews))
-  # 3) remove zeroes
-  cooccurences <- cooccurences[cooccurences > 0]
-  # 4) remove parent terms
-  super_terms <- get_parent_nodes(view, biocViewsVocab)
-  cooccurences <- cooccurences[!names(cooccurences) %in% super_terms]
+  # optionally remove query view itself 
+  if (!keep_self) {
+    cooccurences <- cooccurences[names(cooccurences) != view]
+  }
+  # 3) remove zeroes (make optional)
+  # cooccurences <- cooccurences[cooccurences > 0]
+  # 4) remove parent terms (see below)
+  # super_terms <- get_parent_nodes(view, biocViewsVocab)
+  # cooccurences <- cooccurences[!names(cooccurences) %in% super_terms]
   # 5) keep only leaf nodes (makes 4 moot)
+  # this is because biocPkgList() returns all parent terms,
+  # not only those explicitly in the DESCRIPTION file
+  # that means we need to remove parent terms from the co-occurrence counts
+  # to avoid inflating terms that are inferred from many child terms
+  data(biocViewsVocab)
   cooccurences <- cooccurences[names(cooccurences) %in% get_leaf_nodes(biocViewsVocab)]
+  # convert to named vector
+  cooccurences <- c(cooccurences)
   return(cooccurences)
 }
-
-# worth noting that biocPkgList() returns all parent terms,
-# not only those explicitly in the DESCRIPTION file
-# that means we need to remove parent terms from the co-occurrence counts
-# to avoid inflating terms that are inferred from many child terms
 
 wordcloud_cooccurrences <- function(x) {
   df <- data.frame(
@@ -34,8 +60,9 @@ wordcloud_cooccurrences <- function(x) {
   wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2)
 }
 
+#' @importFrom graph inEdges
 get_parent_nodes <- function(node, g) {
-  parent <- graph::inEdges(node, g)[[1]]
+  parent <- inEdges(node, g)[[1]]
   if (length(parent) == 0) {
     return(character(0))
   } else {
@@ -43,6 +70,7 @@ get_parent_nodes <- function(node, g) {
   }
 }
 
+#' @importFrom graph edges
 get_leaf_nodes <- function(g) {
   e <- edges(g)
   names(which(lengths(e) == 0))
