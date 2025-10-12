@@ -123,15 +123,10 @@ df <- data.frame(
   word = names(out),
   freq = as.integer(out)
 )
-wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2)
+wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 ```
 
-```{r}
-library(wordcloud)
-library(RColorBrewer)
-wordcloud(words = names(out), freq = out, colors = brewer.pal(n = 9, name = "Dark2"), random.color = TRUE, rot.per=.3)
-```
-
+Note that setting size to a value lower than 1 is a workaround sometimes needed to display the most frequent words, as per [this thread](https://stackoverflow.com/a/41654245/2378122).
 
 ### Getting a package-by-biocView membership matrix
 
@@ -195,8 +190,6 @@ library("sessioninfo")
 options(width = 120)
 session_info()
 ```
-
-
 
 # Bibliography
 
