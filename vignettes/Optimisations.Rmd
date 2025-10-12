@@ -71,6 +71,28 @@ out1 <- get_packages_by_view("Spatial", pkg_list = pkg_list)
 out2 <- get_packages_by_view("SingleCell", pkg_list = pkg_list)
 ```
 
+# Wordclouds
+
+The 'Getting started' vignette demonstrated a single method for producing a wordcloud.
+This section offers alternatives.
+
+Let's start by getting the count of co-occurrences for each biocViews term with a query term, obtained as follows:
+
+```{r}
+out <- get_view_cooccurrence_counts(view = "Spatial", pkg_list = pkg_list)
+head(sort(out, decreasing = TRUE))
+```
+
+In contrast to the interactive workclouds produced by `BiocStyle::CRANpkg("wordcloud2")`,
+the `BiocStyle::CRANpkg("wordcloud")` package can be used to produce static wordclouds,
+with a little bit more work:
+
+```{r, message=FALSE, warning=FALSE}
+library(wordcloud)
+library(RColorBrewer)
+wordcloud(words = names(out), freq = out, colors = brewer.pal(n = 8, name = "Dark2"), random.color = TRUE, rot.per=.3)
+```
+
 # Reproducibility
 
 The `r Biocpkg("MyBioconductorPackage")` package `r Citep(bib[["MyBioconductorPackage"]])` was made possible thanks to:
