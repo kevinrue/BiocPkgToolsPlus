@@ -90,7 +90,15 @@ with a little bit more work:
 ```{r, message=FALSE, warning=FALSE, fig.cap="Wordcloud."}
 library(wordcloud)
 library(RColorBrewer)
-wordcloud(words = names(out), freq = out, colors = brewer.pal(n = 8, name = "Dark2"), random.color = TRUE, rot.per=.3)
+set.seed(1)
+wordcloud(
+  words = names(out),
+  freq = out,
+  colors = brewer.pal(n = 8, name = "Dark2"),
+  random.color = TRUE,
+  rot.per=.2,
+  scale=c(3, .5)
+)
 ```
 
 # Reproducibility
