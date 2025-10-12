@@ -114,6 +114,18 @@ out <- get_view_cooccurrence_counts("Spatial")
 head(sort(out, decreasing = TRUE))
 ```
 
+The output can be used to rapidly produce a wordcloud with a choice of packages,
+for instance:
+
+```{r}
+library(wordcloud2)
+df <- data.frame(
+  word = names(out),
+  freq = as.integer(out)
+)
+wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2)
+```
+
 ### Getting a package-by-biocView membership matrix
 
 ```{r}
