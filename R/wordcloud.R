@@ -7,12 +7,12 @@
 #' @param keep_self Logical. Include `view` itself in the output.
 #' @param ratio Logical. Return fraction of packages annotated with `view` also
 #' annotated with each other term, rather than raw counts.
-#' 
+#'
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
 #' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
 #' if you are making multiple calls.
-#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
+#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 #'
 #' @returns Named integer vector of co-occurrence counts for each biocViews term.
 #' @export
@@ -37,7 +37,7 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   if (ratio) {
     cooccurences <- cooccurences / nrow(pkg_list)
   }
-  # optionally remove query view itself 
+  # optionally remove query view itself
   if (!keep_self) {
     cooccurences <- cooccurences[names(cooccurences) != view]
   }
@@ -56,14 +56,6 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   # convert to named vector
   cooccurences <- c(cooccurences)
   return(cooccurences)
-}
-
-wordcloud_cooccurrences <- function(x) {
-  df <- data.frame(
-    word = names(x),
-    freq = as.integer(x)
-  )
-  wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2)
 }
 
 #' @importFrom graph inEdges

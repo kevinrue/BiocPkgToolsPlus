@@ -126,6 +126,13 @@ df <- data.frame(
 wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2)
 ```
 
+```{r}
+library(wordcloud)
+library(RColorBrewer)
+wordcloud(words = names(out), freq = out, colors = brewer.pal(n = 9, name = "Dark2"), random.color = TRUE, rot.per=.3)
+```
+
+
 ### Getting a package-by-biocView membership matrix
 
 ```{r}
