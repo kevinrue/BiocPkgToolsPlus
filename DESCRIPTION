@@ -23,10 +23,12 @@ Depends:
 Imports:
     BiocPkgTools,
     graph,
-    utils
+    utils,
+    tibble
 Suggests: 
     BiocStyle,
     covr,
+    dplyr,
     knitr,
     RefManageR,
     rmarkdown,

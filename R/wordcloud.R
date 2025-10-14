@@ -14,12 +14,15 @@
 #' if you are making multiple calls.
 #' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 #'
-#' @returns Named integer vector of co-occurrence counts for each biocViews term.
+#' @returns A tibble of two columns: `date` and `cooccurences`.
+#' `package` is a biocViews term.
+#' `cooccurences` is the number (or fraction, if `ratio = TRUE`) of packages associated with both `view` and `package`.
 #' @export
 #'
 #' @examples
-#' out <- get_view_cooccurrence_counts("Spatial")
-#' head(sort(out, decreasing = TRUE))
+#' library(dplyr)
+#' get_view_cooccurrence_counts("Spatial") |>
+#'   arrange(desc(count))
 get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)
   # find packages that contain the query view
@@ -50,9 +53,12 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   # to avoid inflating terms that are inferred from many child terms.
   data(biocViewsVocab)
   cooccurences <- cooccurences[names(cooccurences) %in% get_biocviews_leaf_nodes(biocViewsVocab)]
-  # convert to named vector for less surprising return type
-  cooccurences <- c(cooccurences)
-  return(cooccurences)
+  # format as a tibble for return
+  res_tibble <- tibble(
+    package = names(cooccurences),
+    cooccurences = cooccurences
+  )
+  return(res_tibble)
 }
 
 #' @importFrom graph inEdges

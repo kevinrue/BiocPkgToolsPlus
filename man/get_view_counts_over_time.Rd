@@ -14,8 +14,9 @@ If \code{NULL} (default), will call \code{biocPkgList()} internally.
 See Details.}
 }
 \value{
-A named integer vector of counts of packages associated with \code{view} (or one of its child terms) over time,
-named by date.
+A tibble of two columns: \code{date} and \code{count}.
+\code{date} is a sequence of dates spaced by six months from 2006 to the current year.
+\code{count} is the number of packages associated with \code{view} (or one of its child terms).
 }
 \description{
 biocViews Counts Over Time
@@ -27,5 +28,5 @@ if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
-view_over_time("SingleCell")
+get_view_counts_over_time("SingleCell")
 }

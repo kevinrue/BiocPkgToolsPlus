@@ -111,19 +111,15 @@ str(out)
 
 ```{r}
 out <- get_view_cooccurrence_counts("Spatial")
-head(sort(out, decreasing = TRUE))
+out |> arrange(desc(count))
 ```
 
-The output can be used to rapidly produce a wordcloud with a choice of packages,
-for instance:
+The output can be used to instantly produce a wordcloud with a choice of packages,
+for instance `BiocStyle::CRANpkg("wordcloud2")`:
 
 ```{r}
 library(wordcloud2)
-df <- data.frame(
-  word = names(out),
-  freq = as.integer(out)
-)
-wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
+wordcloud2(out, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 ```
 
 Note that setting size to a value lower than 1 is a workaround sometimes needed to display the most frequent words, as per [this thread](https://stackoverflow.com/a/41654245/2378122).
@@ -147,7 +143,6 @@ ggplot(out, aes(date, count)) +
     x = "Time"
   )
 ```
-
 
 ### Getting a package-by-biocView membership matrix
 

@@ -12,14 +12,16 @@
 #' if you are making multiple calls.
 #' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
 #'
-#' @returns A named integer vector of counts of packages associated with `view` (or one of its child terms) over time,
-#' named by date.
+#' @returns A tibble of two columns: `date` and `count`.
+#' `date` is a sequence of dates spaced by six months from 2006 to the current year.
+#' `count` is the number of packages associated with `view` (or one of its child terms).
+#' 
 #' @export
 #' @importFrom BiocPkgTools getPkgYearsInBioc
 #' @importFrom tibble tibble
 #'
 #' @examples
-#' view_over_time("SingleCell")
+#' get_view_counts_over_time("SingleCell")
 get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
   # check or get optional inputs
   pkg_list <- .check_or_get_pkg_list(pkg_list)

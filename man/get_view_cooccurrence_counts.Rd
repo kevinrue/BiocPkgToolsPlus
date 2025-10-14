@@ -24,7 +24,9 @@ See Details.}
 annotated with each other term, rather than raw counts.}
 }
 \value{
-Named integer vector of co-occurrence counts for each biocViews term.
+A tibble of two columns: \code{date} and \code{cooccurences}.
+\code{package} is a biocViews term.
+\code{cooccurences} is the number (or fraction, if \code{ratio = TRUE}) of packages associated with both \code{view} and \code{package}.
 }
 \description{
 Get biocViews Co-Occurrence Counts
@@ -36,6 +38,7 @@ if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
-out <- get_view_cooccurrence_counts("Spatial")
-head(sort(out, decreasing = TRUE))
+library(dplyr)
+get_view_cooccurrence_counts("Spatial") |>
+  arrange(desc(count))
 }
