@@ -78,7 +78,8 @@ This section offers alternatives.
 
 Let's start by getting the count of co-occurrences for each biocViews term with a query term, obtained as follows:
 
-```{r}
+```{r, message=FALSE}
+library("dplyr")
 out <- get_view_cooccurrences(view = "Spatial", pkg_list = pkg_list)
 out |> arrange(desc(value))
 ```
