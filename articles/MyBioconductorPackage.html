@@ -65,7 +65,7 @@ Rue-Albrecht</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-albrecht@imm.ox.ac.uk" class="email">kevin.rue-albrecht@imm.ox.ac.uk</a>
       </address>
                   
-            <h4 data-toc-skip class="date">12 October 2025</h4>
+            <h4 data-toc-skip class="date">14 October 2025</h4>
       
 
       <div class="d-none name"><code>MyBioconductorPackage.Rmd</code></div>
@@ -188,33 +188,124 @@ terms<a class="anchor" aria-label="anchor" href="#getting-packages-at-the-inters
 <h4 id="getting-biocviews-co-occurrence-counts">Getting biocViews co-occurrence counts<a class="anchor" aria-label="anchor" href="#getting-biocviews-co-occurrence-counts"></a>
 </h4>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_cooccurrence_counts.html">get_view_cooccurrence_counts</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">out</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Transcriptomics      SingleCell  GeneExpression      DataImport          RNASeq </span></span>
-<span><span class="co">#&gt;              51              49              42              18              15 </span></span>
-<span><span class="co">#&gt;      Clustering </span></span>
-<span><span class="co">#&gt;              14</span></span></code></pre></div>
-<p>The output can be used to rapidly produce a wordcloud with a choice
-of packages, for instance:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_cooccurrences.html">get_view_cooccurrences</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
+<span><span class="va">out</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 65 × 2</span></span></span>
+<span><span class="co">#&gt;    package            value</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Transcriptomics       51</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> SingleCell            49</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> GeneExpression        42</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DataImport            18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> RNASeq                15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Clustering            14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ImmunoOncology        10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> DataRepresentation     8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> CellBasedAssays        7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> QualityControl         7</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 55 more rows</span></span></span></code></pre></div>
+<p>The output can be used to instantly produce a wordcloud with a choice
+of packages, for instance
+<code>BiocStyle::CRANpkg("wordcloud2")</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lchiffon/wordcloud2" class="external-link">wordcloud2</a></span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>,</span>
-<span>  freq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud2/man/wordcloud2.html" class="external-link">wordcloud2</a></span><span class="op">(</span><span class="va">df</span>, minRotation <span class="op">=</span> <span class="op">-</span><span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, maxRotation <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lchiffon/wordcloud2" class="external-link">"wordcloud2"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud2/man/wordcloud2.html" class="external-link">wordcloud2</a></span><span class="op">(</span><span class="va">out</span>, minRotation <span class="op">=</span> <span class="op">-</span><span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, maxRotation <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="wordcloud2 html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"word":["ATACSeq","BatchEffect","Bayesian","BiomedicalInformatics","CellBasedAssays","CellBiology","Classification","Clustering","Coverage","DataImport","DataRepresentation","DecisionTree","DifferentialExpression","DifferentialMethylation","DimensionReduction","DNAMethylation","DNASeq","Epigenetics","ExperimentalDesign","ExperimentHubSoftware","FeatureExtraction","FlowCytometry","FunctionalGenomics","GeneExpression","GeneSetEnrichment","GeneSignaling","GeneTarget","Genetics","GenomeAnnotation","GenomeWideAssociation","GO","GraphAndNetwork","HiddenMarkovModel","ImmunoOncology","KEGG","Metagenomics","MethylationArray","mRNAMicroarray","MultiChannel","MultipleComparison","Network","NetworkEnrichment","NetworkInference","Normalization","OneChannel","PeakDetection","Preprocessing","ProprietaryPlatforms","Proteomics","QualityControl","Reactome","Regression","ReportWriting","RNASeq","SequenceMatching","ShinyApps","SingleCell","Survival","SystemsBiology","ThirdPartyClient","TimeCourse","TissueMicroarray","Transcription","Transcriptomics","TwoChannel"],"freq":[2,1,3,6,7,5,3,14,1,18,8,1,6,1,6,2,1,1,1,2,2,1,1,42,1,1,4,1,2,1,2,2,2,10,2,1,2,1,1,1,2,1,1,3,1,1,6,2,3,7,2,6,1,15,1,1,49,2,1,1,1,1,4,51,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.764705882352941,"backgroundColor":"white","gridSize":0,"minRotation":-1.570796326794897,"maxRotation":1.570796326794897,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script><p>Note that setting size to a value lower than 1 is a workaround
 sometimes needed to display the most frequent words, as per <a href="https://stackoverflow.com/a/41654245/2378122" class="external-link">this thread</a>.</p>
 </div>
 <div class="section level4">
+<h4 id="getting-biocviews-representation-over-time">Getting biocViews representation over time<a class="anchor" aria-label="anchor" href="#getting-biocviews-representation-over-time"></a>
+</h4>
+<p>The number of packages annotated by a single biocView term (or one of
+its children) can be obtained as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_view_counts_over_time</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
+<span><span class="co">#&gt; Replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
+<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 2</span></span></span>
+<span><span class="co">#&gt;    date       count</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-06-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-06-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-06-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-06-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-06-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span></code></pre></div>
+<p>The output can be instantly plotted using
+<code>BiocStyle::CRANpkg("ggplot2")</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Spatial"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Packages"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Time"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="MyBioconductorPackage_files/figure-html/unnamed-chunk-6-1.png" alt="Count of 'Spatial' packages over time." width="700"><p class="caption">
+Count of ‘Spatial’ packages over time.
+</p>
+</div>
+<p>To get the counts for multiple biocViews terms, use
+<code><a href="../reference/get_view_counts_over_time.html">get_views_counts_over_time()</a></code>:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_views_counts_over_time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
+<span><span class="co">#&gt; Replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
+<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 3</span></span></span>
+<span><span class="co">#&gt;    date       Spatial SingleCell</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-06-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-06-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-06-01       4         13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01       4         14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-06-01       4         14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01       4         14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-06-01       4         14</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span></code></pre></div>
+<p>With a little bit more data wrangling, the output can also be plotted
+for all the terms at once, for instance:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyr.tidyverse.org" class="external-link">"tidyr"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="va">out</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, colour <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    y <span class="op">=</span> <span class="st">"Packages"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Time"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"biocView"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="MyBioconductorPackage_files/figure-html/unnamed-chunk-8-1.png" alt="Count of 'Spatial' or 'SingleCell' packages over time." width="700"><p class="caption">
+Count of ‘Spatial’ or ‘SingleCell’ packages over time.
+</p>
+</div>
+</div>
+<div class="section level4">
 <h4 id="getting-a-package-by-biocview-membership-matrix">Getting a package-by-biocView membership matrix<a class="anchor" aria-label="anchor" href="#getting-a-package-by-biocview-membership-matrix"></a>
 </h4>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_membership_matrix.html">get_view_membership_matrix</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
 <span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
@@ -266,7 +357,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.22/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"MyBioconductorPackage.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -275,9 +366,9 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"MyBioconductorPackage.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2025-10-12 15:42:47 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2025-10-14 15:55:15 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 12.561 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 18.066 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -289,7 +380,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2025-10-12</span></span>
+<span><span class="co">#&gt;  date     2025-10-14</span></span>
 <span><span class="co">#&gt;  pandoc   3.8.1 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   1.7.32 @ /usr/local/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -317,30 +408,34 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  dbplyr                  2.5.1     <span style="color: #555555;">2025-09-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  desc                    1.4.3     <span style="color: #555555;">2023-12-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  digest                  0.6.37    <span style="color: #555555;">2024-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  dplyr                   1.1.4     <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  dplyr                 * 1.1.4     <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  DT                      0.34.0    <span style="color: #555555;">2025-09-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  evaluate                1.0.5     <span style="color: #555555;">2025-08-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  farver                  2.1.2     <span style="color: #555555;">2024-05-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap                 1.2.0     <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  filelock                1.0.3     <span style="color: #555555;">2023-12-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  fs                      1.6.6     <span style="color: #555555;">2025-04-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  generics                0.1.4     <span style="color: #555555;">2025-05-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  ggplot2               * 4.0.0     <span style="color: #555555;">2025-09-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  gh                      1.5.0     <span style="color: #555555;">2025-05-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  glue                    1.8.0     <span style="color: #555555;">2024-09-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  graph                   1.87.0    <span style="color: #555555;">2025-04-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  gtable                  0.3.6     <span style="color: #555555;">2024-10-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  hms                     1.1.3     <span style="color: #555555;">2023-03-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  htmltools               0.5.8.1   <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  htmlwidgets             1.6.4     <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  httr                    1.4.7     <span style="color: #555555;">2023-08-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  httr2                   1.2.1     <span style="color: #555555;">2025-07-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  igraph                  2.1.4     <span style="color: #555555;">2025-01-23</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  igraph                  2.2.0     <span style="color: #555555;">2025-10-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  jquerylib               0.1.4     <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  jsonlite                2.0.0     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  knitr                   1.50      <span style="color: #555555;">2025-03-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  labeling                0.4.3     <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  lifecycle               1.0.4     <span style="color: #555555;">2023-11-07</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  lubridate               1.9.4     <span style="color: #555555;">2024-12-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  magrittr                2.0.4     <span style="color: #555555;">2025-09-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  memoise                 2.0.1     <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  MyBioconductorPackage * 0.99.0    <span style="color: #555555;">2025-10-12</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  MyBioconductorPackage * 0.99.0    <span style="color: #555555;">2025-10-14</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  pillar                  1.11.1    <span style="color: #555555;">2025-09-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  pkgconfig               2.0.3     <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  pkgdown                 2.1.3     <span style="color: #555555;">2025-05-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -350,6 +445,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  ragg                    1.5.0     <span style="color: #555555;">2025-09-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  rappdirs                0.3.3     <span style="color: #555555;">2021-01-31</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  RBGL                    1.85.0    <span style="color: #555555;">2025-04-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  RColorBrewer            1.1-3     <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  Rcpp                    1.1.0     <span style="color: #555555;">2025-07-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  RCurl                   1.98-1.17 <span style="color: #555555;">2025-03-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  readr                   2.1.5     <span style="color: #555555;">2024-01-10</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -359,18 +455,22 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  RSQLite                 2.4.3     <span style="color: #555555;">2025-08-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  RUnit                   0.4.33.1  <span style="color: #555555;">2025-06-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  rvest                   1.0.5     <span style="color: #555555;">2025-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  S7                      0.2.0     <span style="color: #555555;">2024-11-07</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  sass                    0.4.10    <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  scales                  1.4.0     <span style="color: #555555;">2025-04-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  sessioninfo           * 1.2.3     <span style="color: #555555;">2025-02-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringi                 1.8.7     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringr                 1.5.2     <span style="color: #555555;">2025-09-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  systemfonts             1.3.1     <span style="color: #555555;">2025-10-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  textshaping             1.0.4     <span style="color: #555555;">2025-10-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tibble                  3.3.0     <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  tidyr                   1.3.1     <span style="color: #555555;">2024-01-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  tidyr                 * 1.3.1     <span style="color: #555555;">2024-01-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tidyselect              1.2.1     <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  timechange              0.3.0     <span style="color: #555555;">2024-01-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tzdb                    0.5.0     <span style="color: #555555;">2025-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  utf8                    1.2.6     <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  vctrs                   0.6.5     <span style="color: #555555;">2023-12-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  withr                   3.0.2     <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  wordcloud2            * 0.2.1     <span style="color: #555555;">2018-01-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  xfun                    0.53      <span style="color: #555555;">2025-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  XML                     3.99-0.19 <span style="color: #555555;">2025-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
