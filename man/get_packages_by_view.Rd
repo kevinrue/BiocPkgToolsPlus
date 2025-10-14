@@ -16,7 +16,7 @@ get_packages_by_views(views, pkg_list = NULL)
 If \code{NULL} (default), will call \code{biocPkgList()} internally.
 See Details.}
 
-\item{views}{A character vector of biocView term.}
+\item{views}{A character vector of biocView terms.}
 }
 \value{
 Character vector of package names.

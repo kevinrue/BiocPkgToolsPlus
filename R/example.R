@@ -60,7 +60,7 @@ get_packages_by_view <- function(view, pkg_list = NULL) {
   return(res_pkgs)
 }
 
-#' @param views A character vector of biocView term.
+#' @param views A character vector of biocView terms.
 #' @export
 #' @rdname get_packages_by_view
 #'
