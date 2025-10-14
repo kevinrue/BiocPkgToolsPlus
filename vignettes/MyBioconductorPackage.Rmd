@@ -136,7 +136,7 @@ The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
 
 ```{r, fig.cap="Count of packages with 'Spatial' biocView over time.", message=FALSE}
 library("ggplot2")
-ggplot(out, aes(date, value)) +
+ggplot(out, aes(date, count)) +
   geom_point() +
   labs(
     title = "Spatial",
