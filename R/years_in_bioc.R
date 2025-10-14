@@ -5,6 +5,8 @@
 #' @param pkg_list Value of a call to `biocPkgList()`.
 #' If `NULL` (default), will call `biocPkgList()` internally.
 #' See Details.
+#' @param pkg_years Value of a call to `getPkgYearsInBioc()`.
+#' If `NULL` (default), will call `getPkgYearsInBioc()` internally.
 #' 
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to

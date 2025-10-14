@@ -16,6 +16,9 @@ get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
 If \code{NULL} (default), will call \code{biocPkgList()} internally.
 See Details.}
 
+\item{pkg_years}{Value of a call to \code{getPkgYearsInBioc()}.
+If \code{NULL} (default), will call \code{getPkgYearsInBioc()} internally.}
+
 \item{views}{A character vector of biocView terms.}
 }
 \value{
