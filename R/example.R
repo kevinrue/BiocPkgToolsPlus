@@ -60,22 +60,6 @@ get_packages_by_view <- function(view, pkg_list = NULL) {
   return(res_pkgs)
 }
 
-.check_or_get_pkg_list <- function(pkg_list) {
-  if (is.null(pkg_list)) {
-    pkg_list <- biocPkgList()
-  } else {
-    stopifnot(.check_valid_pkg_list(pkg_list))
-  }
-  return(pkg_list)
-}
-
-.check_valid_pkg_list <- function(pkg_list) {
-  if (!"Package" %in% colnames(pkg_list)) {
-    stop("Invalid pkg_list: no 'Package' column")
-  }
-  return(TRUE)
-}
-
 #' @param views A character vector of biocView term.
 #' @export
 #' @rdname get_packages_by_view

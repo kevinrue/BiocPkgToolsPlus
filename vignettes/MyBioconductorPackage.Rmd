@@ -128,13 +128,33 @@ wordcloud2(df, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 
 Note that setting size to a value lower than 1 is a workaround sometimes needed to display the most frequent words, as per [this thread](https://stackoverflow.com/a/41654245/2378122).
 
+### Getting biocViews representation over time
+
+```{r}
+out <- get_view_counts_over_time("Spatial")
+out
+```
+
+The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
+
+```{r, fig.cap="Count of packages with 'Spatial' biocView over time.", message=FALSE}
+library(ggplot2)
+ggplot(out, aes(date, count)) +
+  geom_point() +
+  labs(
+    title = "Spatial",
+    y = "Packages",
+    x = "Time"
+  )
+```
+
+
 ### Getting a package-by-biocView membership matrix
 
 ```{r}
 out <- get_view_membership_matrix()
 out[1:5, 1:5]
 ```
-
 
 Here is an example of you can cite your package inside the vignette:
 
