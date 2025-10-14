@@ -79,8 +79,8 @@ This section offers alternatives.
 Let's start by getting the count of co-occurrences for each biocViews term with a query term, obtained as follows:
 
 ```{r}
-out <- get_view_cooccurrence_counts(view = "Spatial", pkg_list = pkg_list)
-head(sort(out, decreasing = TRUE))
+out <- get_view_cooccurrences(view = "Spatial", pkg_list = pkg_list)
+out |> arrange(desc(value))
 ```
 
 In contrast to the interactive workclouds produced by `BiocStyle::CRANpkg("wordcloud2")`,
@@ -92,8 +92,8 @@ library(wordcloud)
 library(RColorBrewer)
 set.seed(1)
 wordcloud(
-  words = names(out),
-  freq = out,
+  words = out$package,
+  freq = out$value,
   colors = brewer.pal(n = 8, name = "Dark2"),
   random.color = TRUE,
   rot.per=.2,
