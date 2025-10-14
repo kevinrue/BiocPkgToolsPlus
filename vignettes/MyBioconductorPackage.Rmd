@@ -158,7 +158,7 @@ With a little bit more data wrangling, the output can also be plotted for all th
 for instance:
 
 ```{r, fig.cap="Count of 'Spatial' or 'SingleCell' packages over time.", message=FALSE}
-library("dplyr")
+library("tidyr")
 library("ggplot2")
 out|>
   pivot_longer(-date) |>

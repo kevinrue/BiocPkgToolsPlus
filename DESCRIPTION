@@ -35,6 +35,7 @@ Suggests:
     rmarkdown,
     sessioninfo,
     testthat (>= 3.0.0),
+    tidyr,
     wordcloud,
     wordcloud2
 Config/testthat/edition: 3
