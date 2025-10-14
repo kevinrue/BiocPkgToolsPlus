@@ -16,14 +16,14 @@
 #'
 #' @returns A tibble of two columns: `date` and `cooccurences`.
 #' `package` is a biocViews term.
-#' `cooccurences` is the number (or fraction, if `ratio = TRUE`) of packages associated with both `view` and `package`.
+#' `value` is the number (or fraction, if `ratio = TRUE`) of packages associated with both `view` and `package`.
 #' @export
 #'
 #' @examples
 #' library(dplyr)
-#' get_view_cooccurrence_counts("Spatial") |>
-#'   arrange(desc(count))
-get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE) {
+#' get_view_cooccurrences("Spatial") |>
+#'   arrange(desc(value))
+get_view_cooccurrences <- function(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)
   # find packages that contain the query view
   which_pkgs <- vapply(
@@ -56,7 +56,7 @@ get_view_cooccurrence_counts <- function(view, pkg_list = NULL, keep_self = FALS
   # format as a tibble for return
   res_tibble <- tibble(
     package = names(cooccurences),
-    cooccurences = cooccurences
+    value = as.vector(cooccurences)
   )
   return(res_tibble)
 }
