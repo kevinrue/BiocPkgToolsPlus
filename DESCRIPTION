@@ -22,19 +22,20 @@ Depends:
     biocViews
 Imports:
     BiocPkgTools,
+    dplyr,
     graph,
     utils,
     tibble
 Suggests: 
     BiocStyle,
     covr,
-    dplyr,
     knitr,
     ggplot2,
     RefManageR,
     rmarkdown,
     sessioninfo,
     testthat (>= 3.0.0),
+    tidyr,
     wordcloud,
     wordcloud2
 Config/testthat/edition: 3

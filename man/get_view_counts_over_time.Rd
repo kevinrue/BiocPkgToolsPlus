@@ -2,9 +2,12 @@
 % Please edit documentation in R/years_in_bioc.R
 \name{get_view_counts_over_time}
 \alias{get_view_counts_over_time}
+\alias{get_views_counts_over_time}
 \title{biocViews Counts Over Time}
 \usage{
 get_view_counts_over_time(view, pkg_list = NULL, pkg_years = NULL)
+
+get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
 }
 \arguments{
 \item{view}{A single biocView term.}
@@ -12,11 +15,19 @@ get_view_counts_over_time(view, pkg_list = NULL, pkg_years = NULL)
 \item{pkg_list}{Value of a call to \code{biocPkgList()}.
 If \code{NULL} (default), will call \code{biocPkgList()} internally.
 See Details.}
+
+\item{pkg_years}{Value of a call to \code{getPkgYearsInBioc()}.
+If \code{NULL} (default), will call \code{getPkgYearsInBioc()} internally.}
+
+\item{views}{A character vector of biocView terms.}
 }
 \value{
-A tibble of two columns: \code{date} and \code{count}.
+For \code{get_view_counts_over_time()}, a tibble of two columns: \code{date} and \code{count}.
 \code{date} is a sequence of dates spaced by six months from 2006 to the current year.
 \code{count} is the number of packages associated with \code{view} (or one of its child terms).
+
+For \code{get_views_counts_over_time()}, a tibble of $N+1$ columns:
+one column \code{date} and one column for each view in \code{views}.
 }
 \description{
 biocViews Counts Over Time
@@ -29,4 +40,5 @@ See vignette 'Optimisations' for a more comprehensive discussion and demonstrati
 }
 \examples{
 get_view_counts_over_time("SingleCell")
+get_views_counts_over_time(c("Spatial", "SingleCell"))
 }

@@ -5,6 +5,8 @@
 #' @param pkg_list Value of a call to `biocPkgList()`.
 #' If `NULL` (default), will call `biocPkgList()` internally.
 #' See Details.
+#' @param pkg_years Value of a call to `getPkgYearsInBioc()`.
+#' If `NULL` (default), will call `getPkgYearsInBioc()` internally.
 #' 
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
@@ -12,9 +14,13 @@
 #' if you are making multiple calls.
 #' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
 #'
-#' @returns A tibble of two columns: `date` and `count`.
+#' @returns
+#' For `get_view_counts_over_time()`, a tibble of two columns: `date` and `count`.
 #' `date` is a sequence of dates spaced by six months from 2006 to the current year.
 #' `count` is the number of packages associated with `view` (or one of its child terms).
+#' 
+#' For `get_views_counts_over_time()`, a tibble of $N+1$ columns:
+#' one column `date` and one column for each view in `views`.
 #' 
 #' @export
 #' @importFrom BiocPkgTools getPkgYearsInBioc
@@ -53,6 +59,32 @@ get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
     date = test_dates,
     count = res_count
   )
+  return(res_tibble)
+}
+
+#' @param views A character vector of biocView terms.
+#' @export
+#' @importFrom dplyr bind_cols mutate
+#' @rdname get_view_counts_over_time
+#'
+#' @examples
+#' get_views_counts_over_time(c("Spatial", "SingleCell"))
+get_views_counts_over_time <- function(views, pkg_list = NULL, pkg_years = NULL) {
+  pkg_list <- .check_or_get_pkg_list(pkg_list)
+  pkg_years <- .check_or_get_pkg_years(pkg_years)
+  res_pkgs <- lapply(
+    X = views,
+    FUN = get_view_counts_over_time,
+    pkg_list = pkg_list,
+    pkg_years = pkg_years
+  )
+  names
+  res_tibble <- bind_cols(
+    lapply(X = res_pkgs, FUN = `[`, 2),
+    .name_repair = "minimal"
+  )
+  colnames(res_tibble) <- views
+  res_tibble <- mutate(res_tibble, date = res_pkgs[[1]][["date"]], .before = 1)
   return(res_tibble)
 }
 

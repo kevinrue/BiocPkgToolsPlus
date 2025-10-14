@@ -127,6 +127,8 @@ Note that setting size to a value lower than 1 is a workaround sometimes needed 
 
 ### Getting biocViews representation over time
 
+The number of packages annotated by a single biocView term (or one of its children) can be obtained as follows:
+
 ```{r}
 out <- get_view_counts_over_time("Spatial")
 out
@@ -134,7 +136,7 @@ out
 
 The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
 
-```{r, fig.cap="Count of packages with 'Spatial' biocView over time.", message=FALSE}
+```{r, fig.cap="Count of 'Spatial' packages over time.", message=FALSE}
 library("ggplot2")
 ggplot(out, aes(date, count)) +
   geom_point() +
@@ -142,6 +144,30 @@ ggplot(out, aes(date, count)) +
     title = "Spatial",
     y = "Packages",
     x = "Time"
+  )
+```
+
+To get the counts for multiple biocViews terms, use `get_views_counts_over_time()`:
+
+```{r}
+out <- get_views_counts_over_time(c("Spatial", "SingleCell"))
+out
+```
+
+With a little bit more data wrangling, the output can also be plotted for all the terms at once,
+for instance:
+
+```{r, fig.cap="Count of 'Spatial' or 'SingleCell' packages over time.", message=FALSE}
+library("tidyr")
+library("ggplot2")
+out|>
+  pivot_longer(-date) |>
+  ggplot(aes(date, value, colour = name)) +
+  geom_point() +
+  labs(
+    y = "Packages",
+    x = "Time",
+    colour = "biocView"
   )
 ```
 
