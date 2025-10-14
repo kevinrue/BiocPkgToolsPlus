@@ -109,7 +109,8 @@ str(out)
 
 ### Getting biocViews co-occurrence counts
 
-```{r}
+```{r, message=FALSE}
+library("dplyr")
 out <- get_view_cooccurrence_counts("Spatial")
 out |> arrange(desc(count))
 ```
@@ -118,7 +119,7 @@ The output can be used to instantly produce a wordcloud with a choice of package
 for instance `BiocStyle::CRANpkg("wordcloud2")`:
 
 ```{r}
-library(wordcloud2)
+library("wordcloud2")
 wordcloud2(out, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 ```
 
@@ -134,7 +135,7 @@ out
 The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
 
 ```{r, fig.cap="Count of packages with 'Spatial' biocView over time.", message=FALSE}
-library(ggplot2)
+library("ggplot2")
 ggplot(out, aes(date, count)) +
   geom_point() +
   labs(
