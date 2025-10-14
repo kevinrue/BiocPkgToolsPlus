@@ -30,6 +30,7 @@ Suggests:
     covr,
     dplyr,
     knitr,
+    ggplot2,
     RefManageR,
     rmarkdown,
     sessioninfo,
