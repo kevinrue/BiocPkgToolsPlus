@@ -7,21 +7,21 @@
 #' See Details.
 #' @param pkg_years Value of a call to `getPkgYearsInBioc()`.
 #' If `NULL` (default), will call `getPkgYearsInBioc()` internally.
-#' 
+#'
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
 #' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
 #' if you are making multiple calls.
-#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
+#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 #'
 #' @returns
 #' For `get_view_counts_over_time()`, a tibble of two columns: `date` and `count`.
 #' `date` is a sequence of dates spaced by six months from 2006 to the current year.
 #' `count` is the number of packages associated with `view` (or one of its child terms).
-#' 
+#'
 #' For `get_views_counts_over_time()`, a tibble of $N+1$ columns:
 #' one column `date` and one column for each view in `views`.
-#' 
+#'
 #' @export
 #' @importFrom BiocPkgTools getPkgYearsInBioc
 #' @importFrom tibble tibble
@@ -46,7 +46,7 @@ get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
   # create a vector of dates spaced by six months
   current_year <- as.integer(format(Sys.Date(), "%Y"))
   firsts_january <- as.Date(sprintf("%i-01-01", seq(2006, current_year)))
-  firsts_june <- as.Date(sprintf("%i-06-01", seq(2006, current_year)))
+  firsts_june <- as.Date(sprintf("%i-07-01", seq(2006, current_year)))
   test_dates <- sort(c(firsts_january, firsts_june))
   # get number of packages tagged with view at each time point
   res_count <- vapply(
