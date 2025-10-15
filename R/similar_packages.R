@@ -32,7 +32,12 @@ get_package_similarity <- function(pkg, pkg_list = NULL) {
   }
   pkgs_test <- setdiff(rownames(pkg_view_matrix), pkg)
   dist_pkgs <- vapply(pkgs_test, distFUN, numeric(1), query = pkg)
-  max_dist <- sum(colSums(pkg_view_matrix) > 0)
+  pkg_type <- get_package_type(pkg, pkg_list)
+  # max_dist <- sum(colSums(pkg_view_matrix) > 0)
+  data("biocViewsVocab")
+  views_in_type <- getSubTerms(dag = biocViewsVocab, term = pkg_type)
+  used_views_in_type <- which(views_in_type %in% names(which(colSums(pkg_view_matrix) > 0)))
+  max_dist <- sum(used_views_in_type)
   pkg_similarity <- 1 - as.vector(dist_pkgs / max_dist)
   res_tibble <- tibble(
     package = names(dist_pkgs),
@@ -41,3 +46,18 @@ get_package_similarity <- function(pkg, pkg_list = NULL) {
     arrange(desc(similarity))
   return(res_tibble)
 }
+
+get_package_type <- function(pkg, pkg_list = NULL) {
+  data("biocViewsVocab")
+  software_types <- c("AnnotationData", "ExperimentData", "Software", "Workflow")
+  software_lists <- lapply(software_types, getSubTerms, dag = biocViewsVocab)
+  names(software_lists) <- software_types
+  pkg_views <- pkg_list$biocViews[pkg_list$Package == pkg][[1]]
+  type_counts <- vapply(
+    software_lists,
+    function(x) {sum(x %in% pkg_views)},
+    FUN.VALUE = integer(1)
+  )
+  return(names(which.max(type_counts)))
+}
+
