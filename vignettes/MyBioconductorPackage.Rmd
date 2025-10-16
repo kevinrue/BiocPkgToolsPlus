@@ -20,7 +20,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}  
 ---
 
-```{r setup, include = FALSE}
+```{r "setup", include = FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
     comment = "#>",
@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+```{r "vignetteSetup", echo=FALSE, message=FALSE, warning = FALSE}
 ## Track time spent on making the vignette
 startTime <- Sys.time()
 
@@ -95,21 +95,21 @@ library("MyBioconductorPackage")
 
 ### Getting packages under a biocViews term
 
-```{r}
+```{r "get_packages_by_view"}
 out <- get_packages_by_view("Spatial")
 str(out)
 ```
 
 ### Getting packages at the intersection of multiple biocViews terms
 
-```{r}
+```{r "get_packages_by_views"}
 out <- get_packages_by_views(c("Spatial", "SingleCell", "Sequencing"))
 str(out)
 ```
 
 ### Getting biocViews co-occurrence counts
 
-```{r, message=FALSE}
+```{r "get_view_cooccurrences", message=FALSE}
 library("dplyr")
 out <- get_view_cooccurrences("Spatial")
 out |> arrange(desc(value))
@@ -118,7 +118,7 @@ out |> arrange(desc(value))
 The output can be used to instantly produce a wordcloud with a choice of packages,
 for instance `BiocStyle::CRANpkg("wordcloud2")`:
 
-```{r}
+```{r "wordcloud2"}
 library("wordcloud2")
 wordcloud2(out, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 ```
@@ -129,14 +129,14 @@ Note that setting size to a value lower than 1 is a workaround sometimes needed 
 
 The number of packages annotated by a single biocView term (or one of its children) can be obtained as follows:
 
-```{r}
+```{r "get_view_counts_over_time"}
 out <- get_view_counts_over_time("Spatial")
 out
 ```
 
 The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
 
-```{r, fig.cap="Count of 'Spatial' packages over time.", message=FALSE}
+```{r "get_view_counts_over_time_plot", fig.cap="Count of 'Spatial' packages over time.", message=FALSE}
 library("ggplot2")
 ggplot(out, aes(date, count)) +
   geom_point() +
@@ -149,7 +149,7 @@ ggplot(out, aes(date, count)) +
 
 To get the counts for multiple biocViews terms, use `get_views_counts_over_time()`:
 
-```{r}
+```{r "get_views_counts_over_time"}
 out <- get_views_counts_over_time(c("Spatial", "SingleCell"))
 out
 ```
@@ -157,7 +157,7 @@ out
 With a little bit more data wrangling, the output can also be plotted for all the terms at once,
 for instance:
 
-```{r, fig.cap="Count of 'Spatial' or 'SingleCell' packages over time.", message=FALSE}
+```{r "get_views_counts_over_time_plot", fig.cap="Count of 'Spatial' or 'SingleCell' packages over time.", message=FALSE}
 library("tidyr")
 library("ggplot2")
 out|>
@@ -173,10 +173,18 @@ out|>
 
 ### Getting a package-by-biocView membership matrix
 
-```{r}
+```{r "get_view_membership_matrix"}
 out <- get_view_membership_matrix()
 out[1:5, 1:5]
 ```
+
+### Getting packages similar to a query package
+
+```{r}
+out <- get_package_similarity("AUCell")
+out
+```
+
 
 Here is an example of you can cite your package inside the vignette:
 
