@@ -24,20 +24,28 @@
 #' @importFrom dplyr arrange desc
 #'
 #' @examples
-#' get_package_similarity("AUCell")
+#' get_package_similarity("edgeR")
 get_package_similarity <- function(pkg, pkg_list = NULL) {
+  pkg_list <- .check_or_get_pkg_list(pkg_list)
+  # get the membership matrix
   pkg_view_matrix <- get_view_membership_matrix(pkg_list)
+  # identify package type
+  pkg_type <- get_package_type(pkg, pkg_list)
+  # restrict membership to biocViews of package type
+  data("biocViewsVocab")
+  views_in_type <- getSubTerms(dag = biocViewsVocab, term = pkg_type)
+  pkg_view_matrix <- pkg_view_matrix[, views_in_type]
+  # remove unused biocViews
+  unused_views <- colSums(pkg_view_matrix) == 0
+  pkg_view_matrix <- pkg_view_matrix[, !unused_views, drop = FALSE]
+  # compute distance to every other package
   distFUN <- function(other, query) {
     as.numeric(dist(pkg_view_matrix[c(query, other), ], method = "manhattan"))
   }
   pkgs_test <- setdiff(rownames(pkg_view_matrix), pkg)
   dist_pkgs <- vapply(pkgs_test, distFUN, numeric(1), query = pkg)
-  pkg_type <- get_package_type(pkg, pkg_list)
-  # max_dist <- sum(colSums(pkg_view_matrix) > 0)
-  data("biocViewsVocab")
-  views_in_type <- getSubTerms(dag = biocViewsVocab, term = pkg_type)
-  used_views_in_type <- which(views_in_type %in% names(which(colSums(pkg_view_matrix) > 0)))
-  max_dist <- sum(used_views_in_type)
+  # convert distance to similarity
+  max_dist <- ncol(pkg_view_matrix)
   pkg_similarity <- 1 - as.vector(dist_pkgs / max_dist)
   res_tibble <- tibble(
     package = names(dist_pkgs),
@@ -48,11 +56,12 @@ get_package_similarity <- function(pkg, pkg_list = NULL) {
 }
 
 get_package_type <- function(pkg, pkg_list = NULL) {
+  pkg_list <- .check_or_get_pkg_list(pkg_list)
   data("biocViewsVocab")
   software_types <- c("AnnotationData", "ExperimentData", "Software", "Workflow")
   software_lists <- lapply(software_types, getSubTerms, dag = biocViewsVocab)
   names(software_lists) <- software_types
-  pkg_views <- pkg_list$biocViews[pkg_list$Package == pkg][[1]]
+  pkg_views <- unlist(pkg_list$biocViews[pkg_list$Package == pkg])
   type_counts <- vapply(
     software_lists,
     function(x) {sum(x %in% pkg_views)},

@@ -32,5 +32,5 @@ dividing by the number of biocViews to normalise within the range [0, 1],
 and finally taking one minus that value to yield a measure of similarity in the range [0, 1].
 }
 \examples{
-get_package_similarity("AUCell")
+get_package_similarity("edgeR")
 }
