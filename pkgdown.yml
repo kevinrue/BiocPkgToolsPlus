@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   MyBioconductorPackage: MyBioconductorPackage.html
   Optimisations: Optimisations.html
-last_built: 2025-10-15T12:50Z
+last_built: 2025-10-16T14:01Z
 urls:
   reference: https://kevinrue.github.io/BiocPkgToolsPlus/reference
   article: https://kevinrue.github.io/BiocPkgToolsPlus/articles

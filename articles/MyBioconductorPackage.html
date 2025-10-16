@@ -65,7 +65,7 @@ Rue-Albrecht</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-albrecht@imm.ox.ac.uk" class="email">kevin.rue-albrecht@imm.ox.ac.uk</a>
       </address>
                   
-            <h4 data-toc-skip class="date">15 October 2025</h4>
+            <h4 data-toc-skip class="date">16 October 2025</h4>
       
 
       <div class="d-none name"><code>MyBioconductorPackage.Rmd</code></div>
@@ -231,16 +231,16 @@ its children) can be obtained as follows:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 2</span></span></span>
 <span><span class="co">#&gt;    date       count</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-07-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-07-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-07-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-07-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-07-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-07-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-07-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-07-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01     0</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span></code></pre></div>
 <p>The output can be instantly plotted using
 <code>BiocStyle::CRANpkg("ggplot2")</code>:</p>
@@ -254,7 +254,7 @@ its children) can be obtained as follows:</p>
 <span>    x <span class="op">=</span> <span class="st">"Time"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="MyBioconductorPackage_files/figure-html/unnamed-chunk-6-1.png" alt="Count of 'Spatial' packages over time." width="700"><p class="caption">
+<img src="MyBioconductorPackage_files/figure-html/get_view_counts_over_time_plot-1.png" alt="Count of 'Spatial' packages over time." width="700"><p class="caption">
 Count of ‘Spatial’ packages over time.
 </p>
 </div>
@@ -271,16 +271,16 @@ Count of ‘Spatial’ packages over time.
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 3</span></span></span>
 <span><span class="co">#&gt;    date       Spatial SingleCell</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-07-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-07-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-07-01       4         13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01       4         14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-07-01       4         14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01       4         14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01       4         14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2006-01-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2006-07-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2007-01-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2007-07-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2008-01-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2008-07-01       0          0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2009-01-01       0          1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2009-07-01       0          1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01       0          1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01       0          1</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span></code></pre></div>
 <p>With a little bit more data wrangling, the output can also be plotted
 for all the terms at once, for instance:</p>
@@ -288,7 +288,7 @@ for all the terms at once, for instance:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyr.tidyverse.org" class="external-link">"tidyr"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="op">!</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, colour <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
@@ -297,7 +297,7 @@ for all the terms at once, for instance:</p>
 <span>    colour <span class="op">=</span> <span class="st">"biocView"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="MyBioconductorPackage_files/figure-html/unnamed-chunk-8-1.png" alt="Count of 'Spatial' or 'SingleCell' packages over time." width="700"><p class="caption">
+<img src="MyBioconductorPackage_files/figure-html/get_views_counts_over_time_plot-1.png" alt="Count of 'Spatial' or 'SingleCell' packages over time." width="700"><p class="caption">
 Count of ‘Spatial’ or ‘SingleCell’ packages over time.
 </p>
 </div>
@@ -318,6 +318,31 @@ Count of ‘Spatial’ or ‘SingleCell’ packages over time.
 <span><span class="co">#&gt; a4Classif      TRUE     TRUE          FALSE          FALSE    FALSE</span></span>
 <span><span class="co">#&gt; a4Core         TRUE     TRUE          FALSE          FALSE    FALSE</span></span>
 <span><span class="co">#&gt; a4Preproc      TRUE     TRUE          FALSE          FALSE    FALSE</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="getting-packages-similar-to-a-query-package">Getting packages similar to a query package<a class="anchor" aria-label="anchor" href="#getting-packages-similar-to-a-query-package"></a>
+</h4>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_similar_packages.html">get_similar_packages</a></span><span class="op">(</span><span class="st">"AUCell"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
+<span><span class="co">#&gt; Replacement repositories:</span></span>
+<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,345 × 2</span></span></span>
+<span><span class="co">#&gt;    package         similarity</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UCell                0.975</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> awst                 0.969</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> CellMixS             0.969</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> CSOA                 0.969</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> EasyCellType         0.969</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> HVP                  0.969</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> aggregateBioVar      0.963</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> batchelor            0.963</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> COTAN                0.963</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> MAST                 0.963</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,335 more rows</span></span></span></code></pre></div>
 <p>Here is an example of you can cite your package inside the
 vignette:</p>
 <ul>
@@ -357,7 +382,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.22/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"MyBioconductorPackage.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -366,9 +391,9 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"MyBioconductorPackage.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2025-10-15 12:51:29 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2025-10-16 14:02:21 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 18.96 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 25.122 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -380,7 +405,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2025-10-15</span></span>
+<span><span class="co">#&gt;  date     2025-10-16</span></span>
 <span><span class="co">#&gt;  pandoc   3.8.1 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   1.7.32 @ /usr/local/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -435,7 +460,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  lubridate               1.9.4     <span style="color: #555555;">2024-12-08</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  magrittr                2.0.4     <span style="color: #555555;">2025-09-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  memoise                 2.0.1     <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  MyBioconductorPackage * 0.99.0    <span style="color: #555555;">2025-10-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  MyBioconductorPackage * 0.99.0    <span style="color: #555555;">2025-10-16</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  pillar                  1.11.1    <span style="color: #555555;">2025-09-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  pkgconfig               2.0.3     <span style="color: #555555;">2019-09-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  pkgdown                 2.1.3     <span style="color: #555555;">2025-05-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -555,7 +580,7 @@ Generation in R</em>. R package version 1.50. 2025. URL:
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Kevin Christophe Rue.</p>
+  <p>Developed by Kevin Rue.</p>
 </div>
 
 <div class="pkgdown-footer-right">
