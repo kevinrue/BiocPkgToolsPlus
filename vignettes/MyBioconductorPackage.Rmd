@@ -181,7 +181,7 @@ out[1:5, 1:5]
 ### Getting packages similar to a query package
 
 ```{r}
-out <- get_package_similarity("AUCell")
+out <- get_similar_packages("AUCell")
 out
 ```
 

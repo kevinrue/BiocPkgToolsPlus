@@ -24,8 +24,8 @@
 #' @importFrom dplyr arrange desc
 #'
 #' @examples
-#' get_package_similarity("edgeR")
-get_package_similarity <- function(pkg, pkg_list = NULL) {
+#' get_similar_packages("edgeR")
+get_similar_packages <- function(pkg, pkg_list = NULL) {
   pkg_list <- .check_or_get_pkg_list(pkg_list)
   # get the membership matrix
   pkg_view_matrix <- get_view_membership_matrix(pkg_list)
