@@ -161,7 +161,7 @@ for instance:
 library("tidyr")
 library("ggplot2")
 out|>
-  pivot_longer(-date) |>
+  pivot_longer(!date) |>
   ggplot(aes(date, value, colour = name)) +
   geom_point() +
   labs(
