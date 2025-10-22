@@ -92,11 +92,11 @@ test_date <- function(date, pkg_years) {
   # pkg_years <- pkg_years_in_bioc
   # date <- test_dates[1]
   # print(date)
-  older_than_2006 <- is.na(pkg_years$first_version_release_date)
   entered_bioc_before_date <- pkg_years$first_version_release_date < date
   still_in_bioc <- is.na(pkg_years$last_version_release_date)
   left_bioc_after_date <- pkg_years$last_version_release_date > date
-  pkgs_within_date <- (older_than_2006 | entered_bioc_before_date) & (still_in_bioc | left_bioc_after_date)
+  in_devel <- is.na(pkg_years$first_version_release_date)
+  pkgs_within_date <- entered_bioc_before_date & (still_in_bioc | left_bioc_after_date) & !in_devel
   return(sum(pkgs_within_date))
 }
 
