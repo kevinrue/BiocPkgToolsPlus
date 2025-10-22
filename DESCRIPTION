@@ -1,15 +1,15 @@
-Package: MyBioconductorPackage
-Title: Demonstration of a Bioconductor Package
+Package: BiocPkgToolsPlus
+Title: Analyse the Bioconductor Package Ecosystem
 Version: 0.99.0
-Date: 2022-05-10
+Date: 2025-10-22
 Authors@R: 
     c(person("Kevin", "Rue", , "kevinrue@users.noreply.github.com",
              role = c("aut", "cre"),
              comment = c(ORCID = "0000-0003-3899-3872")))
-Description: This package demonstrates the set up of a Bioconductor-friendly
-    package using the packages usethis and biocthis. The setup includes the
-    initialisation of a git repository as well as the connection of the local
-    repository to the GitHub website.
+Description: This package demonstrates use of BiocPkgTools functionality to
+    study the composition the Bioconductor package ecosystem. This is meant
+    to learn about packages, identify trends and issues in package annotations,
+    and inform policies for package development and maintenance.
 License: Artistic-2.0
 URL: https://kevinrue.github.io/BiocPkgToolsPlus
 BugReports: https://support.bioconductor.org/t/BiocPkgToolsPlus

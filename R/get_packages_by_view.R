@@ -1,38 +1,21 @@
-#' Example Function
-#' 
-#' Messages the user and returns the sum of `x`and `y`.
-#'
-#' @param x One number.
-#' @param y Another number.
-#'
-#' @returns The sum of `x`and `y`
-#' @export
-#'
-#' @examples
-#' my_bioc_function(2, 3)
-my_bioc_function <- function(x, y) {
-  message("This is an example function")
-  return(x + y)
-}
-
 #' Get Packages by biocViews
-#' 
+#'
 #' @description
-#' 
+#'
 #' `get_packages_by_view()` returns package names associated with a single biocViews term.
-#' 
+#'
 #' `get_packages_by_views()` returns packages names at the intersection of multiple biocViews terms.
 #'
 #' @param view A single biocView term.
 #' @param pkg_list Value of a call to `biocPkgList()`.
 #' If `NULL` (default), will call `biocPkgList()` internally.
 #' See Details.
-#' 
+#'
 #' @details
 #' Calling `BiocPkgTools::biocPkgList()` and passing the result to
 #' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
 #' if you are making multiple calls.
-#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration. 
+#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 #'
 #' @returns Character vector of package names.
 #' @export
