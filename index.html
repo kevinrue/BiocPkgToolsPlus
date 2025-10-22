@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Demonstration of a Bioconductor Package • MyBioconductorPackage</title>
+<title>Analyse the Bioconductor Package Ecosystem • BiocPkgToolsPlus</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Demonstration of a Bioconductor Package">
-<meta name="description" content="This package demonstrates the set up of a Bioconductor-friendly package using the packages usethis and biocthis. The setup includes the initialisation of a git repository as well as the connection of the local repository to the GitHub website.">
-<meta property="og:description" content="This package demonstrates the set up of a Bioconductor-friendly package using the packages usethis and biocthis. The setup includes the initialisation of a git repository as well as the connection of the local repository to the GitHub website.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Analyse the Bioconductor Package Ecosystem">
+<meta name="description" content="This package demonstrates use of BiocPkgTools functionality to study the composition the Bioconductor package ecosystem. This is meant to learn about packages, identify trends and issues in package annotations, and inform policies for package development and maintenance.">
+<meta property="og:description" content="This package demonstrates use of BiocPkgTools functionality to study the composition the Bioconductor package ecosystem. This is meant to learn about packages, identify trends and issues in package annotations, and inform policies for package development and maintenance.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">MyBioconductorPackage</a>
+    <a class="navbar-brand me-2" href="index.html">BiocPkgToolsPlus</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
@@ -31,7 +31,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="articles/MyBioconductorPackage.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="articles/BiocPkgToolsPlus.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -53,110 +53,116 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="mybioconductorpackage">MyBioconductorPackage<a class="anchor" aria-label="anchor" href="#mybioconductorpackage"></a>
+<div class="page-header"><h1 id="biocpkgtoolsplus">BiocPkgToolsPlus<a class="anchor" aria-label="anchor" href="#biocpkgtoolsplus"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of <code>MyBioconductorPackage</code> is to …</p>
+<p>The goal of <code>BiocPkgToolsPlus</code> is to demonstrate use of BiocPkgTools functionality to study the composition the Bioconductor package ecosystem. This is meant to learn about packages, identify trends and issues in package annotations, and inform policies for package development and maintenance.</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>MyBioconductorPackage</code> from <a href="http://bioconductor.org/" class="external-link">Bioconductor</a> using the following code:</p>
+<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>BiocPkgToolsPlus</code> from <a href="http://bioconductor.org/" class="external-link">Bioconductor</a> using the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"MyBioconductorPackage"</span><span class="op">)</span></span></code></pre></div>
-<p>And the development version from <a href="https://github.com/kevinrue/MyBioconductorPackage" class="external-link">GitHub</a> with:</p>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus"</span><span class="op">)</span></span></code></pre></div>
+<p>And the development version from <a href="https://github.com/kevinrue/BiocPkgToolsPlus" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"kevinrue/MyBioconductorPackage"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"kevinrue/BiocPkgToolsPlus"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>This is a basic example which shows you how to get the names of packages annotated with a given set of <a href="https://www.bioconductor.org/packages/release/BiocViews.html" class="external-link">biocViews</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://kevinrue.github.io/BiocPkgToolsPlus">"MyBioconductorPackage"</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
-<p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date.</p>
-<p>You can also embed plots, for example:</p>
-<p><img src="reference/figures/README-pressure-1.png" width="100%"></p>
-<p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub!</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://kevinrue.github.io/BiocPkgToolsPlus">"BiocPkgToolsPlus"</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: biocViews</span></span>
+<span><span class="fu"><a href="reference/get_packages_by_view.html">get_packages_by_views</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"Transcriptomics"</span>, <span class="st">"SingleCell"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
+<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
+<span><span class="co">#&gt; Replacement repositories:</span></span>
+<span><span class="co">#&gt;     BioCsoft: https://bioconductor.org/packages/3.21/bioc</span></span>
+<span><span class="co">#&gt;     BioCann: https://bioconductor.org/packages/3.21/data/annotation</span></span>
+<span><span class="co">#&gt;     BioCexp: https://bioconductor.org/packages/3.21/data/experiment</span></span>
+<span><span class="co">#&gt;     BioCworkflows: https://bioconductor.org/packages/3.21/workflows</span></span>
+<span><span class="co">#&gt;     BioCbooks: https://bioconductor.org/packages/3.21/books</span></span>
+<span><span class="co">#&gt;     CRAN: https://packagemanager.posit.co/cran/latest</span></span>
+<span><span class="co">#&gt;  [1] "CARDspa"               "clustSIGNAL"           "concordexR"           </span></span>
+<span><span class="co">#&gt;  [4] "DESpace"               "escheR"                "ggsc"                 </span></span>
+<span><span class="co">#&gt;  [7] "ggspavis"              "hoodscanR"             "nnSVG"                </span></span>
+<span><span class="co">#&gt; [10] "OSTA.data"             "retrofit"              "SEraster"             </span></span>
+<span><span class="co">#&gt; [13] "smoothclust"           "smoppix"               "SpaceTrooper"         </span></span>
+<span><span class="co">#&gt; [16] "spacexr"               "SpatialExperiment"     "SpatialExperimentIO"  </span></span>
+<span><span class="co">#&gt; [19] "spoon"                 "SpotClean"             "stPipe"               </span></span>
+<span><span class="co">#&gt; [22] "SVP"                   "tidySpatialExperiment" "CatsCradle"           </span></span>
+<span><span class="co">#&gt; [25] "scFeatures"            "SpaceMarkers"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Below is the citation output from using <code>citation('MyBioconductorPackage')</code> in R. Please run this yourself to check for any updates on how to cite <strong>MyBioconductorPackage</strong>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">'MyBioconductorPackage'</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<p>Below is the citation output from using <code>citation('BiocPkgToolsPlus')</code> in R. Please run this yourself to check for any updates on how to cite <strong>BiocPkgToolsPlus</strong>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">'BiocPkgToolsPlus'</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite package 'BiocPkgToolsPlus' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; kevinrue (2022). _Demonstration of a Bioconductor Package_. doi:</span></span>
-<span><span class="co">#&gt; 10.18129/B9.bioc.MyBioconductorPackage (URL:</span></span>
-<span><span class="co">#&gt; https://doi.org/10.18129/B9.bioc.MyBioconductorPackage),</span></span>
-<span><span class="co">#&gt; https://github.com/kevinrue/MyBioconductorPackage/MyBioconductorPackage</span></span>
-<span><span class="co">#&gt; - R package version 0.99.0, &lt;URL:</span></span>
-<span><span class="co">#&gt; http://www.bioconductor.org/packages/MyBioconductorPackage&gt;.</span></span>
+<span><span class="co">#&gt;   kevinrue (2025). _Demonstration of a Bioconductor Package_.</span></span>
+<span><span class="co">#&gt;   doi:10.18129/B9.bioc.BiocPkgToolsPlus</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.BiocPkgToolsPlus&gt;,</span></span>
+<span><span class="co">#&gt;   https://github.com/kevinrue/BiocPkgToolsPlus/BiocPkgToolsPlus - R</span></span>
+<span><span class="co">#&gt;   package version 0.99.0,</span></span>
+<span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/BiocPkgToolsPlus&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   @Manual{,</span></span>
 <span><span class="co">#&gt;     title = {Demonstration of a Bioconductor Package},</span></span>
 <span><span class="co">#&gt;     author = {{kevinrue}},</span></span>
-<span><span class="co">#&gt;     year = {2022},</span></span>
-<span><span class="co">#&gt;     url = {http://www.bioconductor.org/packages/MyBioconductorPackage},</span></span>
-<span><span class="co">#&gt;     note = {https://github.com/kevinrue/MyBioconductorPackage/MyBioconductorPackage - R package version 0.99.0},</span></span>
-<span><span class="co">#&gt;     doi = {10.18129/B9.bioc.MyBioconductorPackage},</span></span>
+<span><span class="co">#&gt;     year = {2025},</span></span>
+<span><span class="co">#&gt;     url = {http://www.bioconductor.org/packages/BiocPkgToolsPlus},</span></span>
+<span><span class="co">#&gt;     note = {https://github.com/kevinrue/BiocPkgToolsPlus/BiocPkgToolsPlus - R package version 0.99.0},</span></span>
+<span><span class="co">#&gt;     doi = {10.18129/B9.bioc.BiocPkgToolsPlus},</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; kevinrue (2022). "Demonstration of a Bioconductor Package." _bioRxiv_.</span></span>
-<span><span class="co">#&gt; doi: 10.1101/TODO (URL: https://doi.org/10.1101/TODO), &lt;URL:</span></span>
-<span><span class="co">#&gt; https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
+<span><span class="co">#&gt;   kevinrue (2025). "Demonstration of a Bioconductor Package."</span></span>
+<span><span class="co">#&gt;   _bioRxiv_. doi:10.1101/TODO &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
+<span><span class="co">#&gt;   &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   @Article{,</span></span>
 <span><span class="co">#&gt;     title = {Demonstration of a Bioconductor Package},</span></span>
 <span><span class="co">#&gt;     author = {{kevinrue}},</span></span>
-<span><span class="co">#&gt;     year = {2022},</span></span>
+<span><span class="co">#&gt;     year = {2025},</span></span>
 <span><span class="co">#&gt;     journal = {bioRxiv},</span></span>
 <span><span class="co">#&gt;     doi = {10.1101/TODO},</span></span>
 <span><span class="co">#&gt;     url = {https://www.biorxiv.org/content/10.1101/TODO},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
-<p>Please note that the <code>MyBioconductorPackage</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
+<p>Please note that the <code>BiocPkgToolsPlus</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the <code>MyBioconductorPackage</code> project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the <code>BiocPkgToolsPlus</code> project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 <div class="section level2">
 <h2 id="development-tools">Development tools<a class="anchor" aria-label="anchor" href="#development-tools"></a>
 </h2>
 <ul>
-<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.14/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
+<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.22/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
 <li>Code coverage assessment is possible thanks to <a href="https://codecov.io/gh" class="external-link">codecov</a> and <em><a href="https://CRAN.R-project.org/package=covr" class="external-link">covr</a></em>.</li>
-<li>The <a href="http://kevinrue.github.io/MyBioconductorPackage" class="external-link">documentation website</a> is automatically updated thanks to <em><a href="https://CRAN.R-project.org/package=pkgdown" class="external-link">pkgdown</a></em>.</li>
+<li>The <a href="http://kevinrue.github.io/BiocPkgToolsPlus" class="external-link">documentation website</a> is automatically updated thanks to <em><a href="https://CRAN.R-project.org/package=pkgdown" class="external-link">pkgdown</a></em>.</li>
 <li>The code is styled automatically thanks to <em><a href="https://CRAN.R-project.org/package=styler" class="external-link">styler</a></em>.</li>
 <li>The documentation is formatted thanks to <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> and <em><a href="https://CRAN.R-project.org/package=roxygen2" class="external-link">roxygen2</a></em>.</li>
 </ul>
 <p>For more details, check the <code>dev</code> directory.</p>
-<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.14/biocthis" class="external-link">biocthis</a></em>.</p>
+<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.22/biocthis" class="external-link">biocthis</a></em>.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct-1">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct-1"></a>
 </h2>
-<p>Please note that the MyBioconductorPackage project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the BiocPkgToolsPlus project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -185,7 +191,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing MyBioconductorPackage</a></li>
+<li><a href="authors.html#citation">Citing BiocPkgToolsPlus</a></li>
 </ul>
 </div>
 
@@ -199,11 +205,11 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/kevinrue/MyBioconductorPackage/issues" class="external-link"><img src="https://img.shields.io/github/issues/kevinrue/MyBioconductorPackage" alt="GitHub issues"></a></li>
-<li><a href="https://github.com/kevinrue/MyBioconductorPackage/pulls" class="external-link"><img src="https://img.shields.io/github/issues-pr/kevinrue/MyBioconductorPackage" alt="GitHub pulls"></a></li>
+<li><a href="https://github.com/kevinrue/BiocPkgToolsPlus/issues" class="external-link"><img src="https://img.shields.io/github/issues/kevinrue/BiocPkgToolsPlus" alt="GitHub issues"></a></li>
+<li><a href="https://github.com/kevinrue/BiocPkgToolsPlus/pulls" class="external-link"><img src="https://img.shields.io/github/issues-pr/kevinrue/BiocPkgToolsPlus" alt="GitHub pulls"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/kevinrue/MyBioconductorPackage/actions" class="external-link"><img src="https://github.com/kevinrue/MyBioconductorPackage/workflows/R-CMD-check-bioc/badge.svg" alt="R-CMD-check-bioc"></a></li>
-<li><a href="https://app.codecov.io/gh/kevinrue/MyBioconductorPackage?branch=main" class="external-link"><img src="https://codecov.io/gh/kevinrue/MyBioconductorPackage/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/kevinrue/BiocPkgToolsPlus/actions" class="external-link"><img src="https://github.com/kevinrue/BiocPkgToolsPlus/workflows/R-CMD-check-bioc/badge.svg" alt="R-CMD-check-bioc"></a></li>
+<li><a href="https://app.codecov.io/gh/kevinrue/BiocPkgToolsPlus?branch=main" class="external-link"><img src="https://codecov.io/gh/kevinrue/BiocPkgToolsPlus/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
