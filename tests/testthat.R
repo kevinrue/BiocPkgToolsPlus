@@ -1,4 +1,4 @@
 library(testthat)
-library(MyBioconductorPackage)
+library(BiocPkgToolsPlus)
 
-test_check("MyBioconductorPackage")
+test_check("BiocPkgToolsPlus")
