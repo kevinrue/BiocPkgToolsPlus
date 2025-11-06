@@ -27,9 +27,11 @@ Calling \code{BiocPkgTools::biocPkgList()} and passing the result to
 if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 
-Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag at least one package,
+Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag either of the two packages being tested when computing each distance,
 dividing by the number of biocViews to normalise within the range [0, 1],
 and finally taking one minus that value to yield a measure of similarity in the range [0, 1].
+In other words, the denominator in different for each pair of packages,
+to increase the dynamic range of values.
 }
 \examples{
 get_similar_packages("edgeR")
