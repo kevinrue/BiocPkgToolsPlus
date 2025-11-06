@@ -73,9 +73,11 @@ See Details.</p></dd>
 <code><a href="get_packages_by_view.html">get_packages_by_view()</a></code> or <code><a href="get_packages_by_view.html">get_packages_by_views()</a></code> is more efficient
 if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.</p>
-<p>Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag at least one package,
+<p>Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag either of the two packages being tested when computing each distance,
 dividing by the number of biocViews to normalise within the range [0, 1],
-and finally taking one minus that value to yield a measure of similarity in the range [0, 1].</p>
+and finally taking one minus that value to yield a measure of similarity in the range [0, 1].
+In other words, the denominator in different for each pair of packages,
+to increase the dynamic range of values.</p>
     </div>
 
     <div class="section level2">
@@ -88,16 +90,16 @@ and finally taking one minus that value to yield a measure of similarity in the 
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2,360 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    package           similarity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> metaseqR2              0.908</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> dearseq                0.883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> limma                  0.883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> dreamlet               0.877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> roastgsa               0.877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> crumblr                0.871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> variancePartition      0.871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> zenith                 0.871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> BASiCS                 0.865</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> BASiCStan              0.865</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> metaseqR2              0.674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> limma                  0.627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> roastgsa               0.615</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> dearseq                0.537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> dreamlet               0.512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> crumblr                0.488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> variancePartition      0.488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> zenith                 0.488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> GenomicOZone           0.478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> BPRMeth                0.476</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2,350 more rows</span></span>
 </code></pre></div>
     </div>
