@@ -11,9 +11,11 @@
 #' if you are making multiple calls.
 #' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 #'
-#' Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag at least one package,
+#' Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag either of the two packages being tested when computing each distance,
 #' dividing by the number of biocViews to normalise within the range \[0, 1\],
 #' and finally taking one minus that value to yield a measure of similarity in the range \[0, 1\].
+#' In other words, the denominator in different for each pair of packages,
+#' to increase the dynamic range of values.
 #'
 #' @returns
 #' A tibble of two columns: `package` and `similarity`.
@@ -40,16 +42,18 @@ get_similar_packages <- function(pkg, pkg_list = NULL) {
   pkg_view_matrix <- pkg_view_matrix[, !unused_views, drop = FALSE]
   # compute distance to every other package
   distFUN <- function(other, query) {
-    as.numeric(dist(pkg_view_matrix[c(query, other), ], method = "manhattan"))
+    sub_pkg_view_matrix <- pkg_view_matrix[c(query, other), ]
+    used_views <- colSums(sub_pkg_view_matrix) > 0
+    sub_pkg_view_matrix <- sub_pkg_view_matrix[, used_views, drop = FALSE]
+    dist <- as.numeric(dist(sub_pkg_view_matrix, method = "manhattan"))
+    similarity <- 1 - as.vector(dist / ncol(sub_pkg_view_matrix))
+    similarity
   }
   pkgs_test <- setdiff(rownames(pkg_view_matrix), pkg)
-  dist_pkgs <- vapply(pkgs_test, distFUN, numeric(1), query = pkg)
-  # convert distance to similarity
-  max_dist <- ncol(pkg_view_matrix)
-  pkg_similarity <- 1 - as.vector(dist_pkgs / max_dist)
+  similarity_pkgs <- vapply(pkgs_test, distFUN, numeric(1), query = pkg)
   res_tibble <- tibble(
-    package = names(dist_pkgs),
-    similarity = pkg_similarity
+    package = names(similarity_pkgs),
+    similarity = similarity_pkgs
   ) |>
     arrange(desc(similarity))
   return(res_tibble)
