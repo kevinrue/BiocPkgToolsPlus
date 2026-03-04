@@ -49,19 +49,6 @@ bib <- c(
 )
 ```
 
-# Foreword
-
-This notebook showcases work in progress.
-
-While other vignettes implicitly focus on 'Software' packages (The default for `biocPkgList()` is to pull from the "BioCsoft" repository), this vignette demonstrates a wrapper function implemented in this package to combine information from all Bioconductor repositories into a single dataframe.
-
-This might be convenient for most users but brings some caveats:
-
-- The various repositories have different sets of columns in their `biocPkgList()` output.
-  Combining those outputs creates many `NA` values.
-- Not all repos are available for all versions, particularly older versions.
-- Downstream functions need to be tweaked to work with the combined dataframe, which might be more difficult to maintain and less efficient than using the individual dataframes for each repository.
-
 # Libraries
 
 Attach packages used in this vignettes.

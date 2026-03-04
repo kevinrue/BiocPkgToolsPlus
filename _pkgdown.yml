@@ -1,3 +1,11 @@
 template:
   bootstrap: 5
 url: https://kevinrue.github.io/BiocPkgToolsPlus/
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - NonSoftwareViews
+  - Optimisations
+  - Repositories
+  - Contributors

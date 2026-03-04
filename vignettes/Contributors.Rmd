@@ -86,15 +86,9 @@ author <- list(
 )
 ```
 
-
 ```{r}
 get_packages_by_author(author, pkg_list = biocpkglist)
 ```
-
-Notes:
-
-- The role of each contributor does not seem to be recorded.
-  There is one column 'Maintainer' (name + email) and one column 'Author' listing names without discriminating roles.
 
 # Reproducibility
 
