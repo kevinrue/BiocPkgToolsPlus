@@ -84,44 +84,22 @@ dim(biocpkglist)
 ## Number of packages by contributor
 
 ```{r}
-pkglist_all$Author
-pkglist_all$Author[[1]]
-any(grepl("Kevin Rue", pkglist_all$Author[[1]]))
-test_one <- function(authors, name) {
-  any(authors == name)
-}
-res <- vapply(X = pkglist_all$Author, FUN = test_one, name = "Kevin Rue", FUN.VALUE = logical(1))
-table(res)
 query_author <- list(
   "Kevin Rue" = c(
     "Kevin Rue",
     "Kevin Rue-Albrecht"
   )
 )
-res <- matrix(
-  data = NA,
-  nrow = nrow(pkglist_all),
-  ncol = length(query_author[[1]]),
-  dimnames = list(
-    pkglist_all$Package,
-    query_author[[1]]
-  )
-)
 test_one_authorset <- function(authors, name) {
   any(authors == name)
 }
 test_one_name <- function(name, pkglist) {
-  vapply(X = pkglist_all$Author, FUN = test_one_authorset, name = name, FUN.VALUE = logical(1))
+  vapply(X = biocpkglist$Author, FUN = test_one_authorset, name = name, FUN.VALUE = logical(1))
 }
-res <- test_one_name("Kevin Rue", pkglist_all)
-table(res)
-res <- vapply(X = query_author[[1]], FUN = test_one_name, FUN.VALUE = logical(nrow(pkglist_all)))
-head(res)
-colSums(res, na.rm = TRUE)
+res <- vapply(X = query_author[[1]], FUN = test_one_name, FUN.VALUE = logical(nrow(biocpkglist)))
 which_pkgs <- which(rowSums(res) > 0)
-res_pkgs <- pkglist_all$Package[which_pkgs]
+res_pkgs <- biocpkglist$Package[which_pkgs]
 res_pkgs
-
 ```
 
 
