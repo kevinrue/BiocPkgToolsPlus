@@ -9,6 +9,15 @@
   return(pkg_list)
 }
 
+.check_or_get_pkg_list2 <- function(pkg_list) {
+  if (is.null(pkg_list)) {
+    pkg_list <- get_all_biocpkglist()
+  } else {
+    stopifnot(.check_valid_pkg_list(pkg_list))
+  }
+  return(pkg_list)
+}
+
 .check_valid_pkg_list <- function(pkg_list) {
   required_columns <- c(
     "Package"
