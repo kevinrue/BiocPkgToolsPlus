@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`count_packages_over_time()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/count_packages_over_time.md)
+  : Track a Set of Packages Over Time
 - [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md)
   : Combined Package Listing from all Bioconductor Repositories
 - [`get_packages_by_author()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_author.md)

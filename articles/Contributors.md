@@ -10,6 +10,7 @@ library("BiocPkgTools")
 #> Loading required package: htmlwidgets
 library("BiocPkgToolsPlus")
 #> Loading required package: biocViews
+library("ggplot2")
 ```
 
 ## Best practices
@@ -45,7 +46,8 @@ author <- list(
 
 ``` r
 
-get_packages_by_author(author, pkg_list = biocpkglist)
+out <- get_packages_by_author(author, pkg_list = biocpkglist)
+out
 #> $Maintainer
 #>  [1] "GOexpress"    "iSEE"         "iSEEde"       "iSEEhex"      "iSEEhub"     
 #>  [6] "iSEEindex"    "iSEEpathways" "iSEEu"        "TVTB"         "velociraptor"
@@ -57,6 +59,42 @@ get_packages_by_author(author, pkg_list = biocpkglist)
 #> [10] "iSEEu"                "SingleCellExperiment" "TVTB"                
 #> [13] "velociraptor"
 ```
+
+One could then follow up by tracking how many of those packages the
+person has maintained over the years.
+
+``` r
+
+out <- count_packages_over_time(out$Maintainer, pkg_list = biocpkglist)
+#> Checking for Bioc Release Update
+out
+#> # A tibble: 42 × 2
+#>    date       count
+#>    <date>     <int>
+#>  1 2006-01-01     0
+#>  2 2006-07-01     0
+#>  3 2007-01-01     0
+#>  4 2007-07-01     0
+#>  5 2008-01-01     0
+#>  6 2008-07-01     0
+#>  7 2009-01-01     0
+#>  8 2009-07-01     0
+#>  9 2010-01-01     0
+#> 10 2010-07-01     0
+#> # ℹ 32 more rows
+```
+
+``` r
+
+ggplot(out, aes(x = date, y = count)) +
+  geom_point() +
+  scale_y_continuous(breaks = function(x) {
+    seq(ceiling(min(x)), floor(max(x)), by = 1)
+  }) +
+  theme_classic()
+```
+
+![](Contributors_files/figure-html/unnamed-chunk-5-1.png)
 
 ## Reproducibility
 
@@ -96,11 +134,11 @@ knit("BiocPkgToolsPlus.Rmd", tangle = TRUE)
 
 Date the vignette was generated.
 
-    #> [1] "2026-03-04 13:51:46 UTC"
+    #> [1] "2026-03-04 17:28:20 UTC"
 
 Wallclock time spent generating the vignette.
 
-    #> Time difference of 6.345 secs
+    #> Time difference of 7.305 secs
 
 `R` session information.
 
@@ -146,13 +184,16 @@ Wallclock time spent generating the vignette.
     #>  dplyr              1.2.0     2026-02-03 [1] RSPM (R 4.5.0)
     #>  DT                 0.34.0    2025-09-02 [1] RSPM (R 4.5.0)
     #>  evaluate           1.0.5     2025-08-27 [2] RSPM (R 4.5.0)
+    #>  farver             2.1.2     2024-05-13 [1] RSPM (R 4.5.0)
     #>  fastmap            1.2.0     2024-05-15 [2] RSPM (R 4.5.0)
     #>  filelock           1.0.3     2023-12-11 [1] RSPM (R 4.5.0)
     #>  fs                 1.6.6     2025-04-12 [2] RSPM (R 4.5.0)
     #>  generics           0.1.4     2025-05-09 [1] RSPM (R 4.5.0)
+    #>  ggplot2          * 4.0.2     2026-02-03 [1] RSPM (R 4.5.0)
     #>  gh                 1.5.0     2025-05-26 [2] RSPM (R 4.5.0)
     #>  glue               1.8.0     2024-09-30 [2] RSPM (R 4.5.0)
     #>  graph              1.88.1    2025-12-08 [1] Bioconductor 3.22 (R 4.5.2)
+    #>  gtable             0.3.6     2024-10-25 [1] RSPM (R 4.5.0)
     #>  hms                1.1.4     2025-10-17 [1] RSPM (R 4.5.0)
     #>  htmltools          0.5.9     2025-12-04 [2] RSPM (R 4.5.0)
     #>  htmlwidgets      * 1.6.4     2023-12-06 [2] RSPM (R 4.5.0)
@@ -176,6 +217,7 @@ Wallclock time spent generating the vignette.
     #>  ragg               1.5.0     2025-09-02 [2] RSPM (R 4.5.0)
     #>  rappdirs           0.3.4     2026-01-17 [2] RSPM (R 4.5.0)
     #>  RBGL               1.86.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
+    #>  RColorBrewer       1.1-3     2022-04-03 [1] RSPM (R 4.5.0)
     #>  Rcpp               1.1.1     2026-01-10 [2] RSPM (R 4.5.0)
     #>  RCurl              1.98-1.17 2025-03-22 [1] RSPM (R 4.5.0)
     #>  readr              2.2.0     2026-02-19 [1] RSPM (R 4.5.0)
@@ -185,7 +227,9 @@ Wallclock time spent generating the vignette.
     #>  RSQLite            2.4.6     2026-02-06 [1] RSPM (R 4.5.0)
     #>  RUnit              0.4.33.1  2025-06-17 [1] RSPM (R 4.5.0)
     #>  rvest              1.0.5     2025-08-29 [1] RSPM (R 4.5.0)
+    #>  S7                 0.2.1     2025-11-14 [1] RSPM (R 4.5.0)
     #>  sass               0.4.10    2025-04-11 [2] RSPM (R 4.5.0)
+    #>  scales             1.4.0     2025-04-24 [1] RSPM (R 4.5.0)
     #>  sessioninfo      * 1.2.3     2025-02-05 [2] RSPM (R 4.5.0)
     #>  stringi            1.8.7     2025-03-27 [2] RSPM (R 4.5.0)
     #>  stringr            1.6.0     2025-11-04 [2] RSPM (R 4.5.0)

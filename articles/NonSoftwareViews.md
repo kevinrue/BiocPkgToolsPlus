@@ -89,11 +89,11 @@ knit("BiocPkgToolsPlus.Rmd", tangle = TRUE)
 
 Date the vignette was generated.
 
-    #> [1] "2026-03-04 13:51:53 UTC"
+    #> [1] "2026-03-04 17:28:27 UTC"
 
 Wallclock time spent generating the vignette.
 
-    #> Time difference of 4.681 secs
+    #> Time difference of 4.695 secs
 
 `R` session information.
 
