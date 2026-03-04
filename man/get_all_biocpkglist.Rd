@@ -4,7 +4,7 @@
 \alias{get_all_biocpkglist}
 \title{Combined Package Listing from all Bioconductor Repositories}
 \usage{
-get_all_biocpkglist()
+get_all_biocpkglist(verbose = TRUE)
 }
 \value{
 A data frame with one row per package and columns for package metadata,

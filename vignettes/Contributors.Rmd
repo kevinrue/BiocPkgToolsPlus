@@ -1,5 +1,5 @@
 ---
-title: "Repositories"
+title: "Contributors"
 author: 
   - name: Kevin Rue-Albrecht
     affiliation:
@@ -15,7 +15,7 @@ output:
 date: "`r doc_date()`"
 package: "`r pkg_ver('BiocPkgToolsPlus')`"
 vignette: >
-  %\VignetteIndexEntry{Repositories}
+  %\VignetteIndexEntry{Contributors}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
 ---
@@ -49,19 +49,6 @@ bib <- c(
 )
 ```
 
-# Foreword
-
-This notebook showcases work in progress.
-
-While other vignettes implicitly focus on 'Software' packages (The default for `biocPkgList()` is to pull from the "BioCsoft" repository), this vignette demonstrates a wrapper function implemented in this package to combine information from all Bioconductor repositories into a single dataframe.
-
-This might be convenient for most users but brings some caveats:
-
-- The various repositories have different sets of columns in their `biocPkgList()` output.
-  Combining those outputs creates many `NA` values.
-- Not all repos are available for all versions, particularly older versions.
-- Downstream functions need to be tweaked to work with the combined dataframe, which might be more difficult to maintain and less efficient than using the individual dataframes for each repository.
-
 # Libraries
 
 Attach packages used in this vignettes.
@@ -69,39 +56,45 @@ Attach packages used in this vignettes.
 ```{r}
 library("BiocPkgTools")
 library("BiocPkgToolsPlus")
-library("stringr")
 ```
 
-# Fetching all repositories
+# Best practices
+
+Fetch the full Bioconductor package listing once for the whole notebook:
 
 ```{r biocpkglist}
 biocpkglist <- get_all_biocpkglist(verbose = FALSE)
 dim(biocpkglist)
 ```
 
-# Querying
+# Use cases
 
-## Number of packages by contributor
+## List of packages by contributor
+
+The same person may be known by different name in different packages.
+The function requires a named list:
+
+- The name defines how they will be known in this analysis.
+- The value is a character vector listing all their aliases to consider.
 
 ```{r}
-query_author <- list(
+author <- list(
   "Kevin Rue" = c(
     "Kevin Rue",
     "Kevin Rue-Albrecht"
   )
 )
-test_one_authorset <- function(authors, name) {
-  any(authors == name)
-}
-test_one_name <- function(name, pkglist) {
-  vapply(X = biocpkglist$Author, FUN = test_one_authorset, name = name, FUN.VALUE = logical(1))
-}
-res <- vapply(X = query_author[[1]], FUN = test_one_name, FUN.VALUE = logical(nrow(biocpkglist)))
-which_pkgs <- which(rowSums(res) > 0)
-res_pkgs <- biocpkglist$Package[which_pkgs]
-res_pkgs
 ```
 
+
+```{r}
+get_packages_by_author(author, pkg_list = biocpkglist)
+```
+
+Notes:
+
+- The role of each contributor does not seem to be recorded.
+  There is one column 'Maintainer' (name + email) and one column 'Author' listing names without discriminating roles.
 
 # Reproducibility
 
