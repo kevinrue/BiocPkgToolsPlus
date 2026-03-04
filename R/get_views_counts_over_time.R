@@ -43,12 +43,16 @@ get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
   which_pkgs <- pkg_list$Package[which_pkgs]
   # subset analysis to packages with query view
   pkg_years <- pkg_years[pkg_years$package %in% which_pkgs, ]
-  # create a vector of dates spaced by six months
-  current_year <- as.integer(format(Sys.Date(), "%Y"))
-  firsts_january <- as.Date(sprintf("%i-01-01", seq(2006, current_year)))
-  firsts_june <- as.Date(sprintf("%i-07-01", seq(2006, current_year)))
-  test_dates <- sort(c(firsts_january, firsts_june))
+  test_dates <- .get_dates_within_releases()
   # get number of packages tagged with view at each time point
+  test_date <- function(date, pkg_years) {
+    entered_bioc_before_date <- pkg_years$first_version_release_date < date
+    still_in_bioc <- is.na(pkg_years$last_version_release_date)
+    left_bioc_after_date <- pkg_years$last_version_release_date > date
+    in_devel <- is.na(pkg_years$first_version_release_date)
+    pkgs_within_date <- entered_bioc_before_date & (still_in_bioc | left_bioc_after_date) & !in_devel
+    return(sum(pkgs_within_date))
+  }
   res_count <- vapply(
     X = test_dates,
     FUN = test_date,
@@ -86,18 +90,6 @@ get_views_counts_over_time <- function(views, pkg_list = NULL, pkg_years = NULL)
   colnames(res_tibble) <- views
   res_tibble <- mutate(res_tibble, date = res_pkgs[[1]][["date"]], .before = 1)
   return(res_tibble)
-}
-
-test_date <- function(date, pkg_years) {
-  # pkg_years <- pkg_years_in_bioc
-  # date <- test_dates[1]
-  # print(date)
-  entered_bioc_before_date <- pkg_years$first_version_release_date < date
-  still_in_bioc <- is.na(pkg_years$last_version_release_date)
-  left_bioc_after_date <- pkg_years$last_version_release_date > date
-  in_devel <- is.na(pkg_years$first_version_release_date)
-  pkgs_within_date <- entered_bioc_before_date & (still_in_bioc | left_bioc_after_date) & !in_devel
-  return(sum(pkgs_within_date))
 }
 
 # The earliest date in getPkgYearsInBioc() is 27-apr-2006

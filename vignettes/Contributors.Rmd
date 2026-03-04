@@ -56,6 +56,7 @@ Attach packages used in this vignettes.
 ```{r}
 library("BiocPkgTools")
 library("BiocPkgToolsPlus")
+library("ggplot2")
 ```
 
 # Best practices
@@ -87,8 +88,26 @@ author <- list(
 ```
 
 ```{r}
-get_packages_by_author(author, pkg_list = biocpkglist)
+out <- get_packages_by_author(author, pkg_list = biocpkglist)
+out
 ```
+
+One could then follow up by tracking how many of those packages the person has maintained over the years.
+
+```{r}
+out <- count_packages_over_time(out$Maintainer, pkg_list = biocpkglist)
+out
+```
+
+```{r}
+ggplot(out, aes(x = date, y = count)) +
+  geom_point() +
+  scale_y_continuous(breaks = function(x) {
+    seq(ceiling(min(x)), floor(max(x)), by = 1)
+  }) +
+  theme_classic()
+```
+
 
 # Reproducibility
 
