@@ -79,29 +79,6 @@ biocpkglist <- get_all_biocpkglist(verbose = FALSE)
 dim(biocpkglist)
 ```
 
-# Querying
-
-## Number of packages by contributor
-
-```{r}
-query_author <- list(
-  "Kevin Rue" = c(
-    "Kevin Rue",
-    "Kevin Rue-Albrecht"
-  )
-)
-test_one_authorset <- function(authors, name) {
-  any(authors == name)
-}
-test_one_name <- function(name, pkglist) {
-  vapply(X = biocpkglist$Author, FUN = test_one_authorset, name = name, FUN.VALUE = logical(1))
-}
-res <- vapply(X = query_author[[1]], FUN = test_one_name, FUN.VALUE = logical(nrow(biocpkglist)))
-which_pkgs <- which(rowSums(res) > 0)
-res_pkgs <- biocpkglist$Package[which_pkgs]
-res_pkgs
-```
-
 
 # Reproducibility
 

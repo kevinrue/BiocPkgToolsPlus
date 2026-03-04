@@ -18,7 +18,7 @@ See Details.}
 \item{view}{A single author (and their aliases).}
 }
 \value{
-Character vector of package names.
+A named list with two elements: \code{Maintainer} and \code{Author}.
 }
 \description{
 \code{get_packages_by_author()} returns package names associated with a single author.
