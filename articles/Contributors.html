@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Non-Software biocViews • BiocPkgToolsPlus</title>
+<title>Contributors • BiocPkgToolsPlus</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Non-Software biocViews">
+<meta property="og:title" content="Contributors">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -60,7 +60,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Non-Software biocViews</h1>
+      <h1>Contributors</h1>
                         <h4 data-toc-skip class="author">Kevin
 Rue-Albrecht</h4>
             <address class="author_afil">
@@ -71,7 +71,7 @@ Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-
             <h4 data-toc-skip class="date">4 March 2026</h4>
       
 
-      <div class="d-none name"><code>NonSoftwareViews.Rmd</code></div>
+      <div class="d-none name"><code>Contributors.Rmd</code></div>
     </div>
 
     
@@ -87,40 +87,48 @@ Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-
 <span><span class="co">#&gt; Loading required package: biocViews</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="annotations">Annotations<a class="anchor" aria-label="anchor" href="#annotations"></a>
+<h2 id="best-practices">Best practices<a class="anchor" aria-label="anchor" href="#best-practices"></a>
 </h2>
+<p>Fetch the full Bioconductor package listing once for the whole
+notebook:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pkg_list_experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">biocPkgList</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"BioCexp"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_view</a></span><span class="op">(</span><span class="st">"MassSpectrometryData"</span>, pkg_list <span class="op">=</span> <span class="va">pkg_list_experiment</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  chr [1:26] "adductData" "AWAggregatorData" "BioPlex" "CardinalWorkflows" ...</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">biocpkglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">biocpkglist</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 3753   49</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="workflows">Workflows<a class="anchor" aria-label="anchor" href="#workflows"></a>
+<h2 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
 </h2>
+<div class="section level3">
+<h3 id="list-of-packages-by-contributor">List of packages by contributor<a class="anchor" aria-label="anchor" href="#list-of-packages-by-contributor"></a>
+</h3>
+<p>The same person may be known by different name in different packages.
+The function requires a named list:</p>
+<ul>
+<li>The name defines how they will be known in this analysis.</li>
+<li>The value is a character vector listing all their aliases to
+consider.</li>
+</ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pkg_list_workflows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">biocPkgList</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"BioCworkflows"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_view</a></span><span class="op">(</span><span class="st">"SingleCellWorkflow"</span>, pkg_list <span class="op">=</span> <span class="va">pkg_list_workflows</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  chr [1:2] "cytofWorkflow" "simpleSingleCell"</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="annotations-1">Annotations<a class="anchor" aria-label="anchor" href="#annotations-1"></a>
-</h2>
+<code class="sourceCode R"><span><span class="va">author</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Kevin Rue"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Kevin Rue"</span>,</span>
+<span>    <span class="st">"Kevin Rue-Albrecht"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pkg_list_annotation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">biocPkgList</a></span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"BioCann"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_view</a></span><span class="op">(</span><span class="st">"Homo_sapiens"</span>, pkg_list <span class="op">=</span> <span class="va">pkg_list_annotation</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  chr [1:254] "AlphaMissense.v2023.hg19" "AlphaMissense.v2023.hg38" ...</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_packages_by_author.html">get_packages_by_author</a></span><span class="op">(</span><span class="va">author</span>, pkg_list <span class="op">=</span> <span class="va">biocpkglist</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $Maintainer</span></span>
+<span><span class="co">#&gt;  [1] "GOexpress"    "iSEE"         "iSEEde"       "iSEEhex"      "iSEEhub"     </span></span>
+<span><span class="co">#&gt;  [6] "iSEEindex"    "iSEEpathways" "iSEEu"        "TVTB"         "velociraptor"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Author</span></span>
+<span><span class="co">#&gt;  [1] "BiocCheck"            "BiocSet"              "GOexpress"           </span></span>
+<span><span class="co">#&gt;  [4] "iSEE"                 "iSEEde"               "iSEEhex"             </span></span>
+<span><span class="co">#&gt;  [7] "iSEEhub"              "iSEEindex"            "iSEEpathways"        </span></span>
+<span><span class="co">#&gt; [10] "iSEEu"                "SingleCellExperiment" "TVTB"                </span></span>
+<span><span class="co">#&gt; [13] "velociraptor"</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
@@ -160,9 +168,9 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2026-03-04 13:51:53 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2026-03-04 13:51:46 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 4.681 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 6.345 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
