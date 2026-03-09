@@ -22,7 +22,10 @@ A tibble of two columns: date and count.
 Given a set of packages, this function counts how many of them were present in Bioconductor over time.
 }
 \examples{
+library(BiocPkgTools)
+
 bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
 bioc_years <- getPkgYearsInBioc()
+
 count_packages_over_time(bioc_pkg_list$Package, bioc_pkg_list, bioc_years)
 }

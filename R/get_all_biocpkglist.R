@@ -2,6 +2,9 @@
 #'
 #' This function is a convenience wrapper that invokes [BiocPkgTools::biocPkgList()] for each of the known Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", and "BioCann") and combines the results into a single data frame.
 #'
+#' @param verbose Logical.
+#' Set to `FALSE` to suppress messages while fetching information from the Bioconductor repositories.
+#'
 #' @returns A data frame with one row per package and columns for package metadata,
 #' including the repository it belongs to (column 'Repository').
 #' @export
