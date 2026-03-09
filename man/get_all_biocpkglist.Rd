@@ -8,7 +8,7 @@ get_all_biocpkglist(verbose = TRUE)
 }
 \value{
 A data frame with one row per package and columns for package metadata,
-including the repository it belongs to.
+including the repository it belongs to (column 'Repository').
 }
 \description{
 This function is a convenience wrapper that invokes \code{\link[BiocPkgTools:biocPkgList]{BiocPkgTools::biocPkgList()}} for each of the known Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", and "BioCann") and combines the results into a single data frame.

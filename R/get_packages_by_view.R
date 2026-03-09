@@ -7,17 +7,11 @@
 #' `get_packages_by_views()` returns packages names at the intersection of multiple biocViews terms.
 #'
 #' @param view A single biocView term.
-#' @param pkg_list Value of a call to `biocPkgList()`.
-#' If `NULL` (default), will call `biocPkgList()` internally.
-#' See Details.
+#' @param pkg_list Value of a call to `get_all_biocpkglist()`.
 #'
-#' @details
-#' Calling `BiocPkgTools::biocPkgList()` and passing the result to
-#' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
-#' if you are making multiple calls.
-#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
-#'
-#' @returns Character vector of package names.
+#' @returns A tibble of two columns giving
+#' the name of the package
+#' and the Bioconductor repository it comes from.
 #' @export
 #' @importFrom BiocPkgTools biocPkgList
 #' @importFrom biocViews getSubTerms
@@ -26,8 +20,7 @@
 #'
 #' @examples
 #' get_packages_by_view("Spatial")
-get_packages_by_view <- function(view, pkg_list = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
+get_packages_by_view <- function(view, pkg_list) {
   data(biocViewsVocab)
   stopifnot(view %in% nodes(biocViewsVocab))
   query_terms <- getSubTerms(dag = biocViewsVocab, term = view)
@@ -39,23 +32,27 @@ get_packages_by_view <- function(view, pkg_list = NULL) {
     FUN.VALUE = logical(1),
     query_terms = query_terms
   )
-  res_pkgs <- pkg_list$Package[which_pkgs]
+  res_pkgs <- pkg_list[which_pkgs, c("Package", "Repository")]
+  # TODO: return a tibble that annotates each package with the repo it comes from
   return(res_pkgs)
 }
 
 #' @param views A character vector of biocView terms.
 #' @export
+#' @importFrom dplyr inner_join join_by
 #' @rdname get_packages_by_view
 #'
 #' @examples
 #' get_packages_by_views(c("Spatial", "SingleCell"))
-get_packages_by_views <- function(views, pkg_list = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
+get_packages_by_views <- function(views, pkg_list) {
   res_pkgs <- lapply(
     X = views,
     FUN = get_packages_by_view,
     pkg_list = pkg_list
   )
-  res_pkgs <- Reduce(f = `intersect`, x = res_pkgs)
+  local_inner <- function(x, y) {
+    inner_join(x, y, by = join_by(Package, Repository))
+  }
+  res_pkgs <- Reduce(f = `local_inner`, x = res_pkgs)
   return(res_pkgs)
 }

@@ -1,16 +1,9 @@
 #' Measure Package Similarity
 #'
 #' @param pkg A single package name.
-#' @param pkg_list Value of a call to `biocPkgList()`.
-#' If `NULL` (default), will call `biocPkgList()` internally.
-#' See Details.
+#' @param pkg_list Value of a call to `get_all_biocpkglist()`.
 #'
 #' @details
-#' Calling `BiocPkgTools::biocPkgList()` and passing the result to
-#' `get_packages_by_view()` or `get_packages_by_views()` is more efficient
-#' if you are making multiple calls.
-#' See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
-#'
 #' Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag either of the two packages being tested when computing each distance,
 #' dividing by the number of biocViews to normalise within the range \[0, 1\],
 #' and finally taking one minus that value to yield a measure of similarity in the range \[0, 1\].
@@ -27,8 +20,7 @@
 #'
 #' @examples
 #' get_similar_packages("edgeR")
-get_similar_packages <- function(pkg, pkg_list = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
+get_similar_packages <- function(pkg, pkg_list) {
   # get the membership matrix
   pkg_view_matrix <- get_view_membership_matrix(pkg_list)
   # identify package type
@@ -59,8 +51,7 @@ get_similar_packages <- function(pkg, pkg_list = NULL) {
   return(res_tibble)
 }
 
-get_package_type <- function(pkg, pkg_list = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
+get_package_type <- function(pkg, pkg_list) {
   data("biocViewsVocab")
   software_types <- c("AnnotationData", "ExperimentData", "Software", "Workflow")
   software_lists <- lapply(software_types, getSubTerms, dag = biocViewsVocab)

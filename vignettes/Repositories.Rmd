@@ -1,5 +1,5 @@
 ---
-title: "Repositories"
+title: "Bioconductor Repositories"
 author: 
   - name: Kevin Rue-Albrecht
     affiliation:
@@ -15,7 +15,7 @@ output:
 date: "`r doc_date()`"
 package: "`r pkg_ver('BiocPkgToolsPlus')`"
 vignette: >
-  %\VignetteIndexEntry{Repositories}
+  %\VignetteIndexEntry{Bioconductor Repositories}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
 ---
@@ -56,16 +56,52 @@ Attach packages used in this vignettes.
 ```{r}
 library("BiocPkgTools")
 library("BiocPkgToolsPlus")
-library("stringr")
+library(dplyr)
 ```
 
-# Fetching all repositories
+# First step
 
-```{r biocpkglist}
-biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-dim(biocpkglist)
+Fetch the combined listing of packages from all Bioconductor repositories.
+
+```{r "bioc_pkg_list"}
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
 ```
 
+Reminder of the Bioconductor repositories fetched from (along with the number of packages found in each of them):
+
+```{r}
+bioc_pkg_list |> 
+  summarise(Packages = n(), .by = Repository)
+```
+
+# Software
+
+```{r}
+get_packages_by_view("BatchEffect", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCsoft")
+```
+
+# Annotations
+
+```{r}
+get_packages_by_view("GenomicSequence", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCann")
+```
+
+# Workflows
+
+```{r}
+get_packages_by_view("SingleCellWorkflow", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCworkflows")
+```
+
+# Experiments
+
+```{r}
+get_packages_by_view("MassSpectrometryData", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCexp")
+```
 
 # Reproducibility
 

@@ -58,17 +58,13 @@ library("BiocPkgTools")
 library("BiocPkgToolsPlus")
 ```
 
-# Avoiding repeated calls to biocPkgList()
+## First step
 
-To save some typing, `get_packages_by_view()` calls `biocPkgList()` internally if `pkg_list` is `NULL` (the default).
-This is convenient for one-off calls, but slow and verbose for multiple calls.
+Fetch the combined listing of packages from all Bioconductor repositories.
 
-If you are calling `get_packages_by_view()` multiple times, it is more efficient to call `biocPkgList()` once and pass the result to `get_packages_by_view()`.
-
-```{r}
-pkg_list <- biocPkgList()
-out1 <- get_packages_by_view("Spatial", pkg_list = pkg_list)
-out2 <- get_packages_by_view("SingleCell", pkg_list = pkg_list)
+```{r "bioc_pkg_list"}
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
 ```
 
 # Wordclouds
@@ -80,8 +76,12 @@ Let's start by getting the count of co-occurrences for each biocViews term with 
 
 ```{r, message=FALSE}
 library("dplyr")
-out <- get_view_cooccurrences(view = "Spatial", pkg_list = pkg_list)
-out |> arrange(desc(value))
+out <- get_view_cooccurrences(
+  view = "Spatial",
+  pkg_list = bioc_pkg_list
+)
+out |> 
+  arrange(desc(value))
 ```
 
 In contrast to the interactive workclouds produced by `BiocStyle::CRANpkg("wordcloud2")`,

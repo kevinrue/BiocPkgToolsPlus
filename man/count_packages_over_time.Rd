@@ -4,17 +4,14 @@
 \alias{count_packages_over_time}
 \title{Track a Set of Packages Over Time}
 \usage{
-count_packages_over_time(packages, pkg_list = NULL, pkg_years = NULL)
+count_packages_over_time(packages, pkg_list, pkg_years)
 }
 \arguments{
 \item{packages}{Character vector of package names.}
 
-\item{pkg_list}{Value of a call to \code{biocPkgList()}.
-If \code{NULL} (default), will call \code{biocPkgList()} internally.
-See Details.}
+\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.}
 
-\item{pkg_years}{Value of a call to \code{getPkgYearsInBioc()}.
-If \code{NULL} (default), will call \code{getPkgYearsInBioc()} internally.}
+\item{pkg_years}{Value of a call to \code{getPkgYearsInBioc()}.}
 }
 \value{
 A tibble of two columns: date and count.
@@ -25,6 +22,7 @@ A tibble of two columns: date and count.
 Given a set of packages, this function counts how many of them were present in Bioconductor over time.
 }
 \examples{
-biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-count_packages_over_time(biocpkglist$Package)
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_years <- getPkgYearsInBioc()
+count_packages_over_time(bioc_pkg_list$Package, bioc_pkg_list, bioc_years)
 }
