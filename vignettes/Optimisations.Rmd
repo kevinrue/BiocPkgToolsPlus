@@ -84,8 +84,8 @@ out |>
   arrange(desc(value))
 ```
 
-In contrast to the interactive workclouds produced by `BiocStyle::CRANpkg("wordcloud2")`,
-the `BiocStyle::CRANpkg("wordcloud")` package can be used to produce static wordclouds,
+In contrast to the interactive workclouds produced by `r BiocStyle::CRANpkg("wordcloud2")`,
+the `r BiocStyle::CRANpkg("wordcloud")` package can be used to produce static wordclouds,
 with a little bit more work:
 
 ```{r, message=FALSE, warning=FALSE, fig.cap="Wordcloud."}
