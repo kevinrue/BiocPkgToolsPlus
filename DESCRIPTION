@@ -32,6 +32,7 @@ Suggests:
     covr,
     knitr,
     ggplot2,
+    RColorBrewer,
     RefManageR,
     rmarkdown,
     sessioninfo,
