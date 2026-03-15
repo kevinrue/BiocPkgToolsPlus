@@ -19,7 +19,12 @@
 #' @importFrom utils data
 #'
 #' @examples
-#' get_packages_by_view("Spatial")
+#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+#' 
+#' get_packages_by_view(
+#'   view = "Spatial",
+#'   pkg_list = biocpkglist
+#' )
 get_packages_by_view <- function(view, pkg_list) {
   data(biocViewsVocab)
   stopifnot(view %in% nodes(biocViewsVocab))
@@ -43,7 +48,10 @@ get_packages_by_view <- function(view, pkg_list) {
 #' @rdname get_packages_by_view
 #'
 #' @examples
-#' get_packages_by_views(c("Spatial", "SingleCell"))
+#' get_packages_by_views(
+#'   views = c("Spatial", "SingleCell"),
+#'   pkg_list = biocpkglist
+#' )
 get_packages_by_views <- function(views, pkg_list) {
   res_pkgs <- lapply(
     X = views,

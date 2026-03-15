@@ -27,5 +27,10 @@ In other words, the denominator in different for each pair of packages,
 to increase the dynamic range of values.
 }
 \examples{
-get_similar_packages("edgeR")
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_similar_packages(
+  pkg = "edgeR",
+  pkg_list = biocpkglist
+)
 }

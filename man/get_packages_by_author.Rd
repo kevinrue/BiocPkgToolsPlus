@@ -24,5 +24,8 @@ author <- list(
     "Kevin Rue-Albrecht"
   )
 )
-get_packages_by_author(author)
+
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_packages_by_author(author, pkg_list = biocpkglist)
 }

@@ -12,12 +12,16 @@
 #' @export
 #'
 #' @examples
-#' library(BiocPkgTools)
+#' suppressPackageStartupMessages(library(BiocPkgTools))
 #'
 #' bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
-#' bioc_years <- getPkgYearsInBioc()
+#' bioc_years <- BiocPkgTools::getPkgYearsInBioc()
 #'
-#' count_packages_over_time(bioc_pkg_list$Package, bioc_pkg_list, bioc_years)
+#' count_packages_over_time(
+#'   packages = bioc_pkg_list$Package,
+#'   pkg_list = bioc_pkg_list,
+#'   pkg_years = bioc_years
+#' )
 count_packages_over_time <- function(packages, pkg_list, pkg_years) {
   # Get a vector of dates to test
   test_dates <- .get_dates_within_releases()

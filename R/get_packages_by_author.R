@@ -21,7 +21,10 @@
 #'     "Kevin Rue-Albrecht"
 #'   )
 #' )
-#' get_packages_by_author(author)
+#' 
+#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+#' 
+#' get_packages_by_author(author, pkg_list = biocpkglist)
 get_packages_by_author <- function(author, pkg_list) {
   if (identical(length(author), 0)) {
     stop("Invalid author argument of length 0")
@@ -30,7 +33,6 @@ get_packages_by_author <- function(author, pkg_list) {
     stop("Only one author can be queried at a time")
   }
   author <- author[[1]]
-  pkg_list <- .check_or_get_pkg_list2(pkg_list)
   pkgs_authored <- .get_authored_packages(author, pkg_list)
   pkgs_maintained <- .get_maintained_packages(author, pkg_list)
   res <- list(

@@ -16,6 +16,8 @@ A logical matrix indicating packages associated with each biocViews term (or one
 Package-by-biocView Membership Matrix
 }
 \examples{
-out <- get_view_membership_matrix()
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+out <- get_view_membership_matrix(pkg_list = biocpkglist)
 out[1:5, 1:5]
 }

@@ -6,7 +6,9 @@
 #' @export
 #'
 #' @examples
-#' out <- get_view_membership_matrix()
+#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+#' 
+#' out <- get_view_membership_matrix(pkg_list = biocpkglist)
 #' out[1:5, 1:5]
 get_view_membership_matrix <- function(pkg_list) {
   data(biocViewsVocab)

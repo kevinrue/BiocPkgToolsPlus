@@ -27,6 +27,14 @@ and the Bioconductor repository it comes from.
 \code{get_packages_by_views()} returns packages names at the intersection of multiple biocViews terms.
 }
 \examples{
-get_packages_by_view("Spatial")
-get_packages_by_views(c("Spatial", "SingleCell"))
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_packages_by_view(
+  view = "Spatial",
+  pkg_list = biocpkglist
+)
+get_packages_by_views(
+  views = c("Spatial", "SingleCell"),
+  pkg_list = biocpkglist
+)
 }

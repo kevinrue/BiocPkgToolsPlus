@@ -19,7 +19,12 @@
 #' @importFrom dplyr arrange desc
 #'
 #' @examples
-#' get_similar_packages("edgeR")
+#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+#' 
+#' get_similar_packages(
+#'   pkg = "edgeR",
+#'   pkg_list = biocpkglist
+#' )
 get_similar_packages <- function(pkg, pkg_list) {
   # get the membership matrix
   pkg_view_matrix <- get_view_membership_matrix(pkg_list)
