@@ -7,7 +7,7 @@
 \usage{
 get_view_counts_over_time(view, pkg_list, pkg_years)
 
-get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
+get_views_counts_over_time(views, pkg_list, pkg_years)
 }
 \arguments{
 \item{view}{A single biocView term.}

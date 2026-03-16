@@ -83,9 +83,7 @@ get_view_counts_over_time <- function(view, pkg_list, pkg_years) {
 #'   pkg_list = bioc_pkg_list,
 #'   pkg_years = bioc_years
 #' )
-get_views_counts_over_time <- function(views, pkg_list = NULL, pkg_years = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
-  pkg_years <- .check_or_get_pkg_years(pkg_years)
+get_views_counts_over_time <- function(views, pkg_list, pkg_years) {
   res_pkgs <- lapply(
     X = views,
     FUN = get_view_counts_over_time,

@@ -91,14 +91,20 @@ citation("BiocPkgToolsPlus")
 library("BiocPkgToolsPlus")
 ```
 
-## First step
+## First steps
 
-All the functions in this package rely on information obtained from `BiocPkgTools::biocPkgList()`. 
-This function can be called directly for each of the Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", "BioCann"), but this package provides a wrapper function to automatically query all the repositories and combine the results into a single data frame.
+All the functions in this package rely on information obtained from `BiocPkgTools::biocPkgList()` and `BiocPkgTools::getPkgYearsInBioc()`. 
+
+The function `BiocPkgTools::biocPkgList()` can be called directly for each of the Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", "BioCann"), but this package provides a wrapper function `get_all_biocpkglist()` to automatically query all the repositories and combine the results into a single data frame.
 
 ```{r "bioc_pkg_list"}
 bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
 bioc_pkg_list
+```
+
+```{r}
+bioc_years <- BiocPkgTools::getPkgYearsInBioc()
+bioc_years
 ```
 
 ## Use cases
@@ -151,7 +157,8 @@ The number of packages annotated by a single biocView term (or one of its childr
 ```{r "get_view_counts_over_time", message=FALSE}
 out <- get_view_counts_over_time(
   view = "Spatial",
-  pkg_list = bioc_pkg_list
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
 )
 out
 ```
@@ -175,7 +182,8 @@ To get the counts for multiple biocViews terms, use `get_views_counts_over_time(
 ```{r "get_views_counts_over_time", message=FALSE}
 out <- get_views_counts_over_time(
   views = c("Spatial", "SingleCell"),
-  pkg_list = bioc_pkg_list
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
 )
 out
 ```
