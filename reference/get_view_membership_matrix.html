@@ -19,9 +19,8 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -46,7 +45,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_view_membership_matrix</span><span class="op">(</span>pkg_list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_view_membership_matrix</span><span class="op">(</span><span class="va">pkg_list</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -54,30 +53,19 @@
 
 
 <dl><dt id="arg-pkg-list">pkg_list<a class="anchor" aria-label="anchor" href="#arg-pkg-list"></a></dt>
-<dd><p>Value of a call to <code>biocPkgList()</code>.
-If <code>NULL</code> (default), will call <code>biocPkgList()</code> internally.
-See Details.</p></dd>
+<dd><p>Value of a call to <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A logical matrix indicating packages associated with each biocViews term (or one of its child terms).</p>
     </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Calling <code><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">BiocPkgTools::biocPkgList()</a></code> and passing the result to
-<code><a href="get_packages_by_view.html">get_packages_by_view()</a></code> or <code><a href="get_packages_by_view.html">get_packages_by_views()</a></code> is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.</p>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">get_view_membership_matrix</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">biocpkglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">get_view_membership_matrix</span><span class="op">(</span>pkg_list <span class="op">=</span> <span class="va">biocpkglist</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           BiocViews Software AnnotationData ExperimentData Workflow</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a4             TRUE     TRUE          FALSE          FALSE    FALSE</span>

@@ -35,9 +35,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+<li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul>
 </li>
@@ -69,7 +68,7 @@ Rue-Albrecht</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-albrecht@imm.ox.ac.uk" class="email">kevin.rue-albrecht@imm.ox.ac.uk</a>
       </address>
                   
-            <h4 data-toc-skip class="date">4 March 2026</h4>
+            <h4 data-toc-skip class="date">16 March 2026</h4>
       
 
       <div class="d-none name"><code>BiocPkgToolsPlus.Rmd</code></div>
@@ -161,39 +160,125 @@ to cite the package and the overall approach. Thank you!</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://kevinrue.github.io/BiocPkgToolsPlus">"BiocPkgToolsPlus"</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
+<h3 id="first-steps">First steps<a class="anchor" aria-label="anchor" href="#first-steps"></a>
+</h3>
+<p>All the functions in this package rely on information obtained from
+<code><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">BiocPkgTools::biocPkgList()</a></code> and
+<code><a href="https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html" class="external-link">BiocPkgTools::getPkgYearsInBioc()</a></code>.</p>
+<p>The function <code><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">BiocPkgTools::biocPkgList()</a></code> can be called
+directly for each of the Bioconductor repositories (“BioCsoft”,
+“BioCexp”, “BioCworkflows”, “BioCann”), but this package provides a
+wrapper function <code><a href="../reference/get_all_biocpkglist.html">get_all_biocpkglist()</a></code> to automatically
+query all the repositories and combine the results into a single data
+frame.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bioc_pkg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">bioc_pkg_list</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,753 × 49</span></span></span>
+<span><span class="co">#&gt;    Package     Version Depends   Suggests  License MD5sum NeedsCompilation Title</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> a4          1.58.0  <span style="color: #949494;">&lt;chr [5]&gt;</span> <span style="color: #949494;">&lt;chr [7]&gt;</span> GPL-3   56d24… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> a4Base      1.58.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   5efa1… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> a4Classif   1.58.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   20d28… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> a4Core      1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   bd94b… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> a4Preproc   1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   2c56d… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> a4Reporting 1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   9d31f… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ABarray     1.78.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL     6ad7c… no               <span style="color: #949494;">"</span>Mic…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> abseqR      1.28.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span> GPL-3 … 9ec04… no               <span style="color: #949494;">"</span>Rep…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ABSSeq      1.64.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span> GPL (&gt;… b12fd… no               <span style="color: #949494;">"</span>ABS…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> acde        1.40.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   c04fa… no               <span style="color: #949494;">"</span>Art…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,743 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more variables: Description &lt;chr&gt;, biocViews &lt;list&gt;, Author &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Maintainer &lt;list&gt;, git_url &lt;chr&gt;, git_branch &lt;chr&gt;, git_last_commit &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   git_last_commit_date &lt;chr&gt;, `Date/Publication` &lt;chr&gt;, source.ver &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   win.binary.ver &lt;chr&gt;, `mac.binary.big-sur-x86_64.ver` &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `mac.binary.big-sur-arm64.ver` &lt;chr&gt;, vignettes &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   vignetteTitles &lt;list&gt;, hasREADME &lt;chr&gt;, hasNEWS &lt;chr&gt;, hasINSTALL &lt;chr&gt;, …</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bioc_years</span> <span class="op">&lt;-</span> <span class="fu">BiocPkgTools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html" class="external-link">getPkgYearsInBioc</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
+<span><span class="va">bioc_years</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6,210 × 8</span></span></span>
+<span><span class="co">#&gt;    package       category        first_version_available first_version_release…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ABAData       data/experiment 3.2                     2015-10-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> ABAEnrichment bioc            3.2                     2015-10-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ABSSeq        bioc            2.14                    2014-04-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ABarray       bioc            1.9                     2006-10-04             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ACE           bioc            3.8                     2018-10-31             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> ACME          bioc            2.0                     2007-04-26             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ADAM          bioc            3.9                     2019-05-03             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> ADAMgui       bioc            3.9                     2019-05-03             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ADAPT         bioc            3.20                    2024-10-30             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ADImpute      bioc            3.12                    2020-10-28             </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6,200 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​first_version_release_date</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: approx_years_in &lt;dbl&gt;, last_version_available &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   last_version_release_date &lt;date&gt;, years_before_rm &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
 </h3>
 <div class="section level4">
 <h4 id="getting-packages-under-a-biocviews-term">Getting packages under a biocViews term<a class="anchor" aria-label="anchor" href="#getting-packages-under-a-biocviews-term"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_view</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  chr [1:79] "alabaster.sfe" "Banksy" "BatchSVG" "betaHMM" "BulkSignalR" ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_view</a></span><span class="op">(</span></span>
+<span>  view <span class="op">=</span> <span class="st">"Spatial"</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 79 × 2</span></span></span>
+<span><span class="co">#&gt;    Package       Repository</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> alabaster.sfe BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Banksy        BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> BatchSVG      BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> betaHMM       BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> BulkSignalR   BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> CARDspa       BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> CatsCradle    BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> clustSIGNAL   BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> concordexR    BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> CTSV          BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 69 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="getting-packages-at-the-intersection-of-multiple-biocviews-terms">Getting packages at the intersection of multiple biocViews
 terms<a class="anchor" aria-label="anchor" href="#getting-packages-at-the-intersection-of-multiple-biocviews-terms"></a>
 </h4>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_views</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span>, <span class="st">"Sequencing"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  chr [1:13] "DESpace" "knowYourCG" "miRspongeR" "mitology" "poem" ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_view.html">get_packages_by_views</a></span><span class="op">(</span></span>
+<span>  views <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span>, <span class="st">"Sequencing"</span><span class="op">)</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 2</span></span></span>
+<span><span class="co">#&gt;    Package               Repository</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DESpace               BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> knowYourCG            BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> miRspongeR            BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> mitology              BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> poem                  BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> retrofit              BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> scDesign3             BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> signifinder           BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> spacexr               BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> spatialHeatmap        BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> SpotClean             BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> stPipe                BioCsoft  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> tidySpatialExperiment BioCsoft</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="getting-biocviews-co-occurrence-counts">Getting biocViews co-occurrence counts<a class="anchor" aria-label="anchor" href="#getting-biocviews-co-occurrence-counts"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span></span>
-<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_cooccurrences.html">get_view_cooccurrences</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_cooccurrences.html">get_view_cooccurrences</a></span><span class="op">(</span></span>
+<span>  view <span class="op">=</span> <span class="st">"Spatial"</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 65 × 2</span></span></span>
 <span><span class="co">#&gt;    package            value</span></span>
@@ -212,11 +297,16 @@ terms<a class="anchor" aria-label="anchor" href="#getting-packages-at-the-inters
 <p>The output can be used to instantly produce a wordcloud with a choice
 of packages, for instance
 <code>BiocStyle::CRANpkg("wordcloud2")</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lchiffon/wordcloud2" class="external-link">"wordcloud2"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/wordcloud2/man/wordcloud2.html" class="external-link">wordcloud2</a></span><span class="op">(</span><span class="va">out</span>, minRotation <span class="op">=</span> <span class="op">-</span><span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, maxRotation <span class="op">=</span> <span class="va">pi</span><span class="op">/</span><span class="fl">2</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
 <div class="wordcloud2 html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"word":["ATACSeq","BatchEffect","Bayesian","BiomedicalInformatics","CellBasedAssays","CellBiology","Classification","Clustering","Coverage","DataImport","DataRepresentation","DecisionTree","DifferentialExpression","DifferentialMethylation","DimensionReduction","DNAMethylation","DNASeq","Epigenetics","ExperimentalDesign","ExperimentHubSoftware","FeatureExtraction","FlowCytometry","FunctionalGenomics","GeneExpression","GeneSetEnrichment","GeneSignaling","GeneTarget","Genetics","GenomeAnnotation","GenomeWideAssociation","GO","GraphAndNetwork","HiddenMarkovModel","ImmunoOncology","KEGG","Metagenomics","MethylationArray","mRNAMicroarray","MultiChannel","MultipleComparison","Network","NetworkEnrichment","NetworkInference","Normalization","OneChannel","PeakDetection","Preprocessing","ProprietaryPlatforms","Proteomics","QualityControl","Reactome","Regression","ReportWriting","RNASeq","SequenceMatching","ShinyApps","SingleCell","Survival","SystemsBiology","ThirdPartyClient","TimeCourse","TissueMicroarray","Transcription","Transcriptomics","TwoChannel"],"freq":[2,1,3,6,7,5,3,14,1,18,8,1,6,1,6,2,1,1,1,2,2,1,1,42,1,1,4,1,2,1,2,2,2,10,2,1,2,1,1,1,2,1,1,3,1,1,6,2,3,7,2,6,1,15,1,1,49,2,1,1,1,1,5,51,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.764705882352941,"backgroundColor":"white","gridSize":0,"minRotation":-1.570796326794897,"maxRotation":1.570796326794897,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script><p>Note that setting size to a value lower than 1 is a workaround
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"word":["ATACSeq","BatchEffect","Bayesian","BiomedicalInformatics","CellBasedAssays","CellBiology","Classification","Clustering","Coverage","DataImport","DataRepresentation","DecisionTree","DifferentialExpression","DifferentialMethylation","DimensionReduction","DNAMethylation","DNASeq","Epigenetics","ExperimentalDesign","ExperimentHubSoftware","FeatureExtraction","FlowCytometry","FunctionalGenomics","GeneExpression","GeneSetEnrichment","GeneSignaling","GeneTarget","Genetics","GenomeAnnotation","GenomeWideAssociation","GO","GraphAndNetwork","HiddenMarkovModel","ImmunoOncology","KEGG","Metagenomics","MethylationArray","mRNAMicroarray","MultiChannel","MultipleComparison","Network","NetworkEnrichment","NetworkInference","Normalization","OneChannel","PeakDetection","Preprocessing","ProprietaryPlatforms","Proteomics","QualityControl","Reactome","Regression","ReportWriting","RNASeq","SequenceMatching","ShinyApps","SingleCell","Survival","SystemsBiology","ThirdPartyClient","TimeCourse","TissueMicroarray","Transcription","Transcriptomics","TwoChannel"],"freq":[2,1,3,6,7,5,3,14,1,18,8,1,6,1,6,2,1,1,1,2,2,1,1,42,1,1,4,1,2,1,2,2,2,10,2,1,2,1,1,1,2,1,1,3,1,1,6,2,3,7,2,6,1,15,1,1,49,2,1,1,1,1,5,51,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.764705882352941,"backgroundColor":"white","gridSize":0,"minRotation":-1.570796326794897,"maxRotation":1.570796326794897,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script><p class="caption">
+Word cloud of co-occurrences with ‘Spatial’.
+</p>
+</div>
+<p>Note that setting size to a value lower than 1 is a workaround
 sometimes needed to display the most frequent words, as per <a href="https://stackoverflow.com/a/41654245/2378122" class="external-link">this thread</a>.</p>
 </div>
 <div class="section level4">
@@ -224,13 +314,12 @@ sometimes needed to display the most frequent words, as per <a href="https://sta
 </h4>
 <p>The number of packages annotated by a single biocView term (or one of
 its children) can be obtained as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_view_counts_over_time</a></span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_view_counts_over_time</a></span><span class="op">(</span></span>
+<span>  view <span class="op">=</span> <span class="st">"Spatial"</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span>,</span>
+<span>  pkg_years <span class="op">=</span> <span class="va">bioc_years</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 42 × 2</span></span></span>
 <span><span class="co">#&gt;    date       count</span></span>
@@ -246,9 +335,8 @@ its children) can be obtained as follows:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01     0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01     0</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 32 more rows</span></span></span></code></pre></div>
-<p>The output can be instantly plotted using
-<code>BiocStyle::CRANpkg("ggplot2")</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>The output can be instantly plotted using <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -256,7 +344,8 @@ its children) can be obtained as follows:</p>
 <span>    title <span class="op">=</span> <span class="st">"Spatial"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Packages"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Time"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="BiocPkgToolsPlus_files/figure-html/get_view_counts_over_time_plot-1.png" class="r-plt" alt="Count of 'Spatial' packages over time." width="700"><p class="caption">
 Count of ‘Spatial’ packages over time.
@@ -264,13 +353,12 @@ Count of ‘Spatial’ packages over time.
 </div>
 <p>To get the counts for multiple biocViews terms, use
 <code><a href="../reference/get_view_counts_over_time.html">get_views_counts_over_time()</a></code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_views_counts_over_time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
-<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_counts_over_time.html">get_views_counts_over_time</a></span><span class="op">(</span></span>
+<span>  views <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span><span class="op">)</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span>,</span>
+<span>  pkg_years <span class="op">=</span> <span class="va">bioc_years</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 42 × 3</span></span></span>
 <span><span class="co">#&gt;    date       Spatial SingleCell</span></span>
@@ -288,7 +376,7 @@ Count of ‘Spatial’ packages over time.
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 32 more rows</span></span></span></code></pre></div>
 <p>With a little bit more data wrangling, the output can also be plotted
 for all the terms at once, for instance:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyr.tidyverse.org" class="external-link">"tidyr"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">|&gt;</span></span>
@@ -299,7 +387,8 @@ for all the terms at once, for instance:</p>
 <span>    y <span class="op">=</span> <span class="st">"Packages"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Time"</span>,</span>
 <span>    colour <span class="op">=</span> <span class="st">"biocView"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="BiocPkgToolsPlus_files/figure-html/get_views_counts_over_time_plot-1.png" class="r-plt" alt="Count of 'Spatial' or 'SingleCell' packages over time." width="700"><p class="caption">
 Count of ‘Spatial’ or ‘SingleCell’ packages over time.
@@ -309,12 +398,10 @@ Count of ‘Spatial’ or ‘SingleCell’ packages over time.
 <div class="section level4">
 <h4 id="getting-a-package-by-biocview-membership-matrix">Getting a package-by-biocView membership matrix<a class="anchor" aria-label="anchor" href="#getting-a-package-by-biocview-membership-matrix"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_membership_matrix.html">get_view_membership_matrix</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_view_membership_matrix.html">get_view_membership_matrix</a></span><span class="op">(</span></span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt;           BiocViews Software AnnotationData ExperimentData Workflow</span></span>
 <span><span class="co">#&gt; a4             TRUE     TRUE          FALSE          FALSE    FALSE</span></span>
@@ -326,14 +413,13 @@ Count of ‘Spatial’ or ‘SingleCell’ packages over time.
 <div class="section level4">
 <h4 id="getting-packages-similar-to-a-query-package">Getting packages similar to a query package<a class="anchor" aria-label="anchor" href="#getting-packages-similar-to-a-query-package"></a>
 </h4>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_similar_packages.html">get_similar_packages</a></span><span class="op">(</span><span class="st">"AUCell"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_similar_packages.html">get_similar_packages</a></span><span class="op">(</span></span>
+<span>  pkg <span class="op">=</span> <span class="st">"AUCell"</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,360 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,752 × 2</span></span></span>
 <span><span class="co">#&gt;    package         similarity</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UCell                0.692</span></span>
@@ -346,7 +432,7 @@ Count of ‘Spatial’ or ‘SingleCell’ packages over time.
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> MAST                 0.6  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> scMerge              0.6  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> CSOA                 0.583</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2,350 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,742 more rows</span></span></span></code></pre></div>
 <p>Here is an example of you can cite your package inside the
 vignette:</p>
 <ul>
@@ -386,7 +472,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.22/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -395,9 +481,9 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2026-03-04 17:28:09 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2026-03-16 08:56:41 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 24.274 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 21.155 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -409,7 +495,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2026-03-04</span></span>
+<span><span class="co">#&gt;  date     2026-03-16</span></span>
 <span><span class="co">#&gt;  pandoc   3.8.2.1 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   1.7.32 @ /usr/local/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -422,7 +508,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  BiocGenerics       0.56.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  BiocManager        1.30.27   <span style="color: #555555;">2025-11-14</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  BiocPkgTools       1.28.3    <span style="color: #555555;">2026-02-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
-<span><span class="co">#&gt;  BiocPkgToolsPlus * 0.99.0    <span style="color: #555555;">2026-03-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocPkgToolsPlus * 0.99.0    <span style="color: #555555;">2026-03-16</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  BiocStyle        * 2.38.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  biocViews        * 1.78.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  bit                4.6.0     <span style="color: #555555;">2025-03-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -444,7 +530,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  farver             2.1.2     <span style="color: #555555;">2024-05-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap            1.2.0     <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  filelock           1.0.3     <span style="color: #555555;">2023-12-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  fs                 1.6.6     <span style="color: #555555;">2025-04-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  fs                 1.6.7     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  generics           0.1.4     <span style="color: #555555;">2025-05-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  ggplot2          * 4.0.2     <span style="color: #555555;">2026-02-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  gh                 1.5.0     <span style="color: #555555;">2025-05-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -472,7 +558,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  plyr               1.8.9     <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  purrr              1.2.1     <span style="color: #555555;">2026-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  R6                 2.6.1     <span style="color: #555555;">2025-02-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  ragg               1.5.0     <span style="color: #555555;">2025-09-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  ragg               1.5.1     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  rappdirs           0.3.4     <span style="color: #555555;">2026-01-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  RBGL               1.86.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  RColorBrewer       1.1-3     <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -491,8 +577,8 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  sessioninfo      * 1.2.3     <span style="color: #555555;">2025-02-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringi            1.8.7     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringr            1.6.0     <span style="color: #555555;">2025-11-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  systemfonts        1.3.1     <span style="color: #555555;">2025-10-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  textshaping        1.0.4     <span style="color: #555555;">2025-10-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  systemfonts        1.3.2     <span style="color: #555555;">2026-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  textshaping        1.0.5     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tibble             3.3.1     <span style="color: #555555;">2026-01-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tidyr            * 1.3.2     <span style="color: #555555;">2025-12-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tidyselect         1.2.1     <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>

@@ -5,7 +5,7 @@ Get biocViews Co-Occurrence Counts
 ## Usage
 
 ``` r
-get_view_cooccurrences(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE)
+get_view_cooccurrences(view, pkg_list, keep_self = FALSE, ratio = FALSE)
 ```
 
 ## Arguments
@@ -16,8 +16,11 @@ get_view_cooccurrences(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE)
 
 - pkg_list:
 
-  Value of a call to `biocPkgList()`. If `NULL` (default), will call
-  `biocPkgList()` internally. See Details.
+  Value of a call to
+  [`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html).
+  If `NULL` (default), will call
+  [`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html)
+  internally. See Details.
 
 - keep_self:
 
@@ -48,21 +51,12 @@ is more efficient if you are making multiple calls. See vignette
 ## Examples
 
 ``` r
-library(dplyr)
-#> 
-#> Attaching package: ‘dplyr’
-#> The following objects are masked from ‘package:stats’:
-#> 
-#>     filter, lag
-#> The following objects are masked from ‘package:base’:
-#> 
-#>     intersect, setdiff, setequal, union
-get_view_cooccurrences("Spatial") |>
+suppressPackageStartupMessages(library(dplyr))
+
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_view_cooccurrences("Spatial", pkg_list = biocpkglist) |>
   arrange(desc(value))
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
 #> # A tibble: 65 × 2
 #>    package            value
 #>    <chr>              <int>

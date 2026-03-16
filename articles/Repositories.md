@@ -1,4 +1,4 @@
-# Repositories
+# Bioconductor Repositories
 
 ## Libraries
 
@@ -10,16 +10,134 @@ library("BiocPkgTools")
 #> Loading required package: htmlwidgets
 library("BiocPkgToolsPlus")
 #> Loading required package: biocViews
-library("stringr")
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
-## Fetching all repositories
+## First step
+
+Fetch the combined listing of packages from all Bioconductor
+repositories.
 
 ``` r
 
-biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-dim(biocpkglist)
-#> [1] 3753   49
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
+#> # A tibble: 3,753 × 49
+#>    Package     Version Depends   Suggests  License MD5sum NeedsCompilation Title
+#>    <chr>       <chr>   <list>    <list>    <chr>   <chr>  <chr>            <chr>
+#>  1 a4          1.58.0  <chr [5]> <chr [7]> GPL-3   56d24… no               "Aut…
+#>  2 a4Base      1.58.0  <chr [2]> <chr [4]> GPL-3   5efa1… no               "Aut…
+#>  3 a4Classif   1.58.0  <chr [2]> <chr [4]> GPL-3   20d28… no               "Aut…
+#>  4 a4Core      1.58.0  <chr [1]> <chr [2]> GPL-3   bd94b… no               "Aut…
+#>  5 a4Preproc   1.58.0  <chr [1]> <chr [4]> GPL-3   2c56d… no               "Aut…
+#>  6 a4Reporting 1.58.0  <chr [1]> <chr [2]> GPL-3   9d31f… no               "Aut…
+#>  7 ABarray     1.78.0  <chr [1]> <chr [2]> GPL     6ad7c… no               "Mic…
+#>  8 abseqR      1.28.0  <chr [1]> <chr [1]> GPL-3 … 9ec04… no               "Rep…
+#>  9 ABSSeq      1.64.0  <chr [2]> <chr [1]> GPL (>… b12fd… no               "ABS…
+#> 10 acde        1.40.0  <chr [2]> <chr [2]> GPL-3   c04fa… no               "Art…
+#> # ℹ 3,743 more rows
+#> # ℹ 41 more variables: Description <chr>, biocViews <list>, Author <list>,
+#> #   Maintainer <list>, git_url <chr>, git_branch <chr>, git_last_commit <chr>,
+#> #   git_last_commit_date <chr>, `Date/Publication` <chr>, source.ver <chr>,
+#> #   win.binary.ver <chr>, `mac.binary.big-sur-x86_64.ver` <chr>,
+#> #   `mac.binary.big-sur-arm64.ver` <chr>, vignettes <list>,
+#> #   vignetteTitles <list>, hasREADME <chr>, hasNEWS <chr>, hasINSTALL <chr>, …
+```
+
+Reminder of the Bioconductor repositories fetched from (along with the
+number of packages found in each of them):
+
+``` r
+
+bioc_pkg_list |> 
+  summarise(Packages = n(), .by = Repository)
+#> # A tibble: 4 × 2
+#>   Repository    Packages
+#>   <fct>            <int>
+#> 1 BioCsoft          2361
+#> 2 BioCexp            435
+#> 3 BioCworkflows       29
+#> 4 BioCann            928
+```
+
+## Software
+
+``` r
+
+get_packages_by_view("BatchEffect", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCsoft")
+#> # A tibble: 74 × 2
+#>    Package    Repository
+#>    <chr>      <fct>     
+#>  1 affylmGUI  BioCsoft  
+#>  2 AMARETTO   BioCsoft  
+#>  3 anglemania BioCsoft  
+#>  4 anota2seq  BioCsoft  
+#>  5 bacon      BioCsoft  
+#>  6 batchCorr  BioCsoft  
+#>  7 batchelor  BioCsoft  
+#>  8 BatchQC    BioCsoft  
+#>  9 BatchSVG   BioCsoft  
+#> 10 BEclear    BioCsoft  
+#> # ℹ 64 more rows
+```
+
+## Annotations
+
+``` r
+
+get_packages_by_view("GenomicSequence", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCann")
+#> # A tibble: 4 × 2
+#>   Package             Repository
+#>   <chr>               <fct>     
+#> 1 CTCF                BioCann   
+#> 2 excluderanges       BioCann   
+#> 3 LymphoSeqDB         BioCann   
+#> 4 TENET.AnnotationHub BioCann
+```
+
+## Workflows
+
+``` r
+
+get_packages_by_view("SingleCellWorkflow", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCworkflows")
+#> # A tibble: 2 × 2
+#>   Package          Repository   
+#>   <chr>            <fct>        
+#> 1 cytofWorkflow    BioCworkflows
+#> 2 simpleSingleCell BioCworkflows
+```
+
+## Experiments
+
+``` r
+
+get_packages_by_view("MassSpectrometryData", pkg_list = bioc_pkg_list) |> 
+  filter(Repository == "BioCexp")
+#> # A tibble: 26 × 2
+#>    Package           Repository
+#>    <chr>             <fct>     
+#>  1 adductData        BioCexp   
+#>  2 AWAggregatorData  BioCexp   
+#>  3 BioPlex           BioCexp   
+#>  4 CardinalWorkflows BioCexp   
+#>  5 CluMSIDdata       BioCexp   
+#>  6 DAPARdata         BioCexp   
+#>  7 faahKO            BioCexp   
+#>  8 gcspikelite       BioCexp   
+#>  9 iModMixData       BioCexp   
+#> 10 metaMSdata        BioCexp   
+#> # ℹ 16 more rows
 ```
 
 ## Reproducibility
@@ -60,11 +178,11 @@ knit("BiocPkgToolsPlus.Rmd", tangle = TRUE)
 
 Date the vignette was generated.
 
-    #> [1] "2026-03-04 17:28:42 UTC"
+    #> [1] "2026-03-16 08:57:10 UTC"
 
 Wallclock time spent generating the vignette.
 
-    #> Time difference of 5.961 secs
+    #> Time difference of 6.463 secs
 
 `R` session information.
 
@@ -78,7 +196,7 @@ Wallclock time spent generating the vignette.
     #>  collate  en_US.UTF-8
     #>  ctype    en_US.UTF-8
     #>  tz       UTC
-    #>  date     2026-03-04
+    #>  date     2026-03-16
     #>  pandoc   3.8.2.1 @ /usr/bin/ (via rmarkdown)
     #>  quarto   1.7.32 @ /usr/local/bin/quarto
     #> 
@@ -91,7 +209,7 @@ Wallclock time spent generating the vignette.
     #>  BiocGenerics       0.56.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  BiocManager        1.30.27   2025-11-14 [2] CRAN (R 4.5.2)
     #>  BiocPkgTools     * 1.28.3    2026-02-05 [1] Bioconductor 3.22 (R 4.5.2)
-    #>  BiocPkgToolsPlus * 0.99.0    2026-03-04 [1] Bioconductor
+    #>  BiocPkgToolsPlus * 0.99.0    2026-03-16 [1] Bioconductor
     #>  BiocStyle        * 2.38.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  biocViews        * 1.78.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  bit                4.6.0     2025-03-06 [1] RSPM (R 4.5.0)
@@ -107,12 +225,12 @@ Wallclock time spent generating the vignette.
     #>  dbplyr             2.5.2     2026-02-13 [1] RSPM (R 4.5.0)
     #>  desc               1.4.3     2023-12-10 [2] RSPM (R 4.5.0)
     #>  digest             0.6.39    2025-11-19 [2] RSPM (R 4.5.0)
-    #>  dplyr              1.2.0     2026-02-03 [1] RSPM (R 4.5.0)
+    #>  dplyr            * 1.2.0     2026-02-03 [1] RSPM (R 4.5.0)
     #>  DT                 0.34.0    2025-09-02 [1] RSPM (R 4.5.0)
     #>  evaluate           1.0.5     2025-08-27 [2] RSPM (R 4.5.0)
     #>  fastmap            1.2.0     2024-05-15 [2] RSPM (R 4.5.0)
     #>  filelock           1.0.3     2023-12-11 [1] RSPM (R 4.5.0)
-    #>  fs                 1.6.6     2025-04-12 [2] RSPM (R 4.5.0)
+    #>  fs                 1.6.7     2026-03-06 [2] RSPM (R 4.5.0)
     #>  generics           0.1.4     2025-05-09 [1] RSPM (R 4.5.0)
     #>  gh                 1.5.0     2025-05-26 [2] RSPM (R 4.5.0)
     #>  glue               1.8.0     2024-09-30 [2] RSPM (R 4.5.0)
@@ -137,7 +255,7 @@ Wallclock time spent generating the vignette.
     #>  plyr               1.8.9     2023-10-02 [1] RSPM (R 4.5.0)
     #>  purrr              1.2.1     2026-01-09 [2] RSPM (R 4.5.0)
     #>  R6                 2.6.1     2025-02-15 [2] RSPM (R 4.5.0)
-    #>  ragg               1.5.0     2025-09-02 [2] RSPM (R 4.5.0)
+    #>  ragg               1.5.1     2026-03-06 [2] RSPM (R 4.5.0)
     #>  rappdirs           0.3.4     2026-01-17 [2] RSPM (R 4.5.0)
     #>  RBGL               1.86.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  Rcpp               1.1.1     2026-01-10 [2] RSPM (R 4.5.0)
@@ -152,14 +270,15 @@ Wallclock time spent generating the vignette.
     #>  sass               0.4.10    2025-04-11 [2] RSPM (R 4.5.0)
     #>  sessioninfo      * 1.2.3     2025-02-05 [2] RSPM (R 4.5.0)
     #>  stringi            1.8.7     2025-03-27 [2] RSPM (R 4.5.0)
-    #>  stringr          * 1.6.0     2025-11-04 [2] RSPM (R 4.5.0)
-    #>  systemfonts        1.3.1     2025-10-01 [2] RSPM (R 4.5.0)
-    #>  textshaping        1.0.4     2025-10-10 [2] RSPM (R 4.5.0)
+    #>  stringr            1.6.0     2025-11-04 [2] RSPM (R 4.5.0)
+    #>  systemfonts        1.3.2     2026-03-05 [2] RSPM (R 4.5.0)
+    #>  textshaping        1.0.5     2026-03-06 [2] RSPM (R 4.5.0)
     #>  tibble             3.3.1     2026-01-11 [2] RSPM (R 4.5.0)
     #>  tidyr              1.3.2     2025-12-19 [1] RSPM (R 4.5.0)
     #>  tidyselect         1.2.1     2024-03-11 [1] RSPM (R 4.5.0)
     #>  timechange         0.4.0     2026-01-29 [1] RSPM (R 4.5.0)
     #>  tzdb               0.5.0     2025-03-15 [1] RSPM (R 4.5.0)
+    #>  utf8               1.2.6     2025-06-08 [2] RSPM (R 4.5.0)
     #>  vctrs              0.7.1     2026-01-23 [2] RSPM (R 4.5.0)
     #>  withr              3.0.2     2024-10-28 [2] RSPM (R 4.5.0)
     #>  xfun               0.56      2026-01-18 [2] RSPM (R 4.5.0)

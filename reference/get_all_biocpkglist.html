@@ -19,9 +19,8 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -50,9 +49,18 @@
     </div>
 
     <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+
+
+<dl><dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>Logical.
+Set to <code>FALSE</code> to suppress messages while fetching information from the Bioconductor repositories.</p></dd>
+
+</dl></div>
+    <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with one row per package and columns for package metadata,
-including the repository it belongs to.</p>
+including the repository it belongs to (column 'Repository').</p>
     </div>
 
     <div class="section level2">

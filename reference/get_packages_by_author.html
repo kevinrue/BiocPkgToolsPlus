@@ -19,9 +19,8 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -46,37 +45,24 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_packages_by_author</span><span class="op">(</span></span>
-<span>  <span class="va">author</span>,</span>
-<span>  role <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"contributor"</span>, <span class="st">"maintainer"</span><span class="op">)</span>,</span>
-<span>  pkg_list <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_packages_by_author</span><span class="op">(</span><span class="va">author</span>, <span class="va">pkg_list</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-pkg-list">pkg_list<a class="anchor" aria-label="anchor" href="#arg-pkg-list"></a></dt>
-<dd><p>Value of a call to <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code>.
-If <code>NULL</code> (default), will call <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code> internally.
-See Details.</p></dd>
-
-
-<dt id="arg-view">view<a class="anchor" aria-label="anchor" href="#arg-view"></a></dt>
+<dl><dt id="arg-author">author<a class="anchor" aria-label="anchor" href="#arg-author"></a></dt>
 <dd><p>A single author (and their aliases).</p></dd>
+
+
+<dt id="arg-pkg-list">pkg_list<a class="anchor" aria-label="anchor" href="#arg-pkg-list"></a></dt>
+<dd><p>Value of a call to <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A named list with two elements: <code>Maintainer</code> and <code>Author</code>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Calling <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code> and passing the result to
-<code>get_packages_by_author()</code> is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.</p>
     </div>
 
     <div class="section level2">
@@ -87,23 +73,10 @@ See vignette 'Optimisations' for a more comprehensive discussion and demonstrati
 <span class="r-in"><span>    <span class="st">"Kevin Rue-Albrecht"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">get_packages_by_author</span><span class="op">(</span><span class="va">author</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">biocpkglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">get_packages_by_author</span><span class="op">(</span><span class="va">author</span>, pkg_list <span class="op">=</span> <span class="va">biocpkglist</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Maintainer</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "GOexpress"    "iSEE"         "iSEEde"       "iSEEhex"      "iSEEhub"     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "iSEEindex"    "iSEEpathways" "iSEEu"        "TVTB"         "velociraptor"</span>

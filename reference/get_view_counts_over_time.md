@@ -5,9 +5,9 @@ biocViews Counts Over Time
 ## Usage
 
 ``` r
-get_view_counts_over_time(view, pkg_list = NULL, pkg_years = NULL)
+get_view_counts_over_time(view, pkg_list, pkg_years)
 
-get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
+get_views_counts_over_time(views, pkg_list, pkg_years)
 ```
 
 ## Arguments
@@ -18,13 +18,19 @@ get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
 
 - pkg_list:
 
-  Value of a call to `biocPkgList()`. If `NULL` (default), will call
-  `biocPkgList()` internally. See Details.
+  Value of a call to
+  [`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html).
+  If `NULL` (default), will call
+  [`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html)
+  internally. See Details.
 
 - pkg_years:
 
-  Value of a call to `getPkgYearsInBioc()`. If `NULL` (default), will
-  call `getPkgYearsInBioc()` internally.
+  Value of a call to
+  [`getPkgYearsInBioc()`](https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html).
+  If `NULL` (default), will call
+  [`getPkgYearsInBioc()`](https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html)
+  internally.
 
 - views:
 
@@ -54,12 +60,17 @@ is more efficient if you are making multiple calls. See vignette
 ## Examples
 
 ``` r
-get_view_counts_over_time("SingleCell")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
+suppressPackageStartupMessages(library(BiocPkgTools))
+
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_years <- BiocPkgTools::getPkgYearsInBioc()
 #> Checking for Bioc Release Update
+
+get_view_counts_over_time(
+  view = "SingleCell",
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 #> # A tibble: 42 × 2
 #>    date       count
 #>    <date>     <int>
@@ -74,12 +85,11 @@ get_view_counts_over_time("SingleCell")
 #>  9 2010-01-01     1
 #> 10 2010-07-01     1
 #> # ℹ 32 more rows
-get_views_counts_over_time(c("Spatial", "SingleCell"))
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-#> Checking for Bioc Release Update
+get_views_counts_over_time(
+  views = c("Spatial", "SingleCell"),
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 #> # A tibble: 42 × 3
 #>    date       Spatial SingleCell
 #>    <date>       <int>      <int>

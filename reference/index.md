@@ -2,8 +2,6 @@
 
 ## All functions
 
-- [`count_packages_over_time()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/count_packages_over_time.md)
-  : Track a Set of Packages Over Time
 - [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md)
   : Combined Package Listing from all Bioconductor Repositories
 - [`get_packages_by_author()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_author.md)
@@ -11,6 +9,8 @@
 - [`get_packages_by_view()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
   [`get_packages_by_views()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
   : Get Packages by biocViews
+- [`get_packages_counts_over_time()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_counts_over_time.md)
+  : Track a Set of Packages Over Time
 - [`get_similar_packages()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_similar_packages.md)
   : Measure Package Similarity
 - [`get_view_cooccurrences()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_view_cooccurrences.md)

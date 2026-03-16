@@ -12,31 +12,35 @@ library("BiocPkgToolsPlus")
 #> Loading required package: biocViews
 ```
 
-## Avoiding repeated calls to biocPkgList()
+### First step
 
-To save some typing,
-[`get_packages_by_view()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
-calls
-[`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html)
-internally if `pkg_list` is `NULL` (the default). This is convenient for
-one-off calls, but slow and verbose for multiple calls.
-
-If you are calling
-[`get_packages_by_view()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
-multiple times, it is more efficient to call
-[`biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html)
-once and pass the result to
-[`get_packages_by_view()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md).
+Fetch the combined listing of packages from all Bioconductor
+repositories.
 
 ``` r
 
-pkg_list <- biocPkgList()
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-out1 <- get_packages_by_view("Spatial", pkg_list = pkg_list)
-out2 <- get_packages_by_view("SingleCell", pkg_list = pkg_list)
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
+#> # A tibble: 3,753 × 49
+#>    Package     Version Depends   Suggests  License MD5sum NeedsCompilation Title
+#>    <chr>       <chr>   <list>    <list>    <chr>   <chr>  <chr>            <chr>
+#>  1 a4          1.58.0  <chr [5]> <chr [7]> GPL-3   56d24… no               "Aut…
+#>  2 a4Base      1.58.0  <chr [2]> <chr [4]> GPL-3   5efa1… no               "Aut…
+#>  3 a4Classif   1.58.0  <chr [2]> <chr [4]> GPL-3   20d28… no               "Aut…
+#>  4 a4Core      1.58.0  <chr [1]> <chr [2]> GPL-3   bd94b… no               "Aut…
+#>  5 a4Preproc   1.58.0  <chr [1]> <chr [4]> GPL-3   2c56d… no               "Aut…
+#>  6 a4Reporting 1.58.0  <chr [1]> <chr [2]> GPL-3   9d31f… no               "Aut…
+#>  7 ABarray     1.78.0  <chr [1]> <chr [2]> GPL     6ad7c… no               "Mic…
+#>  8 abseqR      1.28.0  <chr [1]> <chr [1]> GPL-3 … 9ec04… no               "Rep…
+#>  9 ABSSeq      1.64.0  <chr [2]> <chr [1]> GPL (>… b12fd… no               "ABS…
+#> 10 acde        1.40.0  <chr [2]> <chr [2]> GPL-3   c04fa… no               "Art…
+#> # ℹ 3,743 more rows
+#> # ℹ 41 more variables: Description <chr>, biocViews <list>, Author <list>,
+#> #   Maintainer <list>, git_url <chr>, git_branch <chr>, git_last_commit <chr>,
+#> #   git_last_commit_date <chr>, `Date/Publication` <chr>, source.ver <chr>,
+#> #   win.binary.ver <chr>, `mac.binary.big-sur-x86_64.ver` <chr>,
+#> #   `mac.binary.big-sur-arm64.ver` <chr>, vignettes <list>,
+#> #   vignetteTitles <list>, hasREADME <chr>, hasNEWS <chr>, hasINSTALL <chr>, …
 ```
 
 ## Wordclouds
@@ -50,8 +54,12 @@ term with a query term, obtained as follows:
 ``` r
 
 library("dplyr")
-out <- get_view_cooccurrences(view = "Spatial", pkg_list = pkg_list)
-out |> arrange(desc(value))
+out <- get_view_cooccurrences(
+  view = "Spatial",
+  pkg_list = bioc_pkg_list
+)
+out |> 
+  arrange(desc(value))
 #> # A tibble: 65 × 2
 #>    package            value
 #>    <chr>              <int>
@@ -69,9 +77,9 @@ out |> arrange(desc(value))
 ```
 
 In contrast to the interactive workclouds produced by
-`BiocStyle::CRANpkg("wordcloud2")`, the
-`BiocStyle::CRANpkg("wordcloud")` package can be used to produce static
-wordclouds, with a little bit more work:
+*[wordcloud2](https://CRAN.R-project.org/package=wordcloud2)*, the
+*[wordcloud](https://CRAN.R-project.org/package=wordcloud)* package can
+be used to produce static wordclouds, with a little bit more work:
 
 ``` r
 
@@ -88,7 +96,7 @@ wordcloud(
 )
 ```
 
-![Wordcloud.](Optimisations_files/figure-html/unnamed-chunk-4-1.png)
+![Wordcloud.](Optimisations_files/figure-html/unnamed-chunk-3-1.png)
 
 Wordcloud.
 
@@ -130,11 +138,11 @@ knit("BiocPkgToolsPlus.Rmd", tangle = TRUE)
 
 Date the vignette was generated.
 
-    #> [1] "2026-03-04 17:28:33 UTC"
+    #> [1] "2026-03-16 08:57:00 UTC"
 
 Wallclock time spent generating the vignette.
 
-    #> Time difference of 3.982 secs
+    #> Time difference of 6.34 secs
 
 `R` session information.
 
@@ -148,7 +156,7 @@ Wallclock time spent generating the vignette.
     #>  collate  en_US.UTF-8
     #>  ctype    en_US.UTF-8
     #>  tz       UTC
-    #>  date     2026-03-04
+    #>  date     2026-03-16
     #>  pandoc   3.8.2.1 @ /usr/bin/ (via rmarkdown)
     #>  quarto   1.7.32 @ /usr/local/bin/quarto
     #> 
@@ -161,7 +169,7 @@ Wallclock time spent generating the vignette.
     #>  BiocGenerics       0.56.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  BiocManager        1.30.27   2025-11-14 [2] CRAN (R 4.5.2)
     #>  BiocPkgTools     * 1.28.3    2026-02-05 [1] Bioconductor 3.22 (R 4.5.2)
-    #>  BiocPkgToolsPlus * 0.99.0    2026-03-04 [1] Bioconductor
+    #>  BiocPkgToolsPlus * 0.99.0    2026-03-16 [1] Bioconductor
     #>  BiocStyle        * 2.38.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  biocViews        * 1.78.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  bit                4.6.0     2025-03-06 [1] RSPM (R 4.5.0)
@@ -182,7 +190,7 @@ Wallclock time spent generating the vignette.
     #>  evaluate           1.0.5     2025-08-27 [2] RSPM (R 4.5.0)
     #>  fastmap            1.2.0     2024-05-15 [2] RSPM (R 4.5.0)
     #>  filelock           1.0.3     2023-12-11 [1] RSPM (R 4.5.0)
-    #>  fs                 1.6.6     2025-04-12 [2] RSPM (R 4.5.0)
+    #>  fs                 1.6.7     2026-03-06 [2] RSPM (R 4.5.0)
     #>  generics           0.1.4     2025-05-09 [1] RSPM (R 4.5.0)
     #>  gh                 1.5.0     2025-05-26 [2] RSPM (R 4.5.0)
     #>  glue               1.8.0     2024-09-30 [2] RSPM (R 4.5.0)
@@ -207,7 +215,7 @@ Wallclock time spent generating the vignette.
     #>  plyr               1.8.9     2023-10-02 [1] RSPM (R 4.5.0)
     #>  purrr              1.2.1     2026-01-09 [2] RSPM (R 4.5.0)
     #>  R6                 2.6.1     2025-02-15 [2] RSPM (R 4.5.0)
-    #>  ragg               1.5.0     2025-09-02 [2] RSPM (R 4.5.0)
+    #>  ragg               1.5.1     2026-03-06 [2] RSPM (R 4.5.0)
     #>  rappdirs           0.3.4     2026-01-17 [2] RSPM (R 4.5.0)
     #>  RBGL               1.86.0    2025-10-29 [1] Bioconductor 3.22 (R 4.5.2)
     #>  RColorBrewer     * 1.1-3     2022-04-03 [1] RSPM (R 4.5.0)
@@ -224,8 +232,8 @@ Wallclock time spent generating the vignette.
     #>  sessioninfo      * 1.2.3     2025-02-05 [2] RSPM (R 4.5.0)
     #>  stringi            1.8.7     2025-03-27 [2] RSPM (R 4.5.0)
     #>  stringr            1.6.0     2025-11-04 [2] RSPM (R 4.5.0)
-    #>  systemfonts        1.3.1     2025-10-01 [2] RSPM (R 4.5.0)
-    #>  textshaping        1.0.4     2025-10-10 [2] RSPM (R 4.5.0)
+    #>  systemfonts        1.3.2     2026-03-05 [2] RSPM (R 4.5.0)
+    #>  textshaping        1.0.5     2026-03-06 [2] RSPM (R 4.5.0)
     #>  tibble             3.3.1     2026-01-11 [2] RSPM (R 4.5.0)
     #>  tidyr              1.3.2     2025-12-19 [1] RSPM (R 4.5.0)
     #>  tidyselect         1.2.1     2024-03-11 [1] RSPM (R 4.5.0)

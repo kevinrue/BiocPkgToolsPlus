@@ -21,9 +21,8 @@ get_packages_by_views() returns packages names at the intersection of multiple b
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -49,9 +48,9 @@ get_packages_by_views() returns packages names at the intersection of multiple b
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_packages_by_view</span><span class="op">(</span><span class="va">view</span>, pkg_list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_packages_by_view</span><span class="op">(</span><span class="va">view</span>, <span class="va">pkg_list</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_packages_by_views</span><span class="op">(</span><span class="va">views</span>, pkg_list <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">get_packages_by_views</span><span class="op">(</span><span class="va">views</span>, <span class="va">pkg_list</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,9 +62,7 @@ get_packages_by_views() returns packages names at the intersection of multiple b
 
 
 <dt id="arg-pkg-list">pkg_list<a class="anchor" aria-label="anchor" href="#arg-pkg-list"></a></dt>
-<dd><p>Value of a call to <code>biocPkgList()</code>.
-If <code>NULL</code> (default), will call <code>biocPkgList()</code> internally.
-See Details.</p></dd>
+<dd><p>Value of a call to <code><a href="get_all_biocpkglist.html">get_all_biocpkglist()</a></code>.</p></dd>
 
 
 <dt id="arg-views">views<a class="anchor" aria-label="anchor" href="#arg-views"></a></dt>
@@ -74,85 +71,51 @@ See Details.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Character vector of package names.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Calling <code><a href="https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html" class="external-link">BiocPkgTools::biocPkgList()</a></code> and passing the result to
-<code>get_packages_by_view()</code> or <code>get_packages_by_views()</code> is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.</p>
+    <p>A tibble of two columns giving
+the name of the package
+and the Bioconductor repository it comes from.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_packages_by_view</span><span class="op">(</span><span class="st">"Spatial"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "alabaster.sfe"            "Banksy"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "BatchSVG"                 "betaHMM"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "BulkSignalR"              "CARDspa"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "CatsCradle"               "clustSIGNAL"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "concordexR"               "CTSV"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "cytoviewer"               "DESpace"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "escheR"                   "FuseSOM"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "GeomxTools"               "ggsc"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "ggspavis"                 "HiCPotts"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "hoodscanR"                "HuBMAPR"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "imcRtools"                "jazzPanda"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [23] "knowYourCG"               "lisaClust"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "miRspongeR"               "mistyR"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [27] "mitology"                 "MoleculeExperiment"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "nnSVG"                    "OSTA.data"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "pengls"                   "poem"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [33] "RegionalST"               "retrofit"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [35] "scatterHatch"             "sccomp"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "scDesign3"                "scFeatures"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [39] "scider"                   "SEraster"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [41] "shinyDSP"                 "signifinder"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "simpleSeg"                "smoothclust"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [45] "smoppix"                  "sosta"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [47] "SpaceMarkers"             "SpaceTrooper"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "spacexr"                  "SpaNorm"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [51] "spARI"                    "spaSim"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [53] "SpatialDecon"             "SpatialExperiment"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "SpatialExperimentIO"      "spatialFDA"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [57] "SpatialFeatureExperiment" "spatialHeatmap"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [59] "SpatialOmicsOverlay"      "spatialSimGP"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "SPIAT"                    "spicyR"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [63] "spoon"                    "SpotClean"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [65] "SPOTlight"                "SpotSweeper"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [67] "standR"                   "Statial"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [69] "stJoincount"              "stPipe"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [71] "SVP"                      "tidySpatialExperiment"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [73] "tomoda"                   "tomoseqr"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [75] "tpSVG"                    "VisiumIO"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [77] "visiumStitched"           "Voyager"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [79] "XeniumIO"                </span>
-<span class="r-in"><span><span class="fu">get_packages_by_views</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "Banksy"                "CARDspa"               "CatsCradle"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "clustSIGNAL"           "concordexR"            "cytoviewer"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "DESpace"               "escheR"                "FuseSOM"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "ggsc"                  "ggspavis"              "hoodscanR"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "HuBMAPR"               "imcRtools"             "knowYourCG"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "lisaClust"             "miRspongeR"            "mistyR"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "mitology"              "nnSVG"                 "OSTA.data"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "poem"                  "retrofit"              "scatterHatch"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "sccomp"                "scDesign3"             "scFeatures"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "SEraster"              "signifinder"           "simpleSeg"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "smoothclust"           "smoppix"               "SpaceMarkers"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "SpaceTrooper"          "spacexr"               "SpatialExperiment"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "SpatialExperimentIO"   "spatialHeatmap"        "SPIAT"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "spicyR"                "spoon"                 "SpotClean"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "SPOTlight"             "Statial"               "stPipe"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "SVP"                   "tidySpatialExperiment" "VisiumIO"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "XeniumIO"             </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">biocpkglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">get_packages_by_view</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  view <span class="op">=</span> <span class="st">"Spatial"</span>,</span></span>
+<span class="r-in"><span>  pkg_list <span class="op">=</span> <span class="va">biocpkglist</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 79 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Package       Repository</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> alabaster.sfe BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Banksy        BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> BatchSVG      BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> betaHMM       BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> BulkSignalR   BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> CARDspa       BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> CatsCradle    BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> clustSIGNAL   BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> concordexR    BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> CTSV          BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 69 more rows</span></span>
+<span class="r-in"><span><span class="fu">get_packages_by_views</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  views <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spatial"</span>, <span class="st">"SingleCell"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  pkg_list <span class="op">=</span> <span class="va">biocpkglist</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 49 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Package     Repository</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Banksy      BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> CARDspa     BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> CatsCradle  BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> clustSIGNAL BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> concordexR  BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> cytoviewer  BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> DESpace     BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> escheR      BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FuseSOM     BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ggsc        BioCsoft  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 39 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

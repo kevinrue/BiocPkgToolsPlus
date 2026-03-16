@@ -6,7 +6,7 @@ present in Bioconductor over time.
 ## Usage
 
 ``` r
-count_packages_over_time(packages, pkg_list = NULL, pkg_years = NULL)
+get_packages_counts_over_time(packages, pkg_list, pkg_years)
 ```
 
 ## Arguments
@@ -17,13 +17,13 @@ count_packages_over_time(packages, pkg_list = NULL, pkg_years = NULL)
 
 - pkg_list:
 
-  Value of a call to `biocPkgList()`. If `NULL` (default), will call
-  `biocPkgList()` internally. See Details.
+  Value of a call to
+  [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md).
 
 - pkg_years:
 
-  Value of a call to `getPkgYearsInBioc()`. If `NULL` (default), will
-  call `getPkgYearsInBioc()` internally.
+  Value of a call to
+  [`getPkgYearsInBioc()`](https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html).
 
 ## Value
 
@@ -34,13 +34,17 @@ number of packages in Bioconductor on that date.
 ## Examples
 
 ``` r
-biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-count_packages_over_time(biocpkglist$Package)
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
+suppressPackageStartupMessages(library(BiocPkgTools))
+
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_years <- BiocPkgTools::getPkgYearsInBioc()
 #> Checking for Bioc Release Update
+
+get_packages_counts_over_time(
+  packages = bioc_pkg_list$Package,
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 #> # A tibble: 42 × 2
 #>    date       count
 #>    <date>     <int>

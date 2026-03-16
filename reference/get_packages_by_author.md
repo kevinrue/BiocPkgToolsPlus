@@ -6,38 +6,23 @@ single author.
 ## Usage
 
 ``` r
-get_packages_by_author(
-  author,
-  role = c("contributor", "maintainer"),
-  pkg_list = NULL
-)
+get_packages_by_author(author, pkg_list)
 ```
 
 ## Arguments
+
+- author:
+
+  A single author (and their aliases).
 
 - pkg_list:
 
   Value of a call to
   [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md).
-  If `NULL` (default), will call
-  [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md)
-  internally. See Details.
-
-- view:
-
-  A single author (and their aliases).
 
 ## Value
 
 A named list with two elements: `Maintainer` and `Author`.
-
-## Details
-
-Calling
-[`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md)
-and passing the result to `get_packages_by_author()` is more efficient
-if you are making multiple calls. See vignette 'Optimisations' for a
-more comprehensive discussion and demonstration.
 
 ## Examples
 
@@ -48,23 +33,10 @@ author <- list(
     "Kevin Rue-Albrecht"
   )
 )
-get_packages_by_author(author)
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
+
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_packages_by_author(author, pkg_list = biocpkglist)
 #> $Maintainer
 #>  [1] "GOexpress"    "iSEE"         "iSEEde"       "iSEEhex"      "iSEEhub"     
 #>  [6] "iSEEindex"    "iSEEpathways" "iSEEu"        "TVTB"         "velociraptor"

@@ -5,7 +5,7 @@ Measure Package Similarity
 ## Usage
 
 ``` r
-get_similar_packages(pkg, pkg_list = NULL)
+get_similar_packages(pkg, pkg_list)
 ```
 
 ## Arguments
@@ -16,8 +16,8 @@ get_similar_packages(pkg, pkg_list = NULL)
 
 - pkg_list:
 
-  Value of a call to `biocPkgList()`. If `NULL` (default), will call
-  `biocPkgList()` internally. See Details.
+  Value of a call to
+  [`get_all_biocpkglist()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_all_biocpkglist.md).
 
 ## Value
 
@@ -26,15 +26,6 @@ name of every other package. `similarity` is a measure of similarity
 (see Details).
 
 ## Details
-
-Calling
-[`BiocPkgTools::biocPkgList()`](https://rdrr.io/pkg/BiocPkgTools/man/biocPkgList.html)
-and passing the result to
-[`get_packages_by_view()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
-or
-[`get_packages_by_views()`](https://kevinrue.github.io/BiocPkgToolsPlus/reference/get_packages_by_view.md)
-is more efficient if you are making multiple calls. See vignette
-'Optimisations' for a more comprehensive discussion and demonstration.
 
 Currently, similarity is quantified by taking the Hamming distance over
 the set of biocViews used to tag either of the two packages being tested
@@ -47,12 +38,13 @@ increase the dynamic range of values.
 ## Examples
 
 ``` r
-get_similar_packages("edgeR")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://p3m.dev/cran/__linux__/noble/latest
-#> # A tibble: 2,360 × 2
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_similar_packages(
+  pkg = "edgeR",
+  pkg_list = biocpkglist
+)
+#> # A tibble: 3,752 × 2
 #>    package           similarity
 #>    <chr>                  <dbl>
 #>  1 metaseqR2              0.674
@@ -65,5 +57,5 @@ get_similar_packages("edgeR")
 #>  8 zenith                 0.488
 #>  9 GenomicOZone           0.478
 #> 10 BPRMeth                0.476
-#> # ℹ 2,350 more rows
+#> # ℹ 3,742 more rows
 ```

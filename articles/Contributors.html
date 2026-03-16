@@ -35,9 +35,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/NonSoftwareViews.html">Non-Software biocViews</a></li>
-    <li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
-    <li><a class="dropdown-item" href="../articles/Repositories.html">Repositories</a></li>
+<li><a class="dropdown-item" href="../articles/Optimisations.html">Optimisations</a></li>
+    <li><a class="dropdown-item" href="../articles/Repositories.html">Bioconductor Repositories</a></li>
     <li><a class="dropdown-item" href="../articles/Contributors.html">Contributors</a></li>
   </ul>
 </li>
@@ -68,7 +67,7 @@ Rue-Albrecht</h4>
 Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-albrecht@imm.ox.ac.uk" class="email">kevin.rue-albrecht@imm.ox.ac.uk</a>
       </address>
                   
-            <h4 data-toc-skip class="date">4 March 2026</h4>
+            <h4 data-toc-skip class="date">16 March 2026</h4>
       
 
       <div class="d-none name"><code>Contributors.Rmd</code></div>
@@ -88,14 +87,54 @@ Oxford<br><a class="author_email" href="mailto:#"></a><a href="mailto:kevin.rue-
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="best-practices">Best practices<a class="anchor" aria-label="anchor" href="#best-practices"></a>
+<h2 id="first-step">First step<a class="anchor" aria-label="anchor" href="#first-step"></a>
 </h2>
-<p>Fetch the full Bioconductor package listing once for the whole
-notebook:</p>
+<p>Fetch the combined listing of packages from all Bioconductor
+repositories.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">biocpkglist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">biocpkglist</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3753   49</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bioc_pkg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_all_biocpkglist.html">get_all_biocpkglist</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">bioc_pkg_list</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,753 × 49</span></span></span>
+<span><span class="co">#&gt;    Package     Version Depends   Suggests  License MD5sum NeedsCompilation Title</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> a4          1.58.0  <span style="color: #949494;">&lt;chr [5]&gt;</span> <span style="color: #949494;">&lt;chr [7]&gt;</span> GPL-3   56d24… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> a4Base      1.58.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   5efa1… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> a4Classif   1.58.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   20d28… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> a4Core      1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   bd94b… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> a4Preproc   1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [4]&gt;</span> GPL-3   2c56d… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> a4Reporting 1.58.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   9d31f… no               <span style="color: #949494;">"</span>Aut…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ABarray     1.78.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL     6ad7c… no               <span style="color: #949494;">"</span>Mic…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> abseqR      1.28.0  <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span> GPL-3 … 9ec04… no               <span style="color: #949494;">"</span>Rep…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ABSSeq      1.64.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span> GPL (&gt;… b12fd… no               <span style="color: #949494;">"</span>ABS…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> acde        1.40.0  <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> GPL-3   c04fa… no               <span style="color: #949494;">"</span>Art…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3,743 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more variables: Description &lt;chr&gt;, biocViews &lt;list&gt;, Author &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Maintainer &lt;list&gt;, git_url &lt;chr&gt;, git_branch &lt;chr&gt;, git_last_commit &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   git_last_commit_date &lt;chr&gt;, `Date/Publication` &lt;chr&gt;, source.ver &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   win.binary.ver &lt;chr&gt;, `mac.binary.big-sur-x86_64.ver` &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `mac.binary.big-sur-arm64.ver` &lt;chr&gt;, vignettes &lt;list&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   vignetteTitles &lt;list&gt;, hasREADME &lt;chr&gt;, hasNEWS &lt;chr&gt;, hasINSTALL &lt;chr&gt;, …</span></span></span></code></pre></div>
+<p>Fetch historical information about each package.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bioc_years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocPkgTools/man/getPkgYearsInBioc.html" class="external-link">getPkgYearsInBioc</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">bioc_years</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6,210 × 8</span></span></span>
+<span><span class="co">#&gt;    package       category        first_version_available first_version_release…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ABAData       data/experiment 3.2                     2015-10-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> ABAEnrichment bioc            3.2                     2015-10-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ABSSeq        bioc            2.14                    2014-04-14             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ABarray       bioc            1.9                     2006-10-04             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ACE           bioc            3.8                     2018-10-31             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> ACME          bioc            2.0                     2007-04-26             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ADAM          bioc            3.9                     2019-05-03             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> ADAMgui       bioc            3.9                     2019-05-03             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> ADAPT         bioc            3.20                    2024-10-30             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ADImpute      bioc            3.12                    2020-10-28             </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6,200 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​first_version_release_date</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: approx_years_in &lt;dbl&gt;, last_version_available &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   last_version_release_date &lt;date&gt;, years_before_rm &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
@@ -110,15 +149,18 @@ The function requires a named list:</p>
 <li>The value is a character vector listing all their aliases to
 consider.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">author</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Kevin Rue"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Kevin Rue"</span>,</span>
 <span>    <span class="st">"Kevin Rue-Albrecht"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_author.html">get_packages_by_author</a></span><span class="op">(</span><span class="va">author</span>, pkg_list <span class="op">=</span> <span class="va">biocpkglist</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_by_author.html">get_packages_by_author</a></span><span class="op">(</span></span>
+<span>  author <span class="op">=</span> <span class="va">author</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">out</span></span>
 <span><span class="co">#&gt; $Maintainer</span></span>
 <span><span class="co">#&gt;  [1] "GOexpress"    "iSEE"         "iSEEde"       "iSEEhex"      "iSEEhub"     </span></span>
@@ -132,10 +174,13 @@ consider.</li>
 <span><span class="co">#&gt; [13] "velociraptor"</span></span></code></pre></div>
 <p>One could then follow up by tracking how many of those packages the
 person has maintained over the years.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/count_packages_over_time.html">count_packages_over_time</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">Maintainer</span>, pkg_list <span class="op">=</span> <span class="va">biocpkglist</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Checking for Bioc Release Update</span></span>
-<span><span class="va">out</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_packages_counts_over_time.html">get_packages_counts_over_time</a></span><span class="op">(</span></span>
+<span>  packages <span class="op">=</span> <span class="va">out</span><span class="op">$</span><span class="va">Maintainer</span>,</span>
+<span>  pkg_list <span class="op">=</span> <span class="va">bioc_pkg_list</span>,</span>
+<span>  pkg_years <span class="op">=</span> <span class="va">bioc_years</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">out2</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 42 × 2</span></span></span>
 <span><span class="co">#&gt;    date       count</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -150,14 +195,16 @@ person has maintained over the years.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2010-01-01     0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2010-07-01     0</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 32 more rows</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">out2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span>  <span class="op">}</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Contributors_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="Contributors_files/figure-html/plot_get_packages_counts_over_time-1.png" class="r-plt" alt="Number of packages maintained by 'Kevin Rue' over time." width="700"><p class="caption">
+Number of packages maintained by ‘Kevin Rue’ over time.
+</p>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -189,7 +236,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.22/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -198,9 +245,9 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"BiocPkgToolsPlus.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2026-03-04 17:28:20 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2026-03-16 08:56:52 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 7.305 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 7.555 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -212,7 +259,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2026-03-04</span></span>
+<span><span class="co">#&gt;  date     2026-03-16</span></span>
 <span><span class="co">#&gt;  pandoc   3.8.2.1 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   1.7.32 @ /usr/local/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -225,7 +272,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  BiocGenerics       0.56.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  BiocManager        1.30.27   <span style="color: #555555;">2025-11-14</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  BiocPkgTools     * 1.28.3    <span style="color: #555555;">2026-02-05</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
-<span><span class="co">#&gt;  BiocPkgToolsPlus * 0.99.0    <span style="color: #555555;">2026-03-04</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocPkgToolsPlus * 0.99.0    <span style="color: #555555;">2026-03-16</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  BiocStyle        * 2.38.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  biocViews        * 1.78.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  bit                4.6.0     <span style="color: #555555;">2025-03-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -247,7 +294,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  farver             2.1.2     <span style="color: #555555;">2024-05-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  fastmap            1.2.0     <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  filelock           1.0.3     <span style="color: #555555;">2023-12-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  fs                 1.6.6     <span style="color: #555555;">2025-04-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  fs                 1.6.7     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  generics           0.1.4     <span style="color: #555555;">2025-05-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  ggplot2          * 4.0.2     <span style="color: #555555;">2026-02-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  gh                 1.5.0     <span style="color: #555555;">2025-05-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -263,6 +310,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  jquerylib          0.1.4     <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  jsonlite           2.0.0     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  knitr              1.51      <span style="color: #555555;">2025-12-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  labeling           0.4.3     <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  lifecycle          1.0.5     <span style="color: #555555;">2026-01-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  lubridate          1.9.5     <span style="color: #555555;">2026-02-04</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  magrittr           2.0.4     <span style="color: #555555;">2025-09-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -274,7 +322,7 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  plyr               1.8.9     <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  purrr              1.2.1     <span style="color: #555555;">2026-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  R6                 2.6.1     <span style="color: #555555;">2025-02-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  ragg               1.5.0     <span style="color: #555555;">2025-09-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  ragg               1.5.1     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  rappdirs           0.3.4     <span style="color: #555555;">2026-01-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  RBGL               1.86.0    <span style="color: #555555;">2025-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.22 (R 4.5.2)</span></span></span>
 <span><span class="co">#&gt;  RColorBrewer       1.1-3     <span style="color: #555555;">2022-04-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
@@ -293,13 +341,14 @@ Cheng, Chang, and Iannone, 2025)</li>
 <span><span class="co">#&gt;  sessioninfo      * 1.2.3     <span style="color: #555555;">2025-02-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringi            1.8.7     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  stringr            1.6.0     <span style="color: #555555;">2025-11-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  systemfonts        1.3.1     <span style="color: #555555;">2025-10-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
-<span><span class="co">#&gt;  textshaping        1.0.4     <span style="color: #555555;">2025-10-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  systemfonts        1.3.2     <span style="color: #555555;">2026-03-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  textshaping        1.0.5     <span style="color: #555555;">2026-03-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tibble             3.3.1     <span style="color: #555555;">2026-01-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tidyr              1.3.2     <span style="color: #555555;">2025-12-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tidyselect         1.2.1     <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  timechange         0.4.0     <span style="color: #555555;">2026-01-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  tzdb               0.5.0     <span style="color: #555555;">2025-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
+<span><span class="co">#&gt;  utf8               1.2.6     <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  vctrs              0.7.1     <span style="color: #555555;">2026-01-23</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  withr              3.0.2     <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>
 <span><span class="co">#&gt;  xfun               0.56      <span style="color: #555555;">2026-01-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.5.0)</span></span></span>

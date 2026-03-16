@@ -12,10 +12,17 @@ data frame.
 get_all_biocpkglist(verbose = TRUE)
 ```
 
+## Arguments
+
+- verbose:
+
+  Logical. Set to `FALSE` to suppress messages while fetching
+  information from the Bioconductor repositories.
+
 ## Value
 
 A data frame with one row per package and columns for package metadata,
-including the repository it belongs to.
+including the repository it belongs to (column 'Repository').
 
 ## Examples
 
