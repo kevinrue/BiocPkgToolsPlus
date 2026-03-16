@@ -5,9 +5,9 @@
 \alias{get_views_counts_over_time}
 \title{biocViews Counts Over Time}
 \usage{
-get_view_counts_over_time(view, pkg_list = NULL, pkg_years = NULL)
+get_view_counts_over_time(view, pkg_list, pkg_years)
 
-get_views_counts_over_time(views, pkg_list = NULL, pkg_years = NULL)
+get_views_counts_over_time(views, pkg_list, pkg_years)
 }
 \arguments{
 \item{view}{A single biocView term.}
@@ -39,6 +39,19 @@ if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
-get_view_counts_over_time("SingleCell")
-get_views_counts_over_time(c("Spatial", "SingleCell"))
+suppressPackageStartupMessages(library(BiocPkgTools))
+
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_years <- BiocPkgTools::getPkgYearsInBioc()
+
+get_view_counts_over_time(
+  view = "SingleCell",
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
+get_views_counts_over_time(
+  views = c("Spatial", "SingleCell"),
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 }

@@ -3,11 +3,8 @@
 #' Given a set of packages, this function counts how many of them were present in Bioconductor over time.
 #'
 #' @param packages Character vector of package names.
-#' @param pkg_list Value of a call to `biocPkgList()`.
-#' If `NULL` (default), will call `biocPkgList()` internally.
-#' See Details.
+#' @param pkg_list Value of a call to `get_all_biocpkglist()`.
 #' @param pkg_years Value of a call to `getPkgYearsInBioc()`.
-#' If `NULL` (default), will call `getPkgYearsInBioc()` internally.
 #'
 #' @returns A tibble of two columns: date and count.
 #' `date` is a sequence of dates spaced by six months from 2006 to the current year.
@@ -15,12 +12,17 @@
 #' @export
 #'
 #' @examples
-#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-#' count_packages_over_time(biocpkglist$Package)
-count_packages_over_time <- function(packages, pkg_list = NULL, pkg_years = NULL) {
-  # check or get optional inputs
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
-  pkg_years <- .check_or_get_pkg_years(pkg_years)
+#' suppressPackageStartupMessages(library(BiocPkgTools))
+#'
+#' bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+#' bioc_years <- BiocPkgTools::getPkgYearsInBioc()
+#'
+#' get_packages_counts_over_time(
+#'   packages = bioc_pkg_list$Package,
+#'   pkg_list = bioc_pkg_list,
+#'   pkg_years = bioc_years
+#' )
+get_packages_counts_over_time <- function(packages, pkg_list, pkg_years) {
   # Get a vector of dates to test
   test_dates <- .get_dates_within_releases()
   # subset information to packages of interest

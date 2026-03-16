@@ -5,7 +5,6 @@ articles:
 - title: Articles
   navbar: ~
   contents:
-  - NonSoftwareViews
   - Optimisations
   - Repositories
   - Contributors

@@ -91,34 +91,59 @@ citation("BiocPkgToolsPlus")
 library("BiocPkgToolsPlus")
 ```
 
+## First steps
+
+All the functions in this package rely on information obtained from `BiocPkgTools::biocPkgList()` and `BiocPkgTools::getPkgYearsInBioc()`. 
+
+The function `BiocPkgTools::biocPkgList()` can be called directly for each of the Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", "BioCann"), but this package provides a wrapper function `get_all_biocpkglist()` to automatically query all the repositories and combine the results into a single data frame.
+
+```{r "bioc_pkg_list"}
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
+```
+
+```{r}
+bioc_years <- BiocPkgTools::getPkgYearsInBioc()
+bioc_years
+```
+
 ## Use cases
 
 ### Getting packages under a biocViews term
 
 ```{r "get_packages_by_view"}
-out <- get_packages_by_view("Spatial")
-str(out)
+out <- get_packages_by_view(
+  view = "Spatial",
+  pkg_list = bioc_pkg_list
+)
+out
 ```
 
 ### Getting packages at the intersection of multiple biocViews terms
 
 ```{r "get_packages_by_views"}
-out <- get_packages_by_views(c("Spatial", "SingleCell", "Sequencing"))
-str(out)
+out <- get_packages_by_views(
+  views = c("Spatial", "SingleCell", "Sequencing"),
+  pkg_list = bioc_pkg_list
+)
+out
 ```
 
 ### Getting biocViews co-occurrence counts
 
 ```{r "get_view_cooccurrences", message=FALSE}
 library("dplyr")
-out <- get_view_cooccurrences("Spatial")
+out <- get_view_cooccurrences(
+  view = "Spatial",
+  pkg_list = bioc_pkg_list
+)
 out |> arrange(desc(value))
 ```
 
 The output can be used to instantly produce a wordcloud with a choice of packages,
 for instance `BiocStyle::CRANpkg("wordcloud2")`:
 
-```{r "wordcloud2"}
+```{r "wordcloud2", fig.cap="Word cloud of co-occurrences with 'Spatial'."}
 library("wordcloud2")
 wordcloud2(out, minRotation = -pi/2, maxRotation = pi/2, size = 0.5)
 ```
@@ -129,12 +154,16 @@ Note that setting size to a value lower than 1 is a workaround sometimes needed 
 
 The number of packages annotated by a single biocView term (or one of its children) can be obtained as follows:
 
-```{r "get_view_counts_over_time"}
-out <- get_view_counts_over_time("Spatial")
+```{r "get_view_counts_over_time", message=FALSE}
+out <- get_view_counts_over_time(
+  view = "Spatial",
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 out
 ```
 
-The output can be instantly plotted using `BiocStyle::CRANpkg("ggplot2")`:
+The output can be instantly plotted using `r BiocStyle::CRANpkg("ggplot2")`:
 
 ```{r "get_view_counts_over_time_plot", fig.cap="Count of 'Spatial' packages over time.", message=FALSE}
 library("ggplot2")
@@ -144,13 +173,18 @@ ggplot(out, aes(date, count)) +
     title = "Spatial",
     y = "Packages",
     x = "Time"
-  )
+  ) +
+  theme_bw()
 ```
 
 To get the counts for multiple biocViews terms, use `get_views_counts_over_time()`:
 
-```{r "get_views_counts_over_time"}
-out <- get_views_counts_over_time(c("Spatial", "SingleCell"))
+```{r "get_views_counts_over_time", message=FALSE}
+out <- get_views_counts_over_time(
+  views = c("Spatial", "SingleCell"),
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
 out
 ```
 
@@ -168,20 +202,26 @@ out|>
     y = "Packages",
     x = "Time",
     colour = "biocView"
-  )
+  ) +
+  theme_bw()
 ```
 
 ### Getting a package-by-biocView membership matrix
 
 ```{r "get_view_membership_matrix"}
-out <- get_view_membership_matrix()
+out <- get_view_membership_matrix(
+  pkg_list = bioc_pkg_list
+)
 out[1:5, 1:5]
 ```
 
 ### Getting packages similar to a query package
 
 ```{r}
-out <- get_similar_packages("AUCell")
+out <- get_similar_packages(
+  pkg = "AUCell",
+  pkg_list = bioc_pkg_list
+)
 out
 ```
 

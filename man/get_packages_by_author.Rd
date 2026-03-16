@@ -4,30 +4,18 @@
 \alias{get_packages_by_author}
 \title{Get Packages by Author}
 \usage{
-get_packages_by_author(
-  author,
-  role = c("contributor", "maintainer"),
-  pkg_list = NULL
-)
+get_packages_by_author(author, pkg_list)
 }
 \arguments{
-\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.
-If \code{NULL} (default), will call \code{get_all_biocpkglist()} internally.
-See Details.}
+\item{author}{A single author (and their aliases).}
 
-\item{view}{A single author (and their aliases).}
+\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.}
 }
 \value{
 A named list with two elements: \code{Maintainer} and \code{Author}.
 }
 \description{
 \code{get_packages_by_author()} returns package names associated with a single author.
-}
-\details{
-Calling \code{get_all_biocpkglist()} and passing the result to
-\code{get_packages_by_author()} is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
 author <- list(
@@ -36,5 +24,8 @@ author <- list(
     "Kevin Rue-Albrecht"
   )
 )
-get_packages_by_author(author)
+
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_packages_by_author(author, pkg_list = biocpkglist)
 }

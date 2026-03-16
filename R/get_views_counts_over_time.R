@@ -27,11 +27,17 @@
 #' @importFrom tibble tibble
 #'
 #' @examples
-#' get_view_counts_over_time("SingleCell")
-get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
-  # check or get optional inputs
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
-  pkg_years <- .check_or_get_pkg_years(pkg_years)
+#' suppressPackageStartupMessages(library(BiocPkgTools))
+#'
+#' bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+#' bioc_years <- BiocPkgTools::getPkgYearsInBioc()
+#' 
+#' get_view_counts_over_time(
+#'   view = "SingleCell",
+#'   pkg_list = bioc_pkg_list,
+#'   pkg_years = bioc_years
+#' )
+get_view_counts_over_time <- function(view, pkg_list, pkg_years) {
   # get packages with query view
   which_pkgs <- vapply(
     X = pkg_list$biocViews,
@@ -72,10 +78,12 @@ get_view_counts_over_time <- function(view, pkg_list = NULL, pkg_years = NULL) {
 #' @rdname get_view_counts_over_time
 #'
 #' @examples
-#' get_views_counts_over_time(c("Spatial", "SingleCell"))
-get_views_counts_over_time <- function(views, pkg_list = NULL, pkg_years = NULL) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
-  pkg_years <- .check_or_get_pkg_years(pkg_years)
+#' get_views_counts_over_time(
+#'   views = c("Spatial", "SingleCell"),
+#'   pkg_list = bioc_pkg_list,
+#'   pkg_years = bioc_years
+#' )
+get_views_counts_over_time <- function(views, pkg_list, pkg_years) {
   res_pkgs <- lapply(
     X = views,
     FUN = get_view_counts_over_time,

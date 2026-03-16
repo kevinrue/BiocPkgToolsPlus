@@ -4,14 +4,12 @@
 \alias{get_similar_packages}
 \title{Measure Package Similarity}
 \usage{
-get_similar_packages(pkg, pkg_list = NULL)
+get_similar_packages(pkg, pkg_list)
 }
 \arguments{
 \item{pkg}{A single package name.}
 
-\item{pkg_list}{Value of a call to \code{biocPkgList()}.
-If \code{NULL} (default), will call \code{biocPkgList()} internally.
-See Details.}
+\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.}
 }
 \value{
 A tibble of two columns: \code{package} and \code{similarity}.
@@ -22,11 +20,6 @@ A tibble of two columns: \code{package} and \code{similarity}.
 Measure Package Similarity
 }
 \details{
-Calling \code{BiocPkgTools::biocPkgList()} and passing the result to
-\code{get_packages_by_view()} or \code{get_packages_by_views()} is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
-
 Currently, similarity is quantified by taking the Hamming distance over the set of biocViews used to tag either of the two packages being tested when computing each distance,
 dividing by the number of biocViews to normalise within the range [0, 1],
 and finally taking one minus that value to yield a measure of similarity in the range [0, 1].
@@ -34,5 +27,10 @@ In other words, the denominator in different for each pair of packages,
 to increase the dynamic range of values.
 }
 \examples{
-get_similar_packages("edgeR")
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_similar_packages(
+  pkg = "edgeR",
+  pkg_list = biocpkglist
+)
 }

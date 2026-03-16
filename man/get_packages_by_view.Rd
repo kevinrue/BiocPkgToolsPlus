@@ -5,34 +5,36 @@
 \alias{get_packages_by_views}
 \title{Get Packages by biocViews}
 \usage{
-get_packages_by_view(view, pkg_list = NULL)
+get_packages_by_view(view, pkg_list)
 
-get_packages_by_views(views, pkg_list = NULL)
+get_packages_by_views(views, pkg_list)
 }
 \arguments{
 \item{view}{A single biocView term.}
 
-\item{pkg_list}{Value of a call to \code{biocPkgList()}.
-If \code{NULL} (default), will call \code{biocPkgList()} internally.
-See Details.}
+\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.}
 
 \item{views}{A character vector of biocView terms.}
 }
 \value{
-Character vector of package names.
+A tibble of two columns giving
+the name of the package
+and the Bioconductor repository it comes from.
 }
 \description{
 \code{get_packages_by_view()} returns package names associated with a single biocViews term.
 
 \code{get_packages_by_views()} returns packages names at the intersection of multiple biocViews terms.
 }
-\details{
-Calling \code{BiocPkgTools::biocPkgList()} and passing the result to
-\code{get_packages_by_view()} or \code{get_packages_by_views()} is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
-}
 \examples{
-get_packages_by_view("Spatial")
-get_packages_by_views(c("Spatial", "SingleCell"))
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_packages_by_view(
+  view = "Spatial",
+  pkg_list = biocpkglist
+)
+get_packages_by_views(
+  views = c("Spatial", "SingleCell"),
+  pkg_list = biocpkglist
+)
 }

@@ -59,14 +59,22 @@ library("BiocPkgToolsPlus")
 library("ggplot2")
 ```
 
-# Best practices
+# First step
 
-Fetch the full Bioconductor package listing once for the whole notebook:
+Fetch the combined listing of packages from all Bioconductor repositories.
 
-```{r biocpkglist}
-biocpkglist <- get_all_biocpkglist(verbose = FALSE)
-dim(biocpkglist)
+```{r "bioc_pkg_list"}
+bioc_pkg_list <- get_all_biocpkglist(verbose = FALSE)
+bioc_pkg_list
 ```
+
+Fetch historical information about each package.
+
+```{r "bioc_years", message=FALSE}
+bioc_years <- getPkgYearsInBioc()
+bioc_years
+```
+
 
 # Use cases
 
@@ -78,7 +86,7 @@ The function requires a named list:
 - The name defines how they will be known in this analysis.
 - The value is a character vector listing all their aliases to consider.
 
-```{r}
+```{r "author"}
 author <- list(
   "Kevin Rue" = c(
     "Kevin Rue",
@@ -87,25 +95,30 @@ author <- list(
 )
 ```
 
-```{r}
-out <- get_packages_by_author(author, pkg_list = biocpkglist)
+```{r "get_packages_by_author"}
+out <- get_packages_by_author(
+  author = author,
+  pkg_list = bioc_pkg_list
+)
 out
 ```
 
 One could then follow up by tracking how many of those packages the person has maintained over the years.
 
-```{r}
-out <- count_packages_over_time(out$Maintainer, pkg_list = biocpkglist)
-out
+```{r "get_packages_counts_over_time", message=FALSE}
+out2 <- get_packages_counts_over_time(
+  packages = out$Maintainer,
+  pkg_list = bioc_pkg_list,
+  pkg_years = bioc_years
+)
+out2
 ```
 
-```{r}
-ggplot(out, aes(x = date, y = count)) +
+```{r "plot_get_packages_counts_over_time", fig.cap="Number of packages maintained by 'Kevin Rue' over time."}
+ggplot(out2, aes(x = date, y = count)) +
+  geom_line() +
   geom_point() +
-  scale_y_continuous(breaks = function(x) {
-    seq(ceiling(min(x)), floor(max(x)), by = 1)
-  }) +
-  theme_classic()
+  theme_bw()
 ```
 
 

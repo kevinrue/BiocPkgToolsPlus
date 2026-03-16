@@ -20,11 +20,13 @@
 #' @export
 #'
 #' @examples
-#' library(dplyr)
-#' get_view_cooccurrences("Spatial") |>
+#' suppressPackageStartupMessages(library(dplyr))
+#' 
+#' biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+#' 
+#' get_view_cooccurrences("Spatial", pkg_list = biocpkglist) |>
 #'   arrange(desc(value))
-get_view_cooccurrences <- function(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE) {
-  pkg_list <- .check_or_get_pkg_list(pkg_list)
+get_view_cooccurrences <- function(view, pkg_list, keep_self = FALSE, ratio = FALSE) {
   # find packages that contain the query view
   which_pkgs <- vapply(
     X = pkg_list$biocViews,

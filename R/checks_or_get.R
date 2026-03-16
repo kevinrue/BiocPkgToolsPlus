@@ -9,9 +9,9 @@
   return(pkg_list)
 }
 
-.check_or_get_pkg_list2 <- function(pkg_list) {
+.check_or_get_pkg_list2 <- function(pkg_list, verbose = TRUE) {
   if (is.null(pkg_list)) {
-    pkg_list <- get_all_biocpkglist()
+    pkg_list <- get_all_biocpkglist(verbose = verbose)
   } else {
     stopifnot(.check_valid_pkg_list(pkg_list))
   }

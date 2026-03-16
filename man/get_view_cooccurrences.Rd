@@ -4,7 +4,7 @@
 \alias{get_view_cooccurrences}
 \title{Get biocViews Co-Occurrence Counts}
 \usage{
-get_view_cooccurrences(view, pkg_list = NULL, keep_self = FALSE, ratio = FALSE)
+get_view_cooccurrences(view, pkg_list, keep_self = FALSE, ratio = FALSE)
 }
 \arguments{
 \item{view}{A biocViews term.}
@@ -33,7 +33,10 @@ if you are making multiple calls.
 See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
 }
 \examples{
-library(dplyr)
-get_view_cooccurrences("Spatial") |>
+suppressPackageStartupMessages(library(dplyr))
+
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+get_view_cooccurrences("Spatial", pkg_list = biocpkglist) |>
   arrange(desc(value))
 }

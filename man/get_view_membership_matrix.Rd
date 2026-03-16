@@ -4,12 +4,10 @@
 \alias{get_view_membership_matrix}
 \title{Package-by-biocView Membership Matrix}
 \usage{
-get_view_membership_matrix(pkg_list = NULL)
+get_view_membership_matrix(pkg_list)
 }
 \arguments{
-\item{pkg_list}{Value of a call to \code{biocPkgList()}.
-If \code{NULL} (default), will call \code{biocPkgList()} internally.
-See Details.}
+\item{pkg_list}{Value of a call to \code{get_all_biocpkglist()}.}
 }
 \value{
 A logical matrix indicating packages associated with each biocViews term (or one of its child terms).
@@ -17,13 +15,9 @@ A logical matrix indicating packages associated with each biocViews term (or one
 \description{
 Package-by-biocView Membership Matrix
 }
-\details{
-Calling \code{BiocPkgTools::biocPkgList()} and passing the result to
-\code{get_packages_by_view()} or \code{get_packages_by_views()} is more efficient
-if you are making multiple calls.
-See vignette 'Optimisations' for a more comprehensive discussion and demonstration.
-}
 \examples{
-out <- get_view_membership_matrix()
+biocpkglist <- get_all_biocpkglist(verbose = FALSE)
+
+out <- get_view_membership_matrix(pkg_list = biocpkglist)
 out[1:5, 1:5]
 }

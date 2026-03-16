@@ -2,8 +2,11 @@
 #'
 #' This function is a convenience wrapper that invokes [BiocPkgTools::biocPkgList()] for each of the known Bioconductor repositories ("BioCsoft", "BioCexp", "BioCworkflows", and "BioCann") and combines the results into a single data frame.
 #'
+#' @param verbose Logical.
+#' Set to `FALSE` to suppress messages while fetching information from the Bioconductor repositories.
+#'
 #' @returns A data frame with one row per package and columns for package metadata,
-#' including the repository it belongs to.
+#' including the repository it belongs to (column 'Repository').
 #' @export
 #'
 #' @examples
@@ -25,14 +28,14 @@ get_all_biocpkglist <- function(verbose = TRUE) {
   })
   # combine tables
   res <- do.call(rbind, res)
-  # set the 'repo' column to a factor
-  res$repo <- factor(res$repo, repo_names)
+  # set the 'Repository' column to a factor
+  res[["Repository"]] <- factor(res[["Repository"]], repo_names)
   # return
   return(res)
 }
 
 .get_one_biocpkglist <- function(repo, verbose = TRUE) {
   df <- .run_quietly(biocPkgList(repo = repo), verbose = verbose)
-  df$repo <- repo
+  df[["Repository"]] <- repo
   return(df)
 }
