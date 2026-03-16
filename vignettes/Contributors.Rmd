@@ -105,8 +105,8 @@ out
 
 One could then follow up by tracking how many of those packages the person has maintained over the years.
 
-```{r "count_packages_over_time", message=FALSE}
-out2 <- count_packages_over_time(
+```{r "get_packages_counts_over_time", message=FALSE}
+out2 <- get_packages_counts_over_time(
   packages = out$Maintainer,
   pkg_list = bioc_pkg_list,
   pkg_years = bioc_years
@@ -114,7 +114,7 @@ out2 <- count_packages_over_time(
 out2
 ```
 
-```{r "plot_count_packages_over_time", fig.cap="Number of packages maintained by 'Kevin Rue' over time."}
+```{r "plot_get_packages_counts_over_time", fig.cap="Number of packages maintained by 'Kevin Rue' over time."}
 ggplot(out2, aes(x = date, y = count)) +
   geom_line() +
   geom_point() +
